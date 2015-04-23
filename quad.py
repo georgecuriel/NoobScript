@@ -72,7 +72,7 @@ def parentesisPop():
       
 #5
 def termino(): 
-  print(stderr, "Estoy en cuadruplo termino\n");
+  print(stderr, "Estoy en cuadruplo termino\n")
   op = top(POper)
   pop(POper)
   if (op == 3 || op == 4):			#operadores * o /
@@ -92,46 +92,41 @@ def termino():
       fprintf(stderr, "No es termino pasar al siguiente \n")
       pila_op(op)
    
-   //6
-   void *expresion(){
-      fprintf(stderr, "Estoy en cuadruplo expresion\n");
-      int op = top(POper);
-      pop(POper);
-      if(op == 1 || op == 2){				//operadores + o -
-         int oper2 = top(PilaO);
-         pop(PilaO);
-         int oper1 = top(PilaO);
-         pop(PilaO);
-         if(check(op, oper1, oper2)){		//checa el tipo    
-            escribe_cuad(cont, op, oper1, oper2,  contemp+tipotemp());		//genera el cuadruplo
-            pila_id(contemp+tipotemp());			//mete el resultado a la pila de operadores
-            contemp++;
-         }
-         else{		//marca error si no es compatible
-            fprintf(stderr, "***ERROR DE TIPOS**** expresion\n");
-            exit(1);
-         }
-      }
-      else{
-         fprintf(stderr, "No es expresion pasar al siguiente \n");
-         pila_op(op);}
+#6
+def expresion():
+  print(stderr, "Estoy en cuadruplo expresion\n")
+  op = top(POper);
+  pop(POper);
+  if op == 1 || op == 2:				#operadores + o -
+    oper2 = top(PilaO);
+    pop(PilaO);
+    oper1 = top(PilaO);
+    pop(PilaO);
+    if check(op, oper1, oper2)):		#checa el tipo    
+      escribe_cuad(cont, op, oper1, oper2,  contemp+tipotemp())	#genera el cuadruplo
+      pila_id(contemp+tipotemp())			#mete el resultado a la pila de operadores
+      contemp = contemp+1
+    else:		#marca error si no es compatible
+      print(stderr, "***ERROR DE TIPOS**** expresion\n")
+      sys.exit(1);
+  else:
+    print(stderr, "No es expresion pasar al siguiente \n")
+      pila_op(op)
      
-   }
-   
-   //7
-   void *relacional(){
-      fprintf(stderr, "Estoy en cuadruplo relacional\n");
-      int op = top(POper);
-      pop(POper);
-      if(op == 5 || op == 6 || op == 7 ){ // op == < || op == > || op = ==
-         int oper2 = top(PilaO); 
-         pop(PilaO);
-         int oper1 = top(PilaO);
-         pop(PilaO);
-         if(check(op, oper1, oper2)){		//checa el tipo
-            escribe_cuad(cont, op, oper1, oper2,  (contemp+tipotemp()));
-            pila_id(contemp+tipotemp());			//mete el resultado a la pila de operadores
-            contemp++;
+#7
+def relacional():
+  print(stderr, "Estoy en cuadruplo relacional\n");
+    op = top(POper);
+    pop(POper)
+      if op == 5 or op == 6 or op == 7 ):  # op == < || op == > || op = ==
+        oper2 = top(PilaO) 
+        pop(PilaO)
+        oper1 = top(PilaO)
+        pop(PilaO)
+        if check(op, oper1, oper2)) 		#checa el tipo
+          escribe_cuad(cont, op, oper1, oper2,  (contemp+tipotemp()));
+          pila_id(contemp+tipotemp());			#mete el resultado a la pila de operadores
+          contemp = contemp +;
          }
          else{		//marca error si no es compatible
            
