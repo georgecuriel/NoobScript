@@ -1,4 +1,6 @@
 #Cubo Semantico
+
+
 def suma(op, operando1 , operando2): 
     print  ("Estoy en el case suma Operando1:%s Operando2:%s\n" % (operando1, operando2))
     
@@ -277,12 +279,12 @@ def igualacion(op, operando1 , operando2):
     if operando1 =='e':
         if operando2 == 'e':
             print ("si se puede y es entero")
-            tipo = 5000
             return True
-        
+            
         elif operando2 == 'd':
             print ("No se puede")
             return True
+        
         else:
             print ("no se puede nigga")
             return False
@@ -325,7 +327,6 @@ def igualacion(op, operando1 , operando2):
 
 
 def check(op, oper1 , oper2):
-    valido = True
     
     #entero
     if oper1 >= 1000 and oper1 < 1500 or oper1 >= 3000 and oper1 < 3500 or oper1 >= 5000 and oper1 < 5500:
@@ -362,12 +363,13 @@ def check(op, oper1 , oper2):
 # Como si fuera switch, pero con arrays associativos
     operaciones = { 1: suma, 2: resta, 3: multiplicacion, 4: division, 5: menorQue, 6: mayorQue, 7: igualA, 8:igualacion } 
     valido = operaciones[op](op, operando1, operando2)
+    return valido
+
 #1000 entero
 #1500 decimal
 #2000 boolean
 #2500 frase string
 
-a = 1
-b = 1001
-c = 1000
-check(a,b,c)
+
+def tipotemp(): #regresa el tipo nuevo de la variable temporal que sera creada
+    return tipo
