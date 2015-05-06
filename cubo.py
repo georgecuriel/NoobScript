@@ -1,5 +1,8 @@
 #Cubo Semantico
+tipo = -1
+
 def suma(op, operando1 , operando2): 
+    global tipo
     print  ("Estoy en el case suma Operando1:%s Operando2:%s\n" % (operando1, operando2))
     
     if operando1 == 'es' or operando1=='f':
@@ -36,7 +39,8 @@ def suma(op, operando1 , operando2):
     else:
         return False
 
-def resta(op, operando1 , operando2): 
+def resta(op, operando1 , operando2):
+    global tipo
     print ("Estoy en el case resta Operando1:%s Operando2:%s\n" % (operando1, operando2))
     
     if operando1 == 'f' or operando1 == 'es':
@@ -66,6 +70,7 @@ def resta(op, operando1 , operando2):
         
         elif operando2 == 'd':
             print ("si se puede y es Decimal")
+            tipo = 5500
             return True
         else:
             print ("no se puede nigga")
@@ -76,6 +81,7 @@ def resta(op, operando1 , operando2):
         return False
 
 def multiplicacion(op, operando1 , operando2):
+    global tipo
     print ("Estoy en el case multiplicacion Operando1:%s Operando2:%s\n" % (operando1, operando2))
     
     if operando1 == 'es' or operando1 == 'f':
@@ -114,6 +120,7 @@ def multiplicacion(op, operando1 , operando2):
         return False
 
 def division(op, operando1 , operando2):
+    global tipo
     print ("Estoy en el case division!  Operando1:%s Operando2:%s\n" % (operando1, operando2))
     
     if operando1 =='es' or operando1 =='f':
@@ -277,12 +284,12 @@ def igualacion(op, operando1 , operando2):
     if operando1 =='e':
         if operando2 == 'e':
             print ("si se puede y es entero")
-            tipo = 5000
+            return True
+            
+        elif operando2 == 'd':
+            print ("si se puede y es decimal")
             return True
         
-        elif operando2 == 'd':
-            print ("No se puede")
-            return True
         else:
             print ("no se puede nigga")
             return False
@@ -325,49 +332,50 @@ def igualacion(op, operando1 , operando2):
 
 
 def check(op, oper1 , oper2):
-    valido = True
     
     #entero
-    if oper1 >= 1000 and oper1 < 1500 or oper1 >= 3000 and oper1 < 3500 or oper1 >= 5000 and oper1 < 5500:
+    if oper1 >= 1000 and oper1 < 1500 or oper1 >= 3000 and oper1 < 3500 or oper1 >= 5000 and oper1 < 5500 or oper1 >= 7000 and oper1 < 7500:
         operando1='e'
     
     #decimal
-    elif oper1 >= 1500 and oper1 < 2000 or oper1 >= 3500 and oper1 < 4000 or oper1 >= 5500 and oper1 < 6000:
+    elif oper1 >= 1500 and oper1 < 2000 or oper1 >= 3500 and oper1 < 4000 or oper1 >= 5500 and oper1 < 6000 or oper1 >= 7500 and oper1 < 8000:
         operando1='d'
     
     #esVerdad
-    elif oper1 >= 2000 and oper1 < 2500 or oper1 >= 4000 and oper1 < 4500 or oper1 >= 6000 and oper1 < 6500:
+    elif oper1 >= 2000 and oper1 < 2500 or oper1 >= 4000 and oper1 < 4500 or oper1 >= 6000 and oper1 < 6500 or oper1 >= 8000 and oper1 < 8500:
         operando1='es'
     
     #frase
-    elif oper1 >= 2500 and oper1 < 3000 or oper1 >= 4500 and oper1 < 5000 or oper1 >= 6500 and oper1 < 7000:
+    elif oper1 >= 2500 and oper1 < 3000 or oper1 >= 4500 and oper1 < 5000 or oper1 >= 6500 and oper1 < 7000 or oper1 >= 8500 and oper1 < 9000:
         operando1='f'
     
     #entero
-    if oper2 >= 1000 and oper2 < 1500 or oper2 >= 3000 and oper2 < 3500 or oper2 >= 5000 and oper2 < 5500:
+    if oper2 >= 1000 and oper2 < 1500 or oper2 >= 3000 and oper2 < 3500 or oper2 >= 5000 and oper2 < 5500 or oper1 >= 7000 and oper1 < 7500:
         operando2='e'
     
     #decimal
-    elif oper2 >= 1500 and oper2 < 2000 or oper2 >= 3500 and oper2 < 4000 or oper2 >= 5500 and oper2 < 6000:
+    elif oper2 >= 1500 and oper2 < 2000 or oper2 >= 3500 and oper2 < 4000 or oper2 >= 5500 and oper2 < 6000 or oper1 >= 7500 and oper1 < 8000:
         operando2='d'
     
     #esVerdad
-    elif oper2 >= 2000 and oper2 < 2500 or oper2 >= 4000 and oper2 < 4500 or oper2 >= 6000 and oper2 < 6500:
+    elif oper2 >= 2000 and oper2 < 2500 or oper2 >= 4000 and oper2 < 4500 or oper2 >= 6000 and oper2 < 6500 or oper1 >= 8000 and oper1 < 8500:
         operando2='es'
     
     #frase
-    elif oper2 >= 2500 and oper2 < 3000 or oper2 >= 4500 and oper2 < 5000 or oper2 >= 6500 and oper2 < 7000:
+    elif oper2 >= 2500 and oper2 < 3000 or oper2 >= 4500 and oper2 < 5000 or oper2 >= 6500 and oper2 < 7000 or oper1 >= 8500 and oper1 < 9000:
         operando2='f'
     
 # Como si fuera switch, pero con arrays associativos
     operaciones = { 1: suma, 2: resta, 3: multiplicacion, 4: division, 5: menorQue, 6: mayorQue, 7: igualA, 8:igualacion } 
     valido = operaciones[op](op, operando1, operando2)
+    return valido
+
 #1000 entero
 #1500 decimal
 #2000 boolean
 #2500 frase string
 
-a = 1
-b = 1001
-c = 1000
-check(a,b,c)
+
+def tipotemp(): #regresa el tipo nuevo de la variable temporal que sera creada
+    global tipo
+    return tipo
