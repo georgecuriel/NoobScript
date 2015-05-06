@@ -4,49 +4,55 @@ class Local:
 	flotantes = 3500
 	esverdad = 4000
 	frases = 4500
+	
+	memInt = [0]*500
+	memFloat = [0]*500
+	memBool = [0]*500
+	memString = [0]*500
 
-	memInt = []
-	memFloat = []
-	memBool = []
-	memString = []
-
-	def setValD(dire, val, tipo):
+	def setValD(self, dire, val, tipo):
 		if tipo == 1:
-			dirReal = dire - enteros
+			dirReal = dire - 3000
 			if dirReal < 500:
-				memInt[dirReal] = int(val)
+				self.memInt[dirReal] = val
 		elif tipo == 2:
-			dirReal = dire - flotantes
+			dirReal = dire - 3500
 			if dirReal < 500:
 				memFloat[dirReal] = val
 
-	def getValD (dire, tipo):
+	def getValD (self, dire, tipo):
+		global enteros
+		global flotantes
 		if tipo == 1:
-			dirReal = dire - enteros
+			dirReal = dire - 3000
 			if dirReal < 500:
-				return memInt[dirReal]
+				return self.memInt[dirReal]
 		elif tipo == 2:
-			dirReal = dire - flotantes
+			dirReal = dire - 3500
 			if dirReal < 500:
-				return memFloat[dirReal]
+				return self.memFloat[dirReal]
 
-	def setMemBool(dire, val):
-		dirReal = dire - esverdad
+	def setMemBool(self, dire, val):
+		global esVerdad
+		dirReal = dire - 4000
 		if dirReal < 500:
-			memBool[dirReal] = val
+			memBool[dirReal] = self.val
 		
-	def getMemBool(dire):
-		dirReal = dire - esverdad
+	def getMemBool(self, dire):
+		global esVerdad
+		dirReal = dire - 4000
 		if dirReal < 500:
-			return memBool[dirReal]
+			return self.memBool[dirReal]
 		
-	def setMemString(dire, val):
-		dirReal = dire - frases
+	def setMemString(self, dire, val):
+		global frases
+		dirReal = dire - 4500
 		if dirReal < 500:
-			memString[dirReal] = val
+			memString[dirReal] = self.val
 		
-	def getMemString(dire):
-		dirReal = dire - frases
+	def getMemString(self ,dire):
+		global frases
+		dirReal = dire - 4500
 		if dirReal < 500:
-			return memString[dirReal]
+			return self.memString[dirReal]
 	
