@@ -173,7 +173,7 @@ def p_funcion(t):
 	'funcion : FUNCION ID funcion_push_id LPAREN funparam RPAREN LLLAVE bloque RLLAVE'
 	print("funcion")
 
-def funcion_push_id:
+def funcion_push_id():
     'funcion_push_id: '
     #creamos espacio en memoria para la funcion
     
@@ -186,10 +186,12 @@ def p_funparams(t):
 	'''funparams : COMMA funparam
 				 | empty'''
 				 
+
+
 def p_tipo(t):
-	'''tipo : ENTERO
-			| DECIMAL
-			| FRASE
+    '''tipo : ENTERO
+            | DECIMAL
+            | FRASE
             | ESVERDAD'''
             
 def p_estatuto(t):

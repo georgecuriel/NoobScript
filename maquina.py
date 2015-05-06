@@ -1,6 +1,197 @@
-    
+#Inicializas Espacios en memoria con la clase correspondiente
+memglobal = Global()
+memlocal = Local()
+memconstant = Constant()
+memtemp = Temporal()
 x_table = []
 for eachLine in open('cuadruplos.txt', "r"):
     x_table.append([int(k) for k in eachLine.split()])
+    #El operador es el segundo elemento del arreglo obtenido
+    op=Integer.parseInt( cuad[1] )
+    #Revisar a que memoria pertenece cada operando
+    scope = checaScope(cuad[2])
+    scope2 = checaScope(cuad[3])
+    scope3 = checaScope(cuad[4])
+    #Revisar el tipo de cada operando
+    tipo1 = checaTipo(cuad[2])
+    tipo2 = checaTipo(cuad[3])
+    tipo3 = checaTipo(cuad[4])
+    def suma():  # case 1 +
+        ope1 = obtenValorD(scope, cuad[2], tipo1)
+        ope2 = obtenValorD(scope2, cuad[3], tipo2)
+        meteValorD(scope3, cuad[4], (ope1 + ope2), tipo3)
+    def resta(): # case 2: -
+        ope1 = obtenValorD(scope, cuad[2], tipo1)
+        ope2 = obtenValorD(scope2, cuad[3], tipo2)
+        meteValorD(scope3, cuad[4], (ope1 - ope2), tipo3)
+    def multiplicacion(): #case 3: *
+        ope1 = obtenValorD(scope, cuad[2], tipo1)
+        ope2 = obtenValorD(scope2, cuad[3], tipo2)
+        meteValorD(scope3, cuad[4], (ope1 * ope2), tipo3)
+    def division(): #case 4: /
+        ope1 = obtenValorD(scope, cuad[2], tipo1)
+        ope2 = obtenValorD(scope2, cuad[3], tipo2)
+        meteValorD(scope3, cuad[4], (ope1 / ope2), tipo3)
+    def menor(): #case 5: <
+        ope1 = obtenValorD(scope, cuad[2], tipo1)
+        ope2 = obtenValorD(scope2, cuad[3], tipo2)
+        meteValorB(scope3, cuad[4], (ope1 < ope2))
+    def mayor(): #case 6: >
+        ope1 = obtenValorD(scope, cuad[2], tipo1)
+        ope2 = obtenValorD(scope2, cuad[3], tipo2)
+        meteValorB(scope3, cuad[4], (ope1 > ope2))
+    def comparacion(): #case 7: ==
+        ope1 = obtenValorD(scope, cuad[2], tipo1)
+        ope2 = obtenValorD(scope2, cuad[3], tipo2)
+        meteValorB(scope3, cuad[4], (ope1 == ope2))
+    def igualacion(): #igucalacion case 8 =
+        def uno(tipo): #case 1:
+            ope1 = obtenValorD(scope, cuad[2], tipo1)
+            meteValorD(scope3, cuad[4], ope1, tipo3)
+        def dos(tipo): #case 2:
+            ope1 = obtenValorD(scope, cuad[2], tipo1)
+            meteValorD(scope3, cuad[4], ope1, tipo3)
+        def tres(tipo): #case 3:
+            opeb1 = obtenValorB(scope, cuad[2], tipo1)
+            meteValorB(scope3, cuad[4], opeb)
+        def cuatro(tipo): #case 4
+            ope1 = obtenValorD(scope, cuad[2], tipo1)
+            meteValorD(scope3, cuad[4], ope1, tipo3)
+        def cinco(tipo): #case 5:
+            opes = obtenValorS(scope, cuad[2], tipo1)
+            meteValorS(scope3, cuad[4], opes)
+        operaciones = { 1: uno, 2: dos, 3: tres, 4: cuatro, 5: cinco} 
+        operaciones[tipo](tipo)   
     
-print x_table[2][2]
+    def parentesisIz(): #case 11: //(
+        print("nothing yet")
+    
+    def parentesisDe(): # case 12: //)
+        print("nothing yet")
+    def GOTOF():  #case 20: //GOTOF
+        print("nothing yet")
+    def GOTOV(): #case 21: //GOTOV
+        print("nothing yet")
+    def GOTO(): #case 22: //GOTO
+        print("nothing yet")
+    def ERA(): #case 30: //ERA
+        print("nothing yet")
+    def PARAM(): #case 31: //PARAM
+        print("nothing yet")
+    def GOsub(): #case 32: //Gosub
+        print("nothing yet")
+    def write(): #case 33: //Write
+        def uno(tipo): #case 1:
+            ope1 = memtemp.getValD(cuad[2])
+            print(ope1)
+        def dos(tipo): #case 2:
+            ope1 = memtemp.getValD(cuad[2])
+            print(ope1)
+        def cuatro(tipo): # 4:
+            ope1 = memtemp.getValD(cuad[2])
+            print(ope1)
+        def cinco(tipo):
+            opes = memtemp.getMemString(cuad[2])
+            print(opes)
+        operaciones = { 1: uno, 2: dos, 3: tres, 4: cuatro, 5: cinco} 
+        operaciones[tipo](tipo)
+    operaciones = { 1: suma, 2: resta, 3: multiplicacion, 4: division, 5: menor, 6:mayor, 7:comparacion, 8:igualacion, 9: parentesisIz, 10:parentesisDe, 20:GOTOF, 21:GOTOV, 22:GOTO, 30:ERA, 31:PARAM, 32: GOsub, 33:write} 
+    operaciones[tipo](tipo) 
+    print("\n")
+    #--->cerrar archivo
+    #todo que devuelve el scope de un operando, recibe la direcci?n de la variables
+    #y determina la memoria a la que pertenece por medio de los rangos.
+def checaScope(dire):
+    if dire >= 1000 and dire < 2500:    #Direcciones de variables globales
+        return 1
+    elif dire >= 3000 and dire < 4500:  #Direcciones de variables locales
+        return 2        
+    elif dire >= 5000 and dire < 6500:  #Direcciones de variables temporales
+        return 3
+    else:
+        return 4        #Regresa 4 si no es de ninguna de las otras memorias
+#M?todo que determina el tipo de la variable que se usar?. Si entra en alguno de los rangos especificados se regresa el tipo
+#double o boolean (dependiendo del caso), sino se regresa el tipo int 
+def checaTipo(dire):
+    if  dire == -1:
+        return -1   #//Si no hay una direccion en alguno de los elementos del cuadruplo
+        #rangos de variables float en las memorias
+    elif dire >= 1500 and dire < 2000 or dire >= 3500 and dire < 4000 or dire >= 5500 and dire < 6000 or dire >= 7500 and dire < 8000:
+        return 2
+        #Rangos de variables boolean en las memorias
+    elif dire >= 2000 and dire < 2500 or dire >= 4000 and dire < 4500 or dire >= 6000 and dire < 6500 or dire >= 8000 and dire < 8500:
+        return 3
+        #Rangos de variables string en las memorias  
+    elif dire >= 2500 and dire < 3000 or dire >= 4500 and dire < 5000 or dire >= 6500 and dire < 7000 or dire >= 8500 and dire < 9000:
+        return 4
+        #si no pues es entero
+    else:
+        return 1
+
+def obtenValorD(scope,dire, tipo):
+    def uno(): # 1:
+        return memglobal.getValD(dire, tipo)
+    def dos(): #case 2:
+        return memlocal.getValD(dire, tipo)
+    def tres(): #case 3:
+        return memtemp.getValD(dire, tipo)
+    def cuatro(): #case  4:
+        return memconstant.getValD(dire, tipo)
+        operaciones = { 1: uno, 2: dos, 3: tres, 4: cuatro} 
+        operaciones[scope]
+
+def meteValorD(scope, dire, val, tipo):
+    def uno(): #case 1:
+        memglobal.setValD(dire, val, tipo)
+    def dos():##     case 2:
+        memlocal.setValD(dire, val, tipo)
+    def  tres(): #     case 3:
+        memtemp.setValD(direq, val, tipo)
+    def cuatro(): # 4:
+        memconstant.setValD(dire, val, tipo)
+        operaciones = { 1: uno, 2: dos, 3: tres, 4: cuatro} 
+        operaciones[scope]
+
+def obtenValorS( scope, dire):
+    def uno():  #    case 1:
+        return memglobal.getMemString(dire)
+    def dos(): #case 2:
+        return memlocal.getMemString(dire)
+    def tres():      # case 3:
+        return memtemp.getMemString(dire)
+    def cuatro(): #case 4 :
+        return memconstant.getMemString(dire)
+    operaciones = { 1: uno, 2: dos, 3: tres, 4: cuatro} 
+    operaciones[scope]
+
+def meteValorS(scope, val, dire):
+    def uno():
+        memglobal.setMemString(dire, val)
+    def dos():           
+        memlocal.setMemString(dire, val)
+    def tres():
+        memtemp.setMemString(dire, val)
+    def cuatro():
+        emconstant.setMemString(dire, val)
+    operaciones = { 1: uno, 2: dos, 3: tres, 4: cuatro} 
+    operaciones[scope]
+
+def obtenValorB(scope, dire):
+    def uno():
+        return memglobal.getMemBool(dire)
+    def dos():
+        return memlocal.getMemBool(dire)
+    def tres():
+        return memtemp.getMemBool(dire)
+    operaciones = { 1: uno, 2: dos, 3: tres, 4: cuatro} 
+    operaciones[scope]
+    
+def meteValorB(scope, dire, val):
+    def uno() : #case 1:
+        memglobal.setMemBool(dire, val)
+    def dos():    
+        memlocal.setMemBool(dire, val)
+    def tres():
+        memtemp.setMemBool(dire, val)
+    operaciones = { 1: uno, 2: dos, 3: tres, 4: cuatro}
+    operaciones[scope]

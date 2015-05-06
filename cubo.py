@@ -368,7 +368,7 @@ def check(op, oper1 , oper2):
 # Como si fuera switch, pero con arrays associativos
     operaciones = { 1: suma, 2: resta, 3: multiplicacion, 4: division, 5: menorQue, 6: mayorQue, 7: igualA, 8:igualacion } 
     valido = operaciones[op](op, operando1, operando2)
-    return valido
+    return valido   
 
 #1000 entero
 #1500 decimal
