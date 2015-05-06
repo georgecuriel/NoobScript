@@ -42,7 +42,8 @@ reserved = {
     'mientras': 'MIENTRAS',
     'si'      : 'SI',
     'sino'    : 'SINO',
-    'haz'     : "HAZ"
+    'haz'     : 'HAZ',
+    'var'	  : 'VAR'
 }
 
     # List of token names.   This is always required
@@ -152,10 +153,21 @@ precedence = (
 )
 
 def p_programa(t):
-    'programa : PROGRAMA ID programa_push_id body'
+    'programa : PROGRAMA ID programa_push_id var body'
     init()
     printcuadruplos()
     print(t[1])
+
+def p_var(t):
+	'''var : VAR id vars COLON tipo vars2
+		 | empty'''
+		 
+def p_vars(t):
+	'''vars : COMMA id
+			| empty'''
+def p_vars2(t):
+	'''vars2 : var
+			 | empty'''
 
 def p_empty(t):
 	'empty : '
@@ -170,7 +182,7 @@ def p_bloque(t):
 			  | empty'''
 			  
 def p_funcion(t):
-	'funcion : FUNCION ID funcion_push_id LPAREN funparam RPAREN LLLAVE bloque RLLAVE'
+	'funcion : FUNCION tipo ID funcion_push_id LPAREN funparam RPAREN LLLAVE bloque RLLAVE'
 	print("funcion")
 
 def funcion_push_id():
@@ -302,7 +314,8 @@ def p_factor_rparent:
 def p_valor(t):
     '''valor : ID
              | CTEINT
-             | CTEDEC'''
+             | CTEDEC
+             | llamada'''
     global CONSTENTERO
     global CONSTDECIMAL
     if isinstance(t[1], str):
