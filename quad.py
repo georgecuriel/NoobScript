@@ -6,9 +6,9 @@ cuadruplos = [[0 for x in range(5)] for x in range(300)]
 
 #Crear las pilas e inicializarlas
 #pila de operadores
-PilaO = [1000, 1002, 1003] #pila de operandos
+PilaO = [] #pila de operandos
 PSaltos = [] #pila de saltos
-POper = [8,3] #pila de operadores
+POper = [] #pila de operadores
 cuadf = None
 
 def init(): 
@@ -65,7 +65,7 @@ def pila_op(op):
    
 #3
 def parentesisPush():
-    POper.append(11)  #genera pared falsa en pila
+    POper.append(9)  #genera pared falsa en pila
    
 def parentesisPop():
     POper.pop #saca de la pila  
@@ -240,23 +240,3 @@ def print2():
 
 def cuadproc():
   return cont
-
-
-
-
-init()
-termino()
-PilaO.append(5000)
-POper.append(1) #operadores
-PilaO.append(1004) #Operandos
-expresion()
-PilaO.append(5001)
-POper.append(2)
-PilaO.append(1005)
-expresion()
-assign()
-
-print ("lineas ", cont)
-
-print ("Variables temporales", contemp)
-printcuadruplos()
