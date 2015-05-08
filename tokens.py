@@ -5,26 +5,38 @@ from quad import *
 #Globales
 GLOBENTERO = 1000
 GLOBDECIMAL =1500
-GLOBesVerdad =2000
+GLOBESVERDAD =2000
 GLOBFRASE =2500
 
 #Locales
 LOCALENTERO =3000
 LOCALDECIMAL =3500
-LOCALesVerdad =4000
+LOCALESVERDAD =4000
 LOCALFRASE =4500
 
 #Temporales
 TEMPENTERO =5000
 TEMPDECIMAL =5500
-TEMPesVerdad =6000
+TEMPESVERDAD =6000
 TEMPFRASE =6500
 
 #constantes
 CONSTENTERO = 7000
 CONSTDECIMAL = 7500 
-CONSTesVerdad = 8000
+CONSTESVERDAD = 8000
 CONSTFRASE= 8500
+
+#directorio de procs y tablas de variables y constantes
+#listas de [nombre, tipo, cuadinicio, {}param, {}vars]
+directorio = []
+func = 0
+directorioconst = {}
+direccion = 0
+funnombre = ''
+funtipo = ''
+funcuad = 1
+funparam = {}
+funvars = {}
 
 reserved = {
     'entero'  : 'ENTERO',
@@ -153,21 +165,100 @@ precedence = (
 )
 
 def p_programa(t):
-    'programa : PROGRAMA ID programa_push_id var body'
-    init()
-    printcuadruplos()
+    'programa : PROGRAMA ID programa_push_id vars programa_push_dict body'
+    #init()
+    #printcuadruplos()
+    global directorio
     print(t[1])
+    print directorio
+    print ('termine')
 
-def p_var(t):
-	'''var : VAR id vars COLON tipo vars2
-		 | empty'''
-		 
+def p_programa_push_id(t):
+	'programa_push_id : '
+	global funnombre
+	funnombre = t[-1]
+
+def p_programa_push_dict(t):
+	'programa_push_dict : '
+	global diccionario
+	directorio.append(list((funnombre, funtipo, funcuad, funparam, funvars)))
+		
+
 def p_vars(t):
-	'''vars : COMMA id
-			| empty'''
-def p_vars2(t):
-	'''vars2 : var
+	'''vars : VAR vars2
 			 | empty'''
+
+def p_vars2(t):
+	'vars2 : tipo ID vars_push_id vars3 SEMICOL vars4'
+	
+def p_vars_push_id(t):
+	'vars_push_id : '
+	global directorio
+	global direccion
+	global funvars
+	funvars[t[-1]] = direccion
+	
+	
+def p_vars3(t):
+	'''vars3 : COMMA ID vars3_push_id vars3
+			 | empty'''
+
+def p_vars3_push_id(t):
+	'vars3_push_id : '
+	global direccion
+	global funvars
+	funvars[t[-1]] = direccion
+	
+			 
+def p_vars4(t):
+	'''vars4 : vars2
+			 | empty'''
+
+
+def p_tipo(t):
+	'''tipo : ENTERO
+			| DECIMAL
+			| FRASE
+			| ESVERDAD'''
+	global direccion
+	global GLOBENTERO
+	global LOCALENTERO
+	global GLOBDECIMAL
+	global LOCALDECIMAL
+	global GLOBESVERDAD
+	global LOCALESVERDAD
+	global GLOBFRASE
+	global LOCALFRASE
+	if t[1] == 'entero':
+		if func == 0:
+			GLOBENTERO += GLOBENTERO 
+			direccion = GLOBENTERO
+		else:
+			LOCALENTERO +=1
+			direccion = LOCALENTERO
+	elif t[1] == 'decimal':
+		if func == 0:
+			GLOBDECIMAL +=1
+			direccion = GLOBDECIMAL
+		else:
+			LOCALDECIMAL +=1
+			direccion = LOCALDECIMAL
+	elif t[1] == 'esVerdad':
+		if func == 0:
+			GLOBESVERDAD +=1
+			direccion = GLOBESVERDAD
+		else:
+			LOCALESVERDAD +=1
+			direccion = LOCALESVERDAD
+	elif t[1] == 'frase':
+		if func == 0:
+			BLOBFRASE +=1
+			direccion = GLOBFRASE
+		else:
+			LOCALFRASE +=1
+			direccion = LOCALFRASE
+	
+			
 
 def p_empty(t):
 	'empty : '
@@ -182,11 +273,18 @@ def p_bloque(t):
 			  | empty'''
 			  
 def p_funcion(t):
-	'funcion : FUNCION tipo ID funcion_push_id LPAREN funparam RPAREN LLLAVE bloque RLLAVE'
+	'funcion : FUNCION funcion_increase_func tipo ID funcion_push_id LPAREN funparam RPAREN LLLAVE vars bloque RLLAVE'
 	print("funcion")
 
-def funcion_push_id():
-    'funcion_push_id: '
+def p_funcion_increase_func(t):
+	'funcion_increase_func : '
+	global directorio
+	global func
+	func += 1
+	directorio[func][4] = {}
+
+def p_funcion_push_id(t):
+    'funcion_push_id : '
     #creamos espacio en memoria para la funcion
     
 
@@ -197,14 +295,6 @@ def p_funparam(t):
 def p_funparams(t):
 	'''funparams : COMMA funparam
 				 | empty'''
-				 
-
-
-def p_tipo(t):
-    '''tipo : ENTERO
-            | DECIMAL
-            | FRASE
-            | ESVERDAD'''
             
 def p_estatuto(t):
 	'''estatuto : asignacion bloque
@@ -220,12 +310,12 @@ def p_asignacion(t):
     print("asignacion")
     assign()
     
-def asignacion_push_id(t):
+def p_asignacion_push_id(t):
     'asignacion_push_id :'
     dire = t[1] #mas obtencion de memoria  
     pila_id(dire)
 
-def asignacion_push_igual(t):
+def p_asignacion_push_igual(t):
     'asignacion_push_igual :'
     pila_op(8)
 
@@ -254,15 +344,15 @@ def p_expresions(t):
 				  | empty'''
 
 def p_expresions_push_mayor(t):
-    'p_expresions_push_mayor: '
+    'expresions_push_mayor : '
     pila_op(6)
 
 def p_expresions_push_menor(t):
-    'p_expresions_push_menor: '
+    'expresions_push_menor : '
     pila_op(5)
 
 def p_expresions_push_compara(t):
-    'p_expresions_push_compara: '
+    'expresions_push_compara : '
     pila_op(7)
 
 def p_exp(t):
@@ -275,11 +365,11 @@ def p_exps(t):
 	print("suma/resta")
 
 def p_exps_push_plus(t):
-    'p_exps_push_plus: '
+    'exps_push_plus : '
     pila_op(1)
 
 def p_exps_push_minus(t):
-    'p_exps_push_plus: '
+    'exps_push_minus : '
     pila_op(2)
         
 def p_termino(t):
@@ -292,23 +382,23 @@ def p_terminos(t):
 	print("multi/div")
 
 def p_terminos_push_times(t):
-    'p_terminos_push_times: '
+    'terminos_push_times : '
     pila_op(3)
 
 def p_terminos_push_divide(t):
-    'p_terminos_push_divide: '
+    'terminos_push_divide : '
     pila_op(4)
     
 def p_factor(t):
-	'''factor : LPAREN factor_lparent expresion RPAREN factor_rparen
+	'''factor : LPAREN factor_lparen expresion RPAREN factor_rparen
 			  | valor'''
 
-def p_factor_lparent:
-    'p_factor_lparent'
+def p_factor_lparent(t):
+    'factor_lparen : '
     parentesisPush()
 
-def p_factor_rparent:
-    'p_factor_rparent'
+def p_factor_rparent(t):
+    'factor_rparen : '
     parentesisPop()
 
 def p_valor(t):
@@ -317,22 +407,47 @@ def p_valor(t):
              | CTEDEC
              | llamada'''
     global CONSTENTERO
+    global CONTSTDECILMAL
     global CONSTDECIMAL
-    if isinstance(t[1], str):
-         pila_id(1050) #direccion de T
-    elif isinstance(t[1], int):
-         pila_op(CONSTENTERO)
-         CONSTENTERO = CONSTENTERO + 1
+    global CONSTESVERDAD
+    global CONSTFRASE
+    global direccion
+	global GLOBENTERO
+	global LOCALENTERO
+	global GLOBDECIMAL
+	global LOCALDECIMAL
+	global GLOBESVERDAD
+	global LOCALESVERDAD
+	global GLOBFRASE
+	global LOCALFRASE
+  
+
+    if isinstance(t[1], int):      
+		if t[1] in directorioconst: 
+			pila_id(directorioconst[t[1]])
+		else:
+			CONSTENTERO += 1
+			directorioconst[t[1]] = CONSTENTERO
+			pila_id(directorioconst[t[1]])
     elif isinstance(t[1], float):      
-         pila_op(CONSTDECIMAL)
-         CONSTDECIMAL = CONSTDECIMAL + 1
-    
+		if t[1] in directorioconst:
+			pila_id(directorioconst[t[1]])
+		else:
+			CONSTDECIMAL += 1
+			directorioconst[t[1]] = CONSTDECIMAL
+			pila_id(directorioconst[t[1]])
+    elif isinstance(t[1], str):      #checar global y func
+		if t[1] in funvars[t[1]]:
+			pila_id(funvars[t[1]])
+		else
+			
+
 def p_condicion(t):
 	'condicion : SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto  RLLAVE else'
 	print("condicion")
 
 def p_condicion_if(t):
-    'p_condition_if: '
+    'condicion_if : '
     if1()
 
 def p_else(t):
@@ -341,8 +456,8 @@ def p_else(t):
     print("else")
     if2()
 
-def p_else_2:
-    'p_else_2: '
+def p_else_2(t):
+    'else_2 : '
     else1()
 
 def p_para(t):
@@ -360,7 +475,7 @@ def p_mientras(t):
     do2()
 
 def p_mientras_haz_push(t):
-    'p_mientras_haz_push: '
+    'mientras_haz_push : '
     do1()
     
 def p_escritura(t):
@@ -369,7 +484,7 @@ def p_escritura(t):
     print2()
     
 def p_escritura_escribe(t):
-    'p_escritura_escribe : '
+    'escritura_escribe : '
     print1()
     
 def p_esc(t):
@@ -381,8 +496,8 @@ def p_escs(t):
 			| empty'''	
 			
 def p_error(t):
-    print("Syntax error at '%s'" % t.value)
-    
+	print("Syntax error at '%s'" % t.value)
+
 import ply.yacc as yacc
 parser = yacc.yacc()
 
