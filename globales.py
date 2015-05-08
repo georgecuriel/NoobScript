@@ -5,10 +5,12 @@ class Global:
 	#esverdad = 2000
 	#frases = 2500
 
-	memInt = [None]*500
+	memInt = globales[1][500]
 	memFloat = [None]*500
 	memBool = [None]*500
 	memString = [None]*500
+	
+	
 
 	def setValD(self, dire, val, tipo):
 		if tipo == 1:

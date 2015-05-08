@@ -118,14 +118,14 @@ for e in range(len(cuad)-1):
     
     
     cont1 = cont1 + 1
-    op =  cuad[cont1][0]
-    scope = checaScope(cuad[cont1][1])
-    scope2 = checaScope(cuad[cont1][2])
-    scope3 = checaScope(cuad[cont1][3])
+    op =  cuad[cont1][1]
+    scope = checaScope(cuad[cont1][2])
+    scope2 = checaScope(cuad[cont1][3])
+    scope3 = checaScope(cuad[cont1][4])
     #Revisar el tipo de cada operando
-    tipo1 = checaTipo(cuad[cont1][1])
-    tipo2 = checaTipo(cuad[cont1][2])
-    tipo3 = checaTipo(cuad[cont1][3])
+    tipo1 = checaTipo(cuad[cont1][2])
+    tipo2 = checaTipo(cuad[cont1][3])
+    tipo3 = checaTipo(cuad[cont1][4])
 
     
     def suma(op):  # case 1 +
@@ -136,9 +136,9 @@ for e in range(len(cuad)-1):
         global tipo2
         global tipo3
         global cuad
-        ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
-        ope2 = obtenValorD(scope2, cuad[cont1][2], tipo2)
-        meteValorD(scope3, cuad[cont1][3], (ope1 + ope2), tipo3)
+        ope1 = obtenValorD(scope, cuad[cont1][2], tipo1)
+        ope2 = obtenValorD(scope2, cuad[cont1][3], tipo2)
+        meteValorD(scope3, cuad[cont1][4], (ope1 + ope2), tipo3)
     def resta(op): # case 2: -
         global scope
         global scope2
@@ -147,9 +147,9 @@ for e in range(len(cuad)-1):
         global tipo2
         global tipo3
         global cuad
-        ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
-        ope2 = obtenValorD(scope2, cuad[cont1][2], tipo2)
-        meteValorD(scope3, cuad[cont1][3], (ope1 - ope2), tipo3)
+        ope1 = obtenValorD(scope, cuad[cont1][2], tipo1)
+        ope2 = obtenValorD(scope2, cuad[cont1][3], tipo2)
+        meteValorD(scope3, cuad[cont1][4], (ope1 - ope2), tipo3)
     def multiplicacion(op): #case 3: *
         global scope
         global scope2
@@ -158,9 +158,9 @@ for e in range(len(cuad)-1):
         global tipo2
         global tipo3
         global cuad
-        ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
-        ope2 = obtenValorD(scope2, cuad[cont1][2], tipo2)
-        meteValorD(scope3, cuad[cont1][3], (ope1 * ope2), tipo3)
+        ope1 = obtenValorD(scope, cuad[cont1][2], tipo1)
+        ope2 = obtenValorD(scope2, cuad[cont1][3], tipo2)
+        meteValorD(scope3, cuad[cont1][4], (ope1 * ope2), tipo3)
     def division(op): #case 4: /
         global scope
         global scope2
@@ -169,9 +169,9 @@ for e in range(len(cuad)-1):
         global tipo2
         global tipo3
         global cuad
-        ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
-        ope2 = obtenValorD(scope2, cuad[cont1][2], tipo2)
-        meteValorD(scope3, cuad[cont1][3], (ope1 / ope2), tipo3)
+        ope1 = obtenValorD(scope, cuad[cont1][2], tipo1)
+        ope2 = obtenValorD(scope2, cuad[cont1][3], tipo2)
+        meteValorD(scope3, cuad[cont1][4], (ope1 / ope2), tipo3)
     def menor(op): #case 5: <
         global scope
         global scope2
@@ -180,9 +180,9 @@ for e in range(len(cuad)-1):
         global tipo2
         global tipo3
         global cuad
-        ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
-        ope2 = obtenValorD(scope2, cuad[cont1][2], tipo2)
-        meteValorB(scope3, cuad[cont1][3], (ope1 < ope2))
+        ope1 = obtenValorD(scope, cuad[cont1][2], tipo1)
+        ope2 = obtenValorD(scope2, cuad[cont1][3], tipo2)
+        meteValorB(scope3, cuad[cont1][4], (ope1 < ope2))
     def mayor(op): #case 6: >
         global scope
         global scope2
@@ -191,9 +191,9 @@ for e in range(len(cuad)-1):
         global tipo2
         global tipo3
         global cuad
-        ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
-        ope2 = obtenValorD(scope2, cuad[cont1][2], tipo2)
-        meteValorB(scope3, cuad[cont1][3], (ope1 > ope2))
+        ope1 = obtenValorD(scope, cuad[cont1][2], tipo1)
+        ope2 = obtenValorD(scope2, cuad[cont1][3], tipo2)
+        meteValorB(scope3, cuad[cont1][4], (ope1 > ope2))
     def comparacion(op): #case 7: ==
         global scope
         global scope2
@@ -202,9 +202,9 @@ for e in range(len(cuad)-1):
         global tipo2
         global tipo3
         global cuad
-        ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
-        ope2 = obtenValorD(scope2, cuad[cont1][2], tipo2)
-        meteValorB(scope3, cuad[cont1][3], (ope1 == ope2))
+        ope1 = obtenValorD(scope, cuad[cont1][2], tipo1)
+        ope2 = obtenValorD(scope2, cuad[cont1][3], tipo2)
+        meteValorB(scope3, cuad[cont1][4], (ope1 == ope2))
     def igualacion(op): #igucalacion case 8 =
         global scope
         global scope2
@@ -214,44 +214,44 @@ for e in range(len(cuad)-1):
         global tipo3
         global cuad
         def uno(tipo3):
-            ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
-            meteValorD(scope3, cuad[cont1][3], ope1, tipo3) #cabiar ope 1
+            ope1 = obtenValorD(scope, cuad[cont1][2], tipo1)
+            meteValorD(scope3, cuad[cont1][4], ope1, tipo3) #cabiar ope 1
         def dos(tipo3): 
-            ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
-            meteValorD(scope3, cuad[cont1][3], ope1, tipo3)
+            ope1 = obtenValorD(scope, cuad[cont1][2], tipo1)
+            meteValorD(scope3, cuad[cont1][4], ope1, tipo3)
         def tres(tipo3): 
-            ope1 = obtenValorB(scope, cuad[cont1][1], tipo1)
-            meteValorB(scope3, cuad[cont1][3], opeb)
+            ope1 = obtenValorB(scope, cuad[cont1][2], tipo1)
+            meteValorB(scope3, cuad[cont1][4], opeb)
         def cuatro(tipo3): 
-            opes = obtenValorS(scope, cuad[cont1][1], tipo1)
-            meteValorS(scope3, cuad[cont1][3], opes)
+            opes = obtenValorS(scope, cuad[cont1][2], tipo1)
+            meteValorS(scope3, cuad[cont1][4], opes)
         operaciones = { 1: uno, 2: dos, 3: tres, 4: cuatro} 
         operaciones[tipo3](tipo3)   
     
     def GOTOF(op):  #case 20: //GOTOF
-        if obtenValorB(scope,cuad[cont1][1]) == True:
+        if obtenValorB(scope,cuad[cont1][2]) == True:
             print ("siguele ")
         else:
             cont1 = cuad[cont1][3]
     def GOTOV(op): #case 21: //GOTOV
-        if obtenValorB(scope,cuad[cont1][1]) == False:
+        if obtenValorB(scope,cuad[cont1][2]) == False:
             print ("siguele ")
         else:
-            cont1 = cuad[cont1][3]
+            cont1 = cuad[cont1][4]
     def GOTO(op): #case 22: //GOTO
-        cont1 = cuad[cont1][3]
+        cont1 = cuad[cont1][4]
     def ERA(op): #case 30: //ERA
         print ("era")
     def PARAM(op): #case 31: //PARAM
         if tipo1 == 1 or tipo1 == 2:
-            val = obtenValorD(score, cuad[cont1][1], tipo1)
-            meteValorD(scope, cuad[cont1][3], val , tipo3)
+            val = obtenValorD(score, cuad[cont1][2], tipo1)
+            meteValorD(scope, cuad[cont1][4], val , tipo3)
         elif tipo1== 3:
-            val = obtenValorB(score, cuad[cont1][1], tipo1)
-            meteValorB(scope, cuad[cont1][3], val , tipo3)
+            val = obtenValorB(score, cuad[cont1][2], tipo1)
+            meteValorB(scope, cuad[cont1][4], val , tipo3)
         else:
-            val = obtenValorS(score, cuad[cont1][1], tipo1)
-            meteValorS(scope, cuad[cont1][3], val , tipo3)
+            val = obtenValorS(score, cuad[cont1][2], tipo1)
+            meteValorS(scope, cuad[cont1][4], val , tipo3)
     def GOsub(op): #case 32: //Gosub
         print("")
     def write(op): #case 33: //Write
@@ -263,13 +263,13 @@ for e in range(len(cuad)-1):
         global tipo3
         global cuad
         def uno(tipo1): #case 1:
-            ope1 = memtemp.getValD(cuad[cont1][1])
+            ope1 = memtemp.getValD(cuad[cont1][2])
             print(ope1)
         def dos(tipo1): #case 2:
-            ope1 = memtemp.getValD(cuad[cont1][1])
+            ope1 = memtemp.getValD(cuad[cont1][2])
             print(ope1)
         def cuatro(tipo1):
-            ope1 = memtemp.getMemString(cuad[cont1][1])
+            ope1 = memtemp.getMemString(cuad[cont1][2])
             print(ope1)
         operaciones = { 1: uno, 2: dos, 4: cuatro} 
         operaciones[tipo1](tipo1)

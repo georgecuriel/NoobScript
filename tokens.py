@@ -148,7 +148,7 @@ def t_error(t):
 lexer = lex.lex()
 
     # Test it out
-data = '''2*4+5(4/2.4)<=[{]}= == si no hay mientras sino 'brodi como esta'
+data = '''2*4+5(4/2.4)<=[{]}= == si no hay mientras sino 'estoy vivo'
 #hola adios
 a d entero frase
 imprime('fuentes del valle')

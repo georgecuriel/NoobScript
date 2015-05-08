@@ -235,9 +235,9 @@ def print1():
   POper.append(op)
 
 def print2():
-  oper1=top(PilaO)
+  oper1=PilaO[-1]
   escribe_cuad(cont,top(POper),oper1,-1,-1)
-
+  
 def cuadproc():
   return cont
 
