@@ -174,6 +174,7 @@ def p_programa(t):
     global directorio
     print(t[1])
     print directorio
+    
     print ('termine')
 
 def p_programa_push_id(t):
@@ -508,44 +509,44 @@ def p_factor_rparent(t):
     parentesisPop()
 
 def p_valor(t):
-    '''valor : ID
-             | CTEINT
-             | CTEDEC
-             | llamada'''
-    global CONSTENTERO
-    global CONTSTDECILMAL
-    global CONSTDECIMAL
-    global CONSTESVERDAD
-    global CONSTFRASE
-    global direccion
-    global GLOBENTERO
-    global LOCALENTERO
-    global GLOBDECIMAL
-    global LOCALDECIMAL
-    global GLOBESVERDAD
-    global LOCALESVERDAD
-    global GLOBFRASE
-    global LOCALFRASE
-  
-
-    if isinstance(t[1], int):      
-		if t[1] in directorioconst: 
+	'''valor : ID
+	| CTEINT
+	| CTEDEC
+	| llamada'''
+	global CONSTENTERO
+	global CONTSTDECILMAL
+	global CONSTDECIMAL
+	global CONSTESVERDAD
+	global CONSTFRASE
+	global direccion
+	global GLOBENTERO
+	global LOCALENTERO
+	global GLOBDECIMAL
+	global LOCALDECIMAL
+	global GLOBESVERDAD
+	global LOCALESVERDAD
+	global GLOBFRASE
+	global LOCALFRASE
+   
+	if isinstance(t[1], int):
+		if t[1] in directorioconst[t[1]]:
 			pila_id(directorioconst[t[1]])
 		else:
-			CONSTENTERO += 1
 			directorioconst[t[1]] = CONSTENTERO
+			CONSTENTERO +=1
+	elif isinstance(t[1], float):
+		if t[1] in directorioconst[t[1]]:
 			pila_id(directorioconst[t[1]])
-    elif isinstance(t[1], float):      
-		if t[1] in directorioconst:
-			pila_id(directorioconst[t[1]])
-		else:
-			CONSTDECIMAL += 1
+		else: 
 			directorioconst[t[1]] = CONSTDECIMAL
-			pila_id(directorioconst[t[1]])
-    elif isinstance(t[1], str):      #checar global y func
-		if t[1] in directorio[0][4]:
-			pila_id(directorio[0][4][t[1]])
-
+			CONSTDECIMAL +=1
+	elif isinstance(t[1], str):
+		for x in directorio[0][4]:
+			if x[0] == 'a':
+				pila_id(list(x)[2])
+    		else:
+    			print ("variable no declarada")
+	
 def p_condicion(t):
 	'condicion : SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto  RLLAVE else'
 	print("condicion")
