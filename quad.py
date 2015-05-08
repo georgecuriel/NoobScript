@@ -6,9 +6,9 @@ cuadruplos = [[0 for x in range(5)] for x in range(300)]
 
 #Crear las pilas e inicializarlas
 #pila de operadores
-PilaO = [] #pila de operandos
+PilaO = [1001,1002] #pila de operandos
 PSaltos = [] #pila de saltos
-POper = [] #pila de operadores
+POper = [2] #pila de operadores
 cuadf = None
 
 def init(): 
@@ -240,3 +240,10 @@ def print2():
 
 def cuadproc():
   return cont
+
+init()
+expresion()
+PilaO.append(1)
+POper.append(5001)
+expresion()
+printcuadruplos()
