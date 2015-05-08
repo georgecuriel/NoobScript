@@ -101,25 +101,33 @@ memglobal = Global()
 memlocal = Local()
 memconstant = Constant()
 memtemp = Temporal()
-cont = 0
 x_table = []
 cuad = [[]]
+cont1 = 0
+cont2 = 0
+
 for eachLine in open('cuadruplos.txt', "r"):
-    global cont
     cuad.append([int(k) for k in eachLine.split()])
-    cont = cont + 1
+    cont2 = cont2 + 1
     #El operador es el segundo elemento del arreglo obtenido
-    op =  cuad[cont][1]
     
-    #Revisar a que memoria pertenece cada operando
-    verifica = cuad[cont][2]
-    scope = checaScope(cuad[cont][2])
-    scope2 = checaScope(cuad[cont][3])
-    scope3 = checaScope(cuad[cont][4])
+
+
+
+for e in range(len(cuad)-1):
+    
+    
+    cont1 = cont1 + 1
+    op =  cuad[cont1][0]
+    scope = checaScope(cuad[cont1][1])
+    scope2 = checaScope(cuad[cont1][2])
+    scope3 = checaScope(cuad[cont1][3])
     #Revisar el tipo de cada operando
-    tipo1 = checaTipo(cuad[cont][2])
-    tipo2 = checaTipo(cuad[cont][3])
-    tipo3 = checaTipo(cuad[cont][4])
+    tipo1 = checaTipo(cuad[cont1][1])
+    tipo2 = checaTipo(cuad[cont1][2])
+    tipo3 = checaTipo(cuad[cont1][3])
+
+    
     def suma(op):  # case 1 +
         global scope
         global scope2
@@ -128,9 +136,9 @@ for eachLine in open('cuadruplos.txt', "r"):
         global tipo2
         global tipo3
         global cuad
-        ope1 = obtenValorD(scope, cuad[cont][2], tipo1)
-        ope2 = obtenValorD(scope2, cuad[cont][3], tipo2)
-        meteValorD(scope3, cuad[cont][4], (ope1 + ope2), tipo3)
+        ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
+        ope2 = obtenValorD(scope2, cuad[cont1][2], tipo2)
+        meteValorD(scope3, cuad[cont1][3], (ope1 + ope2), tipo3)
     def resta(op): # case 2: -
         global scope
         global scope2
@@ -139,9 +147,9 @@ for eachLine in open('cuadruplos.txt', "r"):
         global tipo2
         global tipo3
         global cuad
-        ope1 = obtenValorD(scope, cuad[cont][2], tipo1)
-        ope2 = obtenValorD(scope2, cuad[cont][3], tipo2)
-        meteValorD(scope3, cuad[cont][4], (ope1 - ope2), tipo3)
+        ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
+        ope2 = obtenValorD(scope2, cuad[cont1][2], tipo2)
+        meteValorD(scope3, cuad[cont1][3], (ope1 - ope2), tipo3)
     def multiplicacion(op): #case 3: *
         global scope
         global scope2
@@ -150,9 +158,9 @@ for eachLine in open('cuadruplos.txt', "r"):
         global tipo2
         global tipo3
         global cuad
-        ope1 = obtenValorD(scope, cuad[cont][2], tipo1)
-        ope2 = obtenValorD(scope2, cuad[cont][3], tipo2)
-        meteValorD(scope3, cuad[cont][4], (ope1 * ope2), tipo3)
+        ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
+        ope2 = obtenValorD(scope2, cuad[cont1][2], tipo2)
+        meteValorD(scope3, cuad[cont1][3], (ope1 * ope2), tipo3)
     def division(op): #case 4: /
         global scope
         global scope2
@@ -161,9 +169,9 @@ for eachLine in open('cuadruplos.txt', "r"):
         global tipo2
         global tipo3
         global cuad
-        ope1 = obtenValorD(scope, cuad[cont][2], tipo1)
-        ope2 = obtenValorD(scope2, cuad[cont][3], tipo2)
-        meteValorD(scope3, cuad[cont][4], (ope1 / ope2), tipo3)
+        ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
+        ope2 = obtenValorD(scope2, cuad[cont1][2], tipo2)
+        meteValorD(scope3, cuad[cont1][3], (ope1 / ope2), tipo3)
     def menor(op): #case 5: <
         global scope
         global scope2
@@ -172,9 +180,9 @@ for eachLine in open('cuadruplos.txt', "r"):
         global tipo2
         global tipo3
         global cuad
-        ope1 = obtenValorD(scope, cuad[cont][2], tipo1)
-        ope2 = obtenValorD(scope2, cuad[cont][3], tipo2)
-        meteValorB(scope3, cuad[cont][4], (ope1 < ope2))
+        ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
+        ope2 = obtenValorD(scope2, cuad[cont1][2], tipo2)
+        meteValorB(scope3, cuad[cont1][3], (ope1 < ope2))
     def mayor(op): #case 6: >
         global scope
         global scope2
@@ -183,9 +191,9 @@ for eachLine in open('cuadruplos.txt', "r"):
         global tipo2
         global tipo3
         global cuad
-        ope1 = obtenValorD(scope, cuad[cont][2], tipo1)
-        ope2 = obtenValorD(scope2, cuad[cont][3], tipo2)
-        meteValorB(scope3, cuad[cont][4], (ope1 > ope2))
+        ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
+        ope2 = obtenValorD(scope2, cuad[cont1][2], tipo2)
+        meteValorB(scope3, cuad[cont1][3], (ope1 > ope2))
     def comparacion(op): #case 7: ==
         global scope
         global scope2
@@ -194,9 +202,9 @@ for eachLine in open('cuadruplos.txt', "r"):
         global tipo2
         global tipo3
         global cuad
-        ope1 = obtenValorD(scope, cuad[cont][2], tipo1)
-        ope2 = obtenValorD(scope2, cuad[cont][3], tipo2)
-        meteValorB(scope3, cuad[cont][4], (ope1 == ope2))
+        ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
+        ope2 = obtenValorD(scope2, cuad[cont1][2], tipo2)
+        meteValorB(scope3, cuad[cont1][3], (ope1 == ope2))
     def igualacion(op): #igucalacion case 8 =
         global scope
         global scope2
@@ -206,37 +214,46 @@ for eachLine in open('cuadruplos.txt', "r"):
         global tipo3
         global cuad
         def uno(tipo3):
-            ope1 = obtenValorD(scope, cuad[cont][2], tipo1)
-            meteValorD(scope3, cuad[cont][4], 6, tipo3) #cabiar ope 1
+            ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
+            meteValorD(scope3, cuad[cont1][3], ope1, tipo3) #cabiar ope 1
         def dos(tipo3): 
-            ope1 = obtenValorD(scope, cuad[cont][2], tipo1)
-            meteValorD(scope3, cuad[cont][4], ope1, tipo3)
+            ope1 = obtenValorD(scope, cuad[cont1][1], tipo1)
+            meteValorD(scope3, cuad[cont1][3], ope1, tipo3)
         def tres(tipo3): 
-            ope1 = obtenValorB(scope, cuad[cont][2], tipo1)
-            meteValorB(scope3, cuad[cont][4], opeb)
+            ope1 = obtenValorB(scope, cuad[cont1][1], tipo1)
+            meteValorB(scope3, cuad[cont1][3], opeb)
         def cuatro(tipo3): 
-            opes = obtenValorS(scope, cuad[cont][2], tipo1)
-            meteValorS(scope3, cuad[cont][4], opes)
+            opes = obtenValorS(scope, cuad[cont1][1], tipo1)
+            meteValorS(scope3, cuad[cont1][3], opes)
         operaciones = { 1: uno, 2: dos, 3: tres, 4: cuatro} 
         operaciones[tipo3](tipo3)   
     
-    def parentesisIz(op): #case 11: //(
-        print("nothing yet")
-    
-    def parentesisDe(op): # case 12: //)
-        print("nothing yet")
     def GOTOF(op):  #case 20: //GOTOF
-        print("nothing yet")
+        if obtenValorB(scope,cuad[cont1][1]) == True:
+            print ("siguele ")
+        else:
+            cont1 = cuad[cont1][3]
     def GOTOV(op): #case 21: //GOTOV
-        print("nothing yet")
+        if obtenValorB(scope,cuad[cont1][1]) == False:
+            print ("siguele ")
+        else:
+            cont1 = cuad[cont1][3]
     def GOTO(op): #case 22: //GOTO
-        print("nothing yet")
+        cont1 = cuad[cont1][3]
     def ERA(op): #case 30: //ERA
-        print("nothing yet")
+        print ("era")
     def PARAM(op): #case 31: //PARAM
-        print("nothing yet")
+        if tipo1 == 1 or tipo1 == 2:
+            val = obtenValorD(score, cuad[cont1][1], tipo1)
+            meteValorD(scope, cuad[cont1][3], val , tipo3)
+        elif tipo1== 3:
+            val = obtenValorB(score, cuad[cont1][1], tipo1)
+            meteValorB(scope, cuad[cont1][3], val , tipo3)
+        else:
+            val = obtenValorS(score, cuad[cont1][1], tipo1)
+            meteValorS(scope, cuad[cont1][3], val , tipo3)
     def GOsub(op): #case 32: //Gosub
-        print("nothing yet")
+        print("")
     def write(op): #case 33: //Write
         global scope
         global scope2
@@ -246,17 +263,17 @@ for eachLine in open('cuadruplos.txt', "r"):
         global tipo3
         global cuad
         def uno(tipo1): #case 1:
-            ope1 = memtemp.getValD(cuad[cont][2])
+            ope1 = memtemp.getValD(cuad[cont1][1])
             print(ope1)
         def dos(tipo1): #case 2:
-            ope1 = memtemp.getValD(cuad[cont][2])
+            ope1 = memtemp.getValD(cuad[cont1][1])
             print(ope1)
         def cuatro(tipo1):
-            ope1 = memtemp.getMemString(cuad[cont][2])
+            ope1 = memtemp.getMemString(cuad[cont1][1])
             print(ope1)
         operaciones = { 1: uno, 2: dos, 4: cuatro} 
         operaciones[tipo1](tipo1)
-    operaciones = { 1: suma, 2: resta, 3: multiplicacion, 4: division, 5: menor, 6:mayor, 7:comparacion, 8:igualacion, 9: parentesisIz, 10:parentesisDe, 20:GOTOF, 21:GOTOV, 22:GOTO, 30:ERA, 31:PARAM, 32: GOsub, 33:write} 
+    operaciones = { 1: suma, 2: resta, 3: multiplicacion, 4: division, 5: menor, 6:mayor, 7:comparacion, 8:igualacion, 20:GOTOF, 21:GOTOV, 22:GOTO, 30:ERA, 31:PARAM, 32: GOsub, 33:write} 
     operaciones[op](op) 
     print("\n")
     

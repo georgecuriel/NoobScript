@@ -1,9 +1,9 @@
 class Global: 
 
-	enteros = 1000
-	flotantes = 1500
-	esverdad = 2000
-	frases = 2500
+	#enteros = 1000
+	#flotantes = 1500
+	#esverdad = 2000
+	#frases = 2500
 
 	memInt = [None]*500
 	memFloat = [None]*500
@@ -21,8 +21,6 @@ class Global:
 				memFloat[dirReal] = val
 
 	def getValD (self, dire, tipo):
-		global enteros
-		global flotantes
 		if tipo == 1:
 			dirReal = dire - 1000
 			if dirReal < 500:
