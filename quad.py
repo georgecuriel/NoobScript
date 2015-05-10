@@ -90,7 +90,7 @@ def termino():
       print( "***ERROR DE TIPOS**** termino\n")
       exit(1)
   else:
-      fprintf( "No es termino pasar al siguiente \n")
+      print( "No es termino pasar al siguiente \n")
       pila_op(op)
    
 #6

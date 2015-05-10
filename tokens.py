@@ -240,7 +240,7 @@ def p_vars_push_id(t):
             funvars.append((t[-1], 0, LOCALFRASE))
             
 def p_vars3(t):
-	'''vars3 : COMMA ID vars3_push_id vars3
+    '''vars3 : COMMA ID vars3_push_id vars3
              | empty'''
 
 def p_vars3_push_id(t):
@@ -376,28 +376,28 @@ def p_funcion_push_id(t):
     
 
 def p_funparam(t):
-	'''funparam : tipo ID funparam_push_id funparams
-				| empty'''
-				
+    '''funparam : tipo ID funparam_push_id funparams
+                | empty'''
+                
 def p_funparam_push_id(t):
-	'funparam_push_id : '
-	global LOCALENTERO
-	global LOCALDECIMAL
-	global LOCALESVERDAD
-	global LOCALFRASE
-	if tipoactual == 1:
-		LOCALENTERO += 1
-		funparam.append((t[-1], 0, LOCALENTERO))
-	elif tipoactual == 2:
-		LOCALDECIMAL += 1
-		funparam.append((t[-1], 0, LOCALDECIMAL))
-	elif tipoactual == 3:
-		LOCALESVERDAD += 1	
-	 	funparam.append((t[-1], 0, LOCALESVERDAD))
-	elif tipoactual == 4:
-	 	LOCALFRASE += 1
-	 	funparam.append((t[-1], 0, LOCALFRASE))
-	
+    'funparam_push_id : '
+    global LOCALENTERO
+    global LOCALDECIMAL
+    global LOCALESVERDAD
+    global LOCALFRASE
+    if tipoactual == 1:
+        LOCALENTERO += 1
+        funparam.append((t[-1], 0, LOCALENTERO))
+    elif tipoactual == 2:
+        LOCALDECIMAL += 1
+        funparam.append((t[-1], 0, LOCALDECIMAL))
+    elif tipoactual == 3:
+        LOCALESVERDAD += 1
+        funparam.append((t[-1], 0, LOCALESVERDAD))
+    elif tipoactual == 4:
+        LOCALFRASE += 1
+        funparam.append((t[-1], 0, LOCALFRASE))
+
 
 def p_funparams(t):
 	'''funparams : COMMA funparam
@@ -470,10 +470,10 @@ def p_exp(t):
 	'exp : termino exps'
 
 def p_exps(t):
-	'''exps : PLUS exps_push_plus termino exps
+    '''exps : PLUS exps_push_plus termino exps
             | MINUS exps_push_minus termino exps
             | empty'''
-	print("suma/resta")
+    print("suma/resta")
     expresion() 
 
 def p_exps_push_plus(t):
@@ -488,11 +488,13 @@ def p_termino(t):
 	'termino : factor terminos'
 
 def p_terminos(t):
-	'''terminos : TIMES terminos_push_times factor terminos
-				| DIVIDE terminos_push_divide factor terminos
-				| empty'''
-	print("multi/div")
+    '''terminos : TIMES terminos_push_times factor terminos
+                 | DIVIDE terminos_push_divide factor terminos
+                 | empty'''
+    print("multi/div")
     termino()
+    
+    
 def p_terminos_push_times(t):
     'terminos_push_times : '
     pila_op(3)
