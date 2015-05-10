@@ -3,6 +3,7 @@ import ply.lex as lex
 from quad import *
 
 #Globales
+
 GLOBENTERO = 1000
 GLOBDECIMAL =1500
 GLOBESVERDAD =2000
@@ -168,9 +169,9 @@ precedence = (
 )
 
 def p_programa(t):
-    'programa : PROGRAMA ID programa_push_id vars programa_push_dict body'
-    #init()
-    #printcuadruplos()
+    'programa : PROGRAMA ID LLLAVE programa_push_id vars programa_push_dict body RLLAVE'
+    init()
+    printcuadruplos()
     global directorio
     print(t[1])
     print directorio
@@ -178,113 +179,112 @@ def p_programa(t):
     print ('termine')
 
 def p_programa_push_id(t):
-	'programa_push_id : '
-	global funnombre
-	funnombre = t[-1]
+    'programa_push_id : '
+    global funnombre
+    funnombre = t[-1]
 
 def p_programa_push_dict(t):
-	'programa_push_dict : '
-	global diccionario
-	global funvars
-	directorio.append(list((funnombre, funtipo, funcuad, [], funvars)))
-	funvars = []
-		
+    'programa_push_dict : '
+    global diccionario
+    global funvars
+    directorio.append(list((funnombre, funtipo, funcuad, [], funvars)))
+    funvars = []
+
 
 def p_vars(t):
-	'''vars : VAR vars2
-			 | empty'''
+    '''vars : VAR vars2
+            | empty'''
 
 def p_vars2(t):
-	'vars2 : tipo ID vars_push_id vars3 SEMICOL vars4'
-	
+    'vars2 : tipo ID vars_push_id vars3 SEMICOL vars4'
+
 def p_vars_push_id(t):
-	'vars_push_id : '
-	global directorio
-	global direccion
-	global funvars
-	global tipoactual
-	global GLOBENTERO
-	global GLOBDECIMAL
-	global GLOBESVERDAD
-	global GLOBFRASE
-	global LOCALENTERO
-	global LOCALDECIMAL
-	global LOCALESVERDAD
-	global LOCALFRASE
-	if func == 0:
-		if tipoactual == 1:
-			GLOBENTERO += 1
-			funvars.append((t[-1], 0, GLOBENTERO))
-		elif tipoactual == 2:
-			GLOBDECIMAL += 1
-			funvars.append((t[-1], 0, GLOBDECIMAL))
-		elif tipoactual == 3:
-			GLOBESVERDAD += 1	
-		 	funvars.append((t[-1], 0, GLOBESVERDAD))
-		elif tipoactual == 4:
-		 	GLOBFRASE += 1
-		 	funvars.append((t[-1], 0, GLOBFRASE))
-	else:
-		if tipoactual == 1:
-			LOCALENTERO += 1
-			funvars.append((t[-1], 0, LOCALENTERO))
-		elif tipoactual == 2:
-			LOCALDECIMAL += 1
-			funvars.append((t[-1], 0, LOCALDECIMAL))
-		elif tipoactual == 3:
-			LOCALESVERDAD += 1	
-			funvars.append((t[-1], 0, LOCALESVERDAD))
-		elif tipoactual == 4:
-		 	LOCALFRASE += 1
-		 	funvars.append((t[-1], 0, LOCALFRASE))
-		
-	
+    'vars_push_id : '
+    global directorio
+    global direccion
+    global funvars
+    global tipoactual
+    global GLOBENTERO
+    global GLOBDECIMAL
+    global GLOBESVERDAD
+    global GLOBFRASE
+    global LOCALENTERO
+    global LOCALDECIMAL
+    global LOCALESVERDAD
+    global LOCALFRASE
+    if func == 0:
+        if tipoactual == 1:
+            GLOBENTERO += 1
+            funvars.append((t[-1], 0, GLOBENTERO))
+        elif tipoactual == 2:
+            GLOBDECIMAL += 1
+            funvars.append((t[-1], 0, GLOBDECIMAL))
+        elif tipoactual == 3:
+            GLOBESVERDAD += 1
+            funvars.append((t[-1], 0, GLOBESVERDAD))
+        elif tipoactual == 4:
+            GLOBFRASE += 1
+            funvars.append((t[-1], 0, GLOBFRASE))
+    else:
+        if tipoactual == 1:
+            LOCALENTERO += 1
+            funvars.append((t[-1], 0, LOCALENTERO))
+        elif tipoactual == 2:
+            OCALDECIMAL += 1
+            funvars.append((t[-1], 0, LOCALDECIMAL))
+        elif tipoactual == 3:
+            LOCALESVERDAD += 1	
+            funvars.append((t[-1], 0, LOCALESVERDAD))
+        elif tipoactual == 4:
+            LOCALFRASE += 1
+            funvars.append((t[-1], 0, LOCALFRASE))
+            
 def p_vars3(t):
 	'''vars3 : COMMA ID vars3_push_id vars3
-			 | empty'''
+             | empty'''
 
 def p_vars3_push_id(t):
-	'vars3_push_id : '
-	global directorio
-	global direccion
-	global funvars
-	global tipoactual
-	global GLOBENTERO
-	global GLOBDECIMAL
-	global GLOBESVERDAD
-	global GLOBFRASE
-	global LOCALENTERO
-	global LOCALDECIMAL
-	global LOCALESVERDAD
-	global LOCALFRASE
-	if func == 0:
-		if tipoactual == 1:
-			GLOBENTERO += 1
-			funvars.append((t[-1], 0, GLOBENTERO))
-		elif tipoactual == 2:
-			GLOBDECIMAL += 1
-			funvars.append((t[-1], 0, GLOBDECIMAL))
-		elif tipoactual == 3:
-			GLOBESVERDAD += 1	
-		 	funvars.append((t[-1], 0, GLOBESVERDAD))
-		elif tipoactual == 4:
-		 	GLOBFRASE += 1
-		 	funvars.append((t[-1], 0, GLOBFRASE))
-	else:
-		if tipoactual == 1:
-			LOCALENTERO += 1
-			funvars.append((t[-1], 0, LOCALENTERO))
-		elif tipoactual == 2:
-			LOCALDECIMAL += 1
-			funvars.append((t[-1], 0, LOCALDECIMAL))
-		elif tipoactual == 3:
-			LOCALESVERDAD += 1	
-			funvars.append((t[-1], 0, LOCALESVERDAD))
-		elif tipoactual == 4:
-		 	LOCALFRASE += 1
-		 	funvars.append((t[-1], 0, LOCALFRASE))
-	
-			 
+    'vars3_push_id : '
+    global directorio
+    global direccion
+    global funvars
+    global tipoactual
+    global GLOBENTERO
+    global GLOBDECIMAL
+    global GLOBESVERDAD
+    global GLOBFRASE
+    global LOCALENTERO
+    global LOCALDECIMAL
+    global LOCALESVERDAD
+    global LOCALFRASE
+    if func == 0:
+        if tipoactual == 1:
+            GLOBENTERO += 1
+            funvars.append((t[-1], 0, GLOBENTERO))
+        elif tipoactual == 2:
+            GLOBDECIMAL += 1
+            funvars.append((t[-1], 0, GLOBDECIMAL))
+        elif tipoactual == 3:
+            GLOBESVERDAD += 1
+            funvars.append((t[-1], 0, GLOBESVERDAD))
+        elif tipoactual == 4:
+            GLOBFRASE += 1
+            funvars.append((t[-1], 0, GLOBFRASE))
+    else:
+        if tipoactual == 1:
+            LOCALENTERO += 1
+            funvars.append((t[-1], 0, LOCALENTERO))
+        elif tipoactual == 2:
+            LOCALDECIMAL += 1
+            funvars.append((t[-1], 0, LOCALDECIMAL))
+        elif tipoactual == 3:
+            LOCALESVERDAD += 1	
+            funvars.append((t[-1], 0, LOCALESVERDAD))
+        elif tipoactual == 4:
+            LOCALFRASE += 1
+            funvars.append((t[-1], 0, LOCALFRASE))
+
+
 def p_vars4(t):
 	'''vars4 : vars2
 			 | empty'''
@@ -402,7 +402,7 @@ def p_funparam_push_id(t):
 def p_funparams(t):
 	'''funparams : COMMA funparam
 				 | empty'''
-            
+
 def p_estatuto(t):
 	'''estatuto : asignacion bloque
 				| condicion bloque
@@ -419,9 +419,10 @@ def p_asignacion(t):
     
 def p_asignacion_push_id(t):
     'asignacion_push_id :'
-    dire = t[1] #mas obtencion de memoria  
-    pila_id(dire)
-
+    for x in directorio[0][4]:
+        if x[0] == t[-1]:
+            pila_id(list(x)[2])
+            
 def p_asignacion_push_igual(t):
     'asignacion_push_igual :'
     pila_op(8)
@@ -440,16 +441,19 @@ def p_llamadaparams(t):
 	
 
 def p_expresion(t):
-	'''expresion : exp expresions
-		  		 | LEE LPAREN STRING RPAREN SEMICOL'''
-	print("expresion")
-		  		
+    '''expresion : exp expresions
+                 | LEE LPAREN STRING RPAREN SEMICOL'''
+    print("expresion", t[1])
+    
+        
 def p_expresions(t):
-	'''expresions : MAYOR expresions_push_mayor exp
-				  | MENOR expresions_push_menor exp 
-				  | COMPARA expresions_push_compara exp
-				  | empty'''
-
+    '''expresions : MAYOR expresions_push_mayor exp
+                  | MENOR expresions_push_menor exp 
+                  | COMPARA expresions_push_compara exp
+                  | exp
+                  | empty'''
+    relacional()
+                  
 def p_expresions_push_mayor(t):
     'expresions_push_mayor : '
     pila_op(6)
@@ -467,9 +471,10 @@ def p_exp(t):
 
 def p_exps(t):
 	'''exps : PLUS exps_push_plus termino exps
-			| MINUS exps_push_minus termino exps
-			| empty'''
+            | MINUS exps_push_minus termino exps
+            | empty'''
 	print("suma/resta")
+    expresion() 
 
 def p_exps_push_plus(t):
     'exps_push_plus : '
@@ -487,7 +492,7 @@ def p_terminos(t):
 				| DIVIDE terminos_push_divide factor terminos
 				| empty'''
 	print("multi/div")
-
+    termino()
 def p_terminos_push_times(t):
     'terminos_push_times : '
     pila_op(3)
@@ -509,44 +514,45 @@ def p_factor_rparent(t):
     parentesisPop()
 
 def p_valor(t):
-	'''valor : ID
-	| CTEINT
-	| CTEDEC
-	| llamada'''
-	global CONSTENTERO
-	global CONTSTDECILMAL
-	global CONSTDECIMAL
-	global CONSTESVERDAD
-	global CONSTFRASE
-	global direccion
-	global GLOBENTERO
-	global LOCALENTERO
-	global GLOBDECIMAL
-	global LOCALDECIMAL
-	global GLOBESVERDAD
-	global LOCALESVERDAD
-	global GLOBFRASE
-	global LOCALFRASE
-   
-	if isinstance(t[1], int):
-		if t[1] in directorioconst[t[1]]:
-			pila_id(directorioconst[t[1]])
-		else:
-			directorioconst[t[1]] = CONSTENTERO
-			CONSTENTERO +=1
-	elif isinstance(t[1], float):
-		if t[1] in directorioconst[t[1]]:
-			pila_id(directorioconst[t[1]])
-		else: 
-			directorioconst[t[1]] = CONSTDECIMAL
-			CONSTDECIMAL +=1
-	elif isinstance(t[1], str):
-		for x in directorio[0][4]:
-			if x[0] == 'a':
-				pila_id(list(x)[2])
-    		else:
-    			print ("variable no declarada")
-	
+    '''valor : ID
+        | CTEINT
+        | CTEDEC
+        | llamada'''
+    global CONSTENTERO
+    global CONTSTDECILMAL
+    global CONSTDECIMAL
+    global CONSTESVERDAD
+    global CONSTFRASE
+    global direccion
+    global GLOBENTERO
+    global LOCALENTERO
+    global GLOBDECIMAL
+    global LOCALDECIMAL
+    global GLOBESVERDAD
+    global LOCALESVERDAD
+    global GLOBFRASE
+    global LOCALFRASE
+    if isinstance(t[1], int):
+        if t[1] in directorioconst[t[1]]:
+            pila_id(directorioconst[t[1]])
+        
+        else:
+            directorioconst[t[1]] = CONSTENTERO
+            CONSTENTERO +=1
+            
+    elif isinstance(t[1], float):
+        if t[1] in directorioconst[t[1]]:
+            pila_id(directorioconst[t[1]])
+        else:
+            directorioconst[t[1]] = CONSTDECIMAL
+            CONSTDECIMAL +=1
+    elif isinstance(t[1], str):
+        for x in directorio[0][4]:
+            if x[0] == t[1]:
+                pila_id(list(x)[2])
+            else:
+                print ("variable no declarada")
+                
 def p_condicion(t):
 	'condicion : SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto  RLLAVE else'
 	print("condicion")

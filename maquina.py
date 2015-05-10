@@ -44,7 +44,6 @@ def meteValorD(scope, dire, val, tipo):
     
     if scope == 1:
         memglobal.setValD(dire, val, tipo)
-        print (memglobal.getValD(dire, tipo))
     elif scope == 2:  
         memlocal.setValD(dire, val, tipo)
     elif scope == 3:
