@@ -6,9 +6,9 @@ cuadruplos = [[0 for x in range(5)] for x in range(300)]
 
 #Crear las pilas e inicializarlas
 #pila de operadores
-PilaO = [1001,1002] #pila de operandos
+PilaO = [] #pila de operandos
 PSaltos = [] #pila de saltos
-POper = [2] #pila de operadores
+POper = [] #pila de operadores
 cuadf = None
 
 def init(): 
@@ -90,7 +90,7 @@ def termino():
       print( "***ERROR DE TIPOS**** termino\n")
       exit(1)
   else:
-      fprintf( "No es termino pasar al siguiente \n")
+      print( "No es termino pasar al siguiente \n")
       pila_op(op)
    
 #6
@@ -140,6 +140,7 @@ def relacional():
         pila_op(op)
 
 #8
+
 def assign():
   global contemp
   print("Estoy en quad assign\n")
@@ -241,9 +242,3 @@ def print2():
 def cuadproc():
   return cont
 
-init()
-expresion()
-PilaO.append(1)
-POper.append(5001)
-expresion()
-printcuadruplos()
