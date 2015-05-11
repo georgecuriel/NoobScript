@@ -148,7 +148,7 @@ def t_error(t):
 lexer = lex.lex()
 
     # Test it out
-data = '''2*4+5(4/2.4)<=[{]}= == si no hay mientras sino 'estoy vivo'
+data = '''2*4+5(4/2.4)<=[{]}= == si no hay mientras sino 'brodi como esta'
 #hola adios
 a d entero frase
 imprime('fuentes del valle')
@@ -215,6 +215,7 @@ def p_vars_push_id(t):
 		if tipoactual == 1:
 			GLOBENTERO += 1
 			funvars.append((t[-1], 0, GLOBENTERO))
+			memglob
 		elif tipoactual == 2:
 			GLOBDECIMAL += 1
 			funvars.append((t[-1], 0, GLOBDECIMAL))
