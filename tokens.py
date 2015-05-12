@@ -38,9 +38,16 @@ funtipo = ''
 funcuad = 1
 funparam = []
 funvars = []
+#dimension de arreglo 1 var 2 array 3 matriz
 dim = 0
+#valor dim 1
 dim1 = None
+#valor dim 2
 dim2 = None
+#toma casilla 1 de array/matrix
+llamadim1 = None
+#toma casilla 2 de matrix
+llamadim2 = None
 #1 entero, 2 decimal, 3 esverdad, 4 frase
 #tipo para definicion actual de variable
 tipoactual = 0
@@ -245,17 +252,17 @@ def p_vars_push_id(t):
         if tipoactual == 1:
             if dim == 0:
                 GLOBENTERO += 1
-                funvars.append((t[-2], 0, GLOBENTERO))
+                funvars.append((t[-2], 0, GLOBENTERO, dim, dim1, dim2))
             elif dim == 1:
                 for x in range(dim1+1):
                     GLOBENTERO += 1
-                    funvars.append((t[-2], 0, GLOBENTERO))
+                    funvars.append((t[-2], 0, GLOBENTERO, dim, dim1, dim2))
                 dim1 = None;
             elif dim == 2:
                 for x in range(dim1+1):
                     for y in range(dim2+1):
                         GLOBENTERO += 1
-                        funvars.append((t[-2], 0, GLOBENTERO))
+                        funvars.append((t[-2], 0, GLOBENTERO, dim, dim1, dim2))
                 dim1 = None;
                 dim2 = None;
         elif tipoactual == 2:
@@ -593,17 +600,33 @@ def p_valor(t):
     elif isinstance(t[1], str):
         for x in directorio[0][4]:
             if x[0] == t[1]:
-                pila_id(list(x)[2])
+            	if x[3] == 0:
+                	pila_id(list(x)[2])
+                elif x[3] == 1:
+                	pila_id(list(x)[2]+llamadim+1)
+                elif x[3] == 2:
+                	pila_id(list(x)[2])
             else:
                 print ("variable no declarada")
                 
 def p_call_or_array(t):
-	'''call_or_array : LBRAK CTEINT RBRAK id_array
+	'''call_or_array : LBRAK CTEINT push_array_dim1 RBRAK id_array
 					 | LPAREN expresion id_call RPAREN
 					 | empty'''
 
 def p_id_array(t):
-	'id_array : call_or_array'
+	'''id_array : LBRAK CTEINT push_array_dim2 RBRAK
+				| empty'''
+				
+def p_push_array_dim1(t):
+	'push_array_dim1 : '
+	global llamadim1
+	llamadim1 = t[-1]
+
+def p_push_array_dim2(t):
+	'push_array_dim2 : '
+	global llamadim2
+	llamadim2 = t[-1]
 
 def p_id_call(t):
 	'''id_call : COMMA expresion id_call
