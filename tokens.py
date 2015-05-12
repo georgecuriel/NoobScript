@@ -38,6 +38,9 @@ funtipo = ''
 funcuad = 1
 funparam = []
 funvars = []
+dim = None
+dim1 = None
+dim2 = None
 #1 entero, 2 decimal, 3 esverdad, 4 frase
 #tipo para definicion actual de variable
 tipoactual = 0
@@ -196,10 +199,27 @@ def p_vars(t):
             | empty'''
 
 def p_vars2(t):
-    'vars2 : tipo ID vars_push_id vars3 SEMICOL vars4'
+    'vars2 : tipo ID dimension vars_push_id vars3 SEMICOL vars4'
+    
+def p_dimension(t):
+	'''dimension : LBRAK CTEINT push_dim1 RBRAK dimension2
+				 | empty'''
+
+def p_push_dim1(t):
+	'push_dim1 : '
+	global dim1
+	dim1 = t[-1]
+
+def p_dimension2(t):
+	'''dimension2 : LBRAK CTEINT push_dim2 RBRAK
+				  | empty'''
+
+def p_push_dim2(t):
+	'push_dim2 : '
+	global dim2
+	dim2 = t[-1]
 
 def p_vars_push_id(t):
-<<<<<<< HEAD
 	'vars_push_id : '
 	global directorio
 	global direccion
@@ -213,54 +233,27 @@ def p_vars_push_id(t):
 	global LOCALDECIMAL
 	global LOCALESVERDAD
 	global LOCALFRASE
+	global dim
+	global dim1
+	global dim2
 	if func == 0:
 		if tipoactual == 1:
-			GLOBENTERO += 1
-			funvars.append((t[-1], 0, GLOBENTERO))
-			memglob
+        	if dim == 0:
+				GLOBENTERO += 1
+            	funvars.append((t[-1], 0, GLOBENTERO))
+        	elif dim == 1:
+        		for x in dim1:
+        			GLOBENTERO += 1
+            		funvars.append((t[-1], 0, GLOBENTERO))
+				dim1 = None;
+			elif dim == 2:
+				for x in dim1:
+					for y in dim2:
+						GLOBENTERO += 1
+            			funvars.append((t[-1], 0, GLOBENTERO))
+            	dim1 = None;
+            	dim2 = None;
 		elif tipoactual == 2:
-			GLOBDECIMAL += 1
-			funvars.append((t[-1], 0, GLOBDECIMAL))
-		elif tipoactual == 3:
-			GLOBESVERDAD += 1	
-		 	funvars.append((t[-1], 0, GLOBESVERDAD))
-		elif tipoactual == 4:
-		 	GLOBFRASE += 1
-		 	funvars.append((t[-1], 0, GLOBFRASE))
-	else:
-		if tipoactual == 1:
-			LOCALENTERO += 1
-			funvars.append((t[-1], 0, LOCALENTERO))
-		elif tipoactual == 2:
-			LOCALDECIMAL += 1
-			funvars.append((t[-1], 0, LOCALDECIMAL))
-		elif tipoactual == 3:
-			LOCALESVERDAD += 1	
-			funvars.append((t[-1], 0, LOCALESVERDAD))
-		elif tipoactual == 4:
-		 	LOCALFRASE += 1
-		 	funvars.append((t[-1], 0, LOCALFRASE))
-		
-	
-=======
-    'vars_push_id : '
-    global directorio
-    global direccion
-    global funvars
-    global tipoactual
-    global GLOBENTERO
-    global GLOBDECIMAL
-    global GLOBESVERDAD
-    global GLOBFRASE
-    global LOCALENTERO
-    global LOCALDECIMAL
-    global LOCALESVERDAD
-    global LOCALFRASE
-    if func == 0:
-        if tipoactual == 1:
-            GLOBENTERO += 1
-            funvars.append((t[-1], 0, GLOBENTERO))
-        elif tipoactual == 2:
             GLOBDECIMAL += 1
             funvars.append((t[-1], 0, GLOBDECIMAL))
         elif tipoactual == 3:
@@ -282,10 +275,9 @@ def p_vars_push_id(t):
         elif tipoactual == 4:
             LOCALFRASE += 1
             funvars.append((t[-1], 0, LOCALFRASE))
-            
->>>>>>> origin/master
+        
 def p_vars3(t):
-    '''vars3 : COMMA ID vars3_push_id vars3
+    '''vars3 : COMMA ID dimension vars3_push_id vars3
              | empty'''
 
 def p_vars3_push_id(t):
@@ -476,7 +468,7 @@ def p_llamada(t):
 	'llamada : ID LPAREN llamadaparam RPAREN'
 
 def p_llamadaparam(t):
-	'''llamadaparam : valor llamadaparams
+	'''llamadaparam : expresion llamadaparams
 					| empty'''
 
 def p_llamadaparams(t):
@@ -561,10 +553,9 @@ def p_factor_rparent(t):
     parentesisPop()
 
 def p_valor(t):
-    '''valor : ID
-        | CTEINT
-        | CTEDEC
-        | llamada'''
+    '''valor : ID call_or_array
+        	 | CTEINT
+     		 | CTEDEC'''
     global CONSTENTERO
     global CONTSTDECILMAL
     global CONSTDECIMAL
@@ -599,6 +590,19 @@ def p_valor(t):
                 pila_id(list(x)[2])
             else:
                 print ("variable no declarada")
+                
+def p_call_or_array(t):
+	'''call_or_array : LBRAK CTEINT RBRAK id_array
+					 | LPAREN expresion id_call RPAREN
+					 | empty'''
+
+def p_id_array(t):
+	'id_array : call_or_array'
+
+def p_id_call(t):
+	'''id_call : COMMA expresion id_call
+			   | empty'''
+	
                 
 def p_condicion(t):
 	'condicion : SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto  RLLAVE else'

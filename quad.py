@@ -230,6 +230,7 @@ def do2():
   oper1 = Pila0[-1]
   oper2 = -1
   escribe_cuad(cont, op, oper1, -1, contemp)
+	 
   
 def print1():
   op=33
