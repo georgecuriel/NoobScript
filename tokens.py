@@ -252,34 +252,19 @@ def p_vars_push_id(t):
         if tipoactual == 1:
             if dim == 0:
                 GLOBENTERO += 1
-<<<<<<< HEAD
-                funvars.append((t[-2], 0, GLOBENTERO, dim, dim1, dim2))
-            elif dim == 1:
-                for x in range(dim1+1):
-                    GLOBENTERO += 1
-                    funvars.append((t[-2], 0, GLOBENTERO, dim, dim1, dim2))
-                dim1 = None;
-=======
                 funvars.append((t[-2], 0, GLOBENTERO, dim))
             elif dim == 1:
                 for x in range(dim1+1):
                     GLOBENTERO += 1
                     funvars.append((t[-2], 0, GLOBENTERO, dim))
                 dim1 = None
->>>>>>> origin/master
             elif dim == 2:
                 for x in range(dim1+1):
                     for y in range(dim2+1):
                         GLOBENTERO += 1
-<<<<<<< HEAD
-                        funvars.append((t[-2], 0, GLOBENTERO, dim, dim1, dim2))
-                dim1 = None;
-                dim2 = None;
-=======
                         funvars.append((t[-2], 0, GLOBENTERO, dim))
                 dim1 = None
                 dim2 = None
->>>>>>> origin/master
         elif tipoactual == 2:
             if dim == 0:
                 GLOBDECIMAL += 1
@@ -709,14 +694,13 @@ def p_valor(t):
             	if x[3] == 0:
                 	pila_id(list(x)[2])
                 elif x[3] == 1:
-                	pila_id(list(x)[2]+llamadim+1)
+                	pila_id(list(x)[2]+llamadim1+1)
                 elif x[3] == 2:
-                	pila_id(list(x)[2])
+                	pila_id(list(x)[2]+llamadim1*x[5]+1+x[5]+1)
             else:
                 print ("variable no declarada")
                 
 def p_call_or_array(t):
-<<<<<<< HEAD
 	'''call_or_array : LBRAK CTEINT push_array_dim1 RBRAK id_array
 					 | LPAREN expresion id_call RPAREN
 					 | empty'''
@@ -734,17 +718,6 @@ def p_push_array_dim2(t):
 	'push_array_dim2 : '
 	global llamadim2
 	llamadim2 = t[-1]
-=======
-    '''call_or_array : LBRAK CTEINT RBRAK id_array
-                     | LPAREN expresion id_call RPAREN
-                     | empty'''
-                     
-def p_id_array(t):
-    '''id_array : LBRAK CTEINT RBRAK
-                | empy'''
-    global localizacion
-    localizacion = t[-2] 
->>>>>>> origin/master
 
 def p_id_call(t):
 	'''id_call : COMMA expresion id_call
