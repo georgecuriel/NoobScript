@@ -245,41 +245,132 @@ def p_vars_push_id(t):
         if tipoactual == 1:
             if dim == 0:
                 GLOBENTERO += 1
-                funvars.append((t[-2], 0, GLOBENTERO))
+                funvars.append((t[-2], 0, GLOBENTERO, dim))
             elif dim == 1:
                 for x in range(dim1+1):
                     GLOBENTERO += 1
-                    funvars.append((t[-2], 0, GLOBENTERO))
-                dim1 = None;
+                    funvars.append((t[-2], 0, GLOBENTERO, dim))
+                dim1 = None
             elif dim == 2:
                 for x in range(dim1+1):
                     for y in range(dim2+1):
                         GLOBENTERO += 1
-                        funvars.append((t[-2], 0, GLOBENTERO))
-                dim1 = None;
-                dim2 = None;
+                        funvars.append((t[-2], 0, GLOBENTERO, dim))
+                dim1 = None
+                dim2 = None
         elif tipoactual == 2:
-            GLOBDECIMAL += 1
-            funvars.append((t[-1], 0, GLOBDECIMAL))
+            if dim == 0:
+                GLOBDECIMAL += 1
+                funvars.append((t[-2], 0, GLOBDECIMAL, dim))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    GLOBDECIMAL += 1
+                    funvars.append((t[-2], 0, GLOBDECIMAL, dim))
+                dim1 = None
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        GLOBDECIMAL += 1
+                        funvars.append((t[-2], 0, GLOBDECIMAL, dim))
+                dim1 = None
+                dim2 = None
         elif tipoactual == 3:
-            GLOBESVERDAD += 1
-            funvars.append((t[-1], 0, GLOBESVERDAD))
+            if dim == 0:
+                GLOBESVERDAD += 1
+                funvars.append((t[-2], 0, GLOBESVERDAD, dim))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    GLOBDECIMAL += 1
+                    funvars.append((t[-2], 0, GLOBESVERDAD, dim))
+                dim1 = None
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        GLOBDECIMAL += 1
+                        funvars.append((t[-2], 0, GLOBESVERDAD, dim))
+                dim1 = None
+                dim2 = None
         elif tipoactual == 4:
-            GLOBFRASE += 1
-            funvars.append((t[-1], 0, GLOBFRASE))
+            if dim == 0:
+                GLOBFRASE += 1
+                funvars.append((t[-2], 0, GLOBFRASE, dim))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    GLOBFRASE += 1
+                    funvars.append((t[-2], 0, GLOBFRASE, dim))
+                dim1 = None
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        GLOBFRASE += 1
+                        funvars.append((t[-2], 0, GLOBFRASE, dim))
+                dim1 = None
+                dim2 = None 
     else:
         if tipoactual == 1:
-            LOCALENTERO += 1
-            funvars.append((t[-1], 0, LOCALENTERO))
+            if dim == 0:
+                LOCALENTERO += 1
+                funvars.append((t[-2], 0, LOCALENTERO, dim))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    LOCALENTERO += 1
+                    funvars.append((t[-2], 0, LOCALENTERO, dim))
+                dim1 = None
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        LOCALENTERO += 1
+                        funvars.append((t[-2], 0, LOCALENTERO, dim))
+                dim1 = None
+                dim2 = None
         elif tipoactual == 2:
-            OCALDECIMAL += 1
-            funvars.append((t[-1], 0, LOCALDECIMAL))
+            if dim == 0:
+                LOCALDECIMAL += 1
+                funvars.append((t[-2], 0, LOCALDECIMAL, dim))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    LOCALDECIMAL += 1
+                    funvars.append((t[-2], 0, LOCALDECIMAL, dim))
+                dim1 = None
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        LOCALDECIMAL += 1
+                        funvars.append((t[-2], 0, LOCALDECIMAL, dim))
+                dim1 = None
+                dim2 = None
         elif tipoactual == 3:
-            LOCALESVERDAD += 1	
-            funvars.append((t[-1], 0, LOCALESVERDAD))
+            if dim == 0:
+                LOCALESVERDAD += 1
+                funvars.append((t[-2], 0, LOCALESVERDAD, dim))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    LOCALESVERDAD += 1
+                    funvars.append((t[-2], 0, LOCALESVERDAD, dim))
+                dim1 = None
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        LOCALESVERDAD += 1
+                        funvars.append((t[-2], 0, LOCALESVERDAD, dim))
+                dim1 = None
+                dim2 = None
         elif tipoactual == 4:
-            LOCALFRASE += 1
-            funvars.append((t[-1], 0, LOCALFRASE))
+            if dim == 0:
+                LOCALFRASE += 1
+                funvars.append((t[-2], 0, LOCALFRASE, dim))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    LOCALFRASE += 1
+                    funvars.append((t[-2], 0, LOCALFRASE, dim))
+                dim1 = None
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        LOCALFRASE += 1
+                        funvars.append((t[-2], 0, LOCALFRASE, dim))
+                dim1 = None
+                dim2 = None
     dim = 0
     
 def p_vars3(t):
@@ -598,12 +689,15 @@ def p_valor(t):
                 print ("variable no declarada")
                 
 def p_call_or_array(t):
-	'''call_or_array : LBRAK CTEINT RBRAK id_array
-					 | LPAREN expresion id_call RPAREN
-					 | empty'''
-
+    '''call_or_array : LBRAK CTEINT RBRAK id_array
+                     | LPAREN expresion id_call RPAREN
+                     | empty'''
+                     
 def p_id_array(t):
-	'id_array : call_or_array'
+    '''id_array : LBRAK CTEINT RBRAK
+                | empy'''
+    global localizacion
+    localizacion = t[-2] 
 
 def p_id_call(t):
 	'''id_call : COMMA expresion id_call
