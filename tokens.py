@@ -38,7 +38,7 @@ funtipo = ''
 funcuad = 1
 funparam = []
 funvars = []
-dim = None
+dim = 0
 dim1 = None
 dim2 = None
 #1 entero, 2 decimal, 3 esverdad, 4 frase
@@ -173,11 +173,11 @@ precedence = (
 
 def p_programa(t):
     'programa : PROGRAMA ID LLLAVE programa_push_id vars programa_push_dict body RLLAVE'
-    init()
-    printcuadruplos()
     global directorio
     print(t[1])
     print directorio
+    init()
+    printcuadruplos()
     
     print ('termine')
 
@@ -206,54 +206,59 @@ def p_dimension(t):
 				 | empty'''
 
 def p_push_dim1(t):
-	'push_dim1 : '
-	global dim1
-	dim1 = t[-1]
+    'push_dim1 : '
+    global dim
+    global dim1
+    dim = 1
+    dim1 = t[-1]
+        
 
 def p_dimension2(t):
 	'''dimension2 : LBRAK CTEINT push_dim2 RBRAK
 				  | empty'''
 
 def p_push_dim2(t):
-	'push_dim2 : '
-	global dim2
-	dim2 = t[-1]
+    'push_dim2 : '
+    global dim
+    global dim2
+    dim = 2
+    dim2 = t[-1]
 
 def p_vars_push_id(t):
-	'vars_push_id : '
-	global directorio
-	global direccion
-	global funvars
-	global tipoactual
-	global GLOBENTERO
-	global GLOBDECIMAL
-	global GLOBESVERDAD
-	global GLOBFRASE
-	global LOCALENTERO
-	global LOCALDECIMAL
-	global LOCALESVERDAD
-	global LOCALFRASE
-	global dim
-	global dim1
-	global dim2
-	if func == 0:
-		if tipoactual == 1:
-        	if dim == 0:
-				GLOBENTERO += 1
-            	funvars.append((t[-1], 0, GLOBENTERO))
-        	elif dim == 1:
-        		for x in dim1:
-        			GLOBENTERO += 1
-            		funvars.append((t[-1], 0, GLOBENTERO))
-				dim1 = None;
-			elif dim == 2:
-				for x in dim1:
-					for y in dim2:
-						GLOBENTERO += 1
-            			funvars.append((t[-1], 0, GLOBENTERO))
-            	dim1 = None;
-            	dim2 = None;
-		elif tipoactual == 2:
+    'vars_push_id : '
+    global directorio
+    global direccion
+    global funvars
+    global tipoactual
+    global GLOBENTERO
+    global GLOBDECIMAL
+    global GLOBESVERDAD
+    global GLOBFRASE
+    global LOCALENTERO
+    global LOCALDECIMAL
+    global LOCALESVERDAD
+    global LOCALFRASE
+    global dim
+    global dim1
+    global dim2
+    if func == 0:
+        if tipoactual == 1:
+            if dim == 0:
+                GLOBENTERO += 1
+                funvars.append((t[-2], 0, GLOBENTERO))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    GLOBENTERO += 1
+                    funvars.append((t[-2], 0, GLOBENTERO))
+                dim1 = None;
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        GLOBENTERO += 1
+                        funvars.append((t[-2], 0, GLOBENTERO))
+                dim1 = None;
+                dim2 = None;
+        elif tipoactual == 2:
             GLOBDECIMAL += 1
             funvars.append((t[-1], 0, GLOBDECIMAL))
         elif tipoactual == 3:
@@ -275,7 +280,8 @@ def p_vars_push_id(t):
         elif tipoactual == 4:
             LOCALFRASE += 1
             funvars.append((t[-1], 0, LOCALFRASE))
-        
+    dim = 0
+    
 def p_vars3(t):
     '''vars3 : COMMA ID dimension vars3_push_id vars3
              | empty'''
@@ -554,8 +560,8 @@ def p_factor_rparent(t):
 
 def p_valor(t):
     '''valor : ID call_or_array
-        	 | CTEINT
-     		 | CTEDEC'''
+             | CTEINT
+             | CTEDEC'''
     global CONSTENTERO
     global CONTSTDECILMAL
     global CONSTDECIMAL
@@ -603,7 +609,7 @@ def p_id_call(t):
 	'''id_call : COMMA expresion id_call
 			   | empty'''
 	
-                
+
 def p_condicion(t):
 	'condicion : SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto  RLLAVE else'
 	print("condicion")
