@@ -51,16 +51,13 @@ llamadim2 = None
 #1 entero, 2 decimal, 3 esverdad, 4 frase
 #tipo para definicion actual de variable
 tipoactual = 0
-<<<<<<< Updated upstream
 #contador del parametro actual
 paramactual = 0
 #nombre de la funcion si no es variable/constante/param
 nombrefunc = ''
 #direccion resultado de exp
-dirvalor
-=======
-paramactual = 0
->>>>>>> Stashed changes
+dirvalor = None
+init()
 
 reserved = {
     'entero'  : 'ENTERO',
@@ -193,15 +190,13 @@ def p_programa(t):
     global directorio
     print(t[1])
     print directorio
-    init()
     printcuadruplos()
-    
-    print ('termine')
+
 
 def p_programa_push_id(t):
     'programa_push_id : '
     global funnombre
-    funnombre = t[-1]
+    funnombre = t[-2]
 
 def p_programa_push_dict(t):
     'programa_push_dict : '
@@ -612,17 +607,21 @@ def p_bloque(t):
 			  | empty'''
 			  
 def p_funcion(t):
-	'funcion : FUNCION funcion_increase_func tipo ID funcion_push_id LPAREN funparam RPAREN LLLAVE vars bloque RLLAVE'
-	print("funcion")
-	directorio.append(list((funnombre, funtipo, funcuad, funparam, funvars)))
-	
+    'funcion : FUNCION funcion_increase_func tipo ID funcion_push_id LPAREN funparam RPAREN LLLAVE vars bloque RLLAVE'
+    global funnombre
+    global funtipo
+    global funcuad
+    global funparam
+    global funvars
+    directorio.append(list((funnombre, funtipo, cuadproc() - 1, funparam, funvars)))
+
 	
 	
 def p_funcion_increase_func(t):
-	'funcion_increase_func : '
-	global func
-	func += 1
-	
+    'funcion_increase_func : '
+    global func
+    global funcuad
+    func += 1
 
 def p_funcion_push_id(t):
     'funcion_push_id : '
@@ -672,7 +671,7 @@ def p_estatuto(t):
 	print("estatuto")
 
 def p_asignacion(t):
-    'asignacion : ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion'
+    'asignacion : ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion SEMICOL'
     print("asignacion")
     assign()
     
@@ -800,7 +799,7 @@ def p_factor_rparent(t):
     parentesisPop()
 
 def p_valor(t):
-    '''valor : ID nombre_func call_or_array
+    '''valor : ID call_or_array
              | CTEINT
              | CTEDEC'''
     global CONSTENTERO
@@ -822,26 +821,17 @@ def p_valor(t):
     global llamadim2
     global dirvalor
     if isinstance(t[1], int):
-        if t[1] in directorioconst[t[1]]:
-            pila_id(directorioconst[t[1]])
-            dirvalor = directorioconst[t[1]]
-            
-        
-        else:
             directorioconst[t[1]] = CONSTENTERO
             dirvalor = CONSTENTERO
+            pila_id(CONSTENTERO)
             CONSTENTERO +=1
-            
     elif isinstance(t[1], float):
-        if t[1] in directorioconst[t[1]]:
-            pila_id(directorioconst[t[1]])
-            dirvalor = directorioconst[t[1]]
-        else:
             directorioconst[t[1]] = CONSTDECIMAL
             dirvalor = CONSTDECIMAL
+            pila_id(CONSTDECIMAL)
             CONSTDECIMAL +=1
     elif isinstance(t[1], str):
-        for x in directorio[0][4]:   
+        for x in directorio[0][4]:
             if x[0] == t[1]:
             	if x[3] == 0:
                     pila_id(list(x)[2])
@@ -858,16 +848,15 @@ def p_valor(t):
                     break
             else:
                 for x in directorio[func][4]:
-<<<<<<< Updated upstream
-					if x[0] == t[1]:
-						if x[3] == 0:
-							pila_id(list(x)[2])
-							dirvalor = list(x)[2]
-							break
-						elif x[3] == 1:
-							pila_id(list(x)[2]+llamadim1+1)
-							dirvalor = list(x)[2]+llamadim1+1
-							break
+                    if x[0] == t[1]:
+                        if x[3] == 0:
+                            pila_id(list(x)[2])
+                            dirvalor = list(x)[2]
+                            break
+                        elif x[3] == 1:
+                            pila_id(list(x)[2]+llamadim1+1)
+                            dirvalor = list(x)[2]+llamadim1+1
+                            break
                         elif x[3] == 2:
                         	pila_id(list(x)[2]+llamadim1*(list(x)[5]+1)+llamadim2)
                         	dirvalor = list(x)[2]+llamadim1*(list(x)[5]+1)+llamadim2
@@ -883,55 +872,45 @@ def p_valor(t):
                     				if x[0] == t[1]:
                     					pila_id(directorio[list(x)][5])
                     					dirvalor = directorio[list(x)[5]]
-            
-def p_nombre_func(t):
-	'nombre_func : '
-	global nombrefunc
-	nombrefunc = t[-1]
-                
-                
-def p_call_or_array(t):
-	'''call_or_array : LBRAK CTEINT push_array_dim1 RBRAK id_array
-					 | LPAREN expresion set_value_param id_call RPAREN
-					 | empty'''
-					
-def p_set_value_param(t):
-	'set_value_param : '
-	global directorio
-	global paramactual
-	for x in directorio:
-		if x[0] == nombrefunc:
-			param(dirvalor, directorio[x][3][paramactual][2])
-			paramactual += 1
-=======
-                    if x[0] == t[1]:
-                        if x[3] == 0:
-                            pila_id(list(x)[2])
-                            break
-                        elif x[3] == 1:
-                            pila_id(list(x)[2]+llamadim1+1)
-                            break
-                        elif x[3] == 2:
-                            break
-                    else:
-                        for x in directorio[func][3]:
-                            if x[0] == t[1]:
-                                pila_id(list(x)[2])
-                                break
-                            else:
-                                for x in directorio:
-                                    if x[0] == t[1]:
-                                        directorio[x]
-                
+        
 def p_call_or_array(t):
     '''call_or_array : LBRAK CTEINT push_array_dim1 RBRAK id_array
-                     | LPAREN expresion push_valor_array id_call RPAREN
+                     | LPAREN nombre_func expresion set_value_param id_call RPAREN push_gosub
                      | empty'''
+    global nombrefunc
+    global directorio
+    if t[-2] == '(':
+        for x in directorio:
+            if x[0] == nombrefunc:
+                gosub(directorio[x][2])
+            break
+        
+def p_nombre_func(t):
+    'nombre_func : '
+    global nombrefunc
+    print t[-2]
+    nombrefunc = t[-2]
 
-def p_push_valor_array(t):
-    'push_valor_array : '
-    t[-1]
->>>>>>> Stashed changes
+                     
+def p_push_gosub(t):
+    'push_gosub : '
+    global nombrefunc
+    global directorio
+    for x in directorio:
+        print (x[0])
+        print (nombrefunc)
+        if x[0] == nombrefunc:
+            gosub(directorio[directorio.index(x)][2])
+    
+def p_set_value_param(t):
+    'set_value_param : '
+    global directorio
+    global paramactual
+    global dirvalor
+    for x in directorio:
+        if x[0] == nombrefunc:
+            param(dirvalor, directorio[directorio.index(x)][3][paramactual][2])
+            paramactual += 1
 
 def p_id_array(t):
 	'''id_array : LBRAK CTEINT push_array_dim2 RBRAK

@@ -350,19 +350,19 @@ def check(op, oper1 , oper2):
         operando1='f'
     
     #entero
-    if oper2 >= 1000 and oper2 < 1500 or oper2 >= 3000 and oper2 < 3500 or oper2 >= 5000 and oper2 < 5500 or oper1 >= 7000 and oper1 < 7500:
+    if oper2 >= 1000 and oper2 < 1500 or oper2 >= 3000 and oper2 < 3500 or oper2 >= 5000 and oper2 < 5500 or oper2 >= 7000 and oper2 < 7500:
         operando2='e'
     
     #decimal
-    elif oper2 >= 1500 and oper2 < 2000 or oper2 >= 3500 and oper2 < 4000 or oper2 >= 5500 and oper2 < 6000 or oper1 >= 7500 and oper1 < 8000:
+    elif oper2 >= 1500 and oper2 < 2000 or oper2 >= 3500 and oper2 < 4000 or oper2 >= 5500 and oper2 < 6000 or oper2 >= 7500 and oper2 < 8000:
         operando2='d'
     
     #esVerdad
-    elif oper2 >= 2000 and oper2 < 2500 or oper2 >= 4000 and oper2 < 4500 or oper2 >= 6000 and oper2 < 6500 or oper1 >= 8000 and oper1 < 8500:
+    elif oper2 >= 2000 and oper2 < 2500 or oper2 >= 4000 and oper2 < 4500 or oper2 >= 6000 and oper2 < 6500 or oper2 >= 8000 and oper2 < 8500:
         operando2='es'
     
     #frase
-    elif oper2 >= 2500 and oper2 < 3000 or oper2 >= 4500 and oper2 < 5000 or oper2 >= 6500 and oper2 < 7000 or oper1 >= 8500 and oper1 < 9000:
+    elif oper2 >= 2500 and oper2 < 3000 or oper2 >= 4500 and oper2 < 5000 or oper2 >= 6500 and oper2 < 7000 or oper2 >= 8500 and oper2 < 9000:
         operando2='f'
     
 # Como si fuera switch, pero con arrays associativos

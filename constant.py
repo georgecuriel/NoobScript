@@ -1,8 +1,18 @@
+from tokens import *
 class Constant:
 
 	memInt = [None] * 500
 	memFloat = [None] * 500
 	memString = [None] *500
+
+
+for x in directorioconst:
+    opcion = checaTipo(directorioconst[x])
+    if opcion == 1 or opcion == 2:
+        memconstant.setValD(directorioconst[x], x, opcion)
+        print  memconstant.getValD(directorioconst[x], opcion)
+    else:
+        memconstant.setMemString(directorioconst[x], x, opcion)
 
 	def setValD(self, dire, val, tipo):
 		if tipo == 1:

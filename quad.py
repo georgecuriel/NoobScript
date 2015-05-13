@@ -20,7 +20,6 @@ def init():
   cuadf = open("cuadruplos.txt", 'w')
   if cuadf == None:
     print( "Archivo cuadruplos.txt no se ha podido abrir");
-    exit(1);
    
 def printcuadruplos():
   for i in range(300):
@@ -188,6 +187,8 @@ def else1():
   cuadruplos[falso-1][4]=cont
   PSaltos.append(cont-1)
 
+def ret():
+  escribe_cuad(cont, 34, PilaO.pop(),-1,-1 )
 #12
 def if2():
   fin = PSaltos[-1]

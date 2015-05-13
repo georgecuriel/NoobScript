@@ -5,6 +5,9 @@ from globales import *
 
 auxCont = 0
 
+
+
+
 def checaScope(dire):
     if dire >= 1000 and dire < 2500:    #Direcciones de variables globales
         return 1
@@ -282,13 +285,13 @@ for e in range(len(cuad)-1):
         global tipo3
         global cuad
         def uno(tipo1): #case 1:
-            ope1 = memtemp.getValD(cuad[cont1][2], tipo1)
-            print("lool bro!", ope1)
+            ope1 = memtemp.getValD(cuad[cont1][2], tipo3)
+            print(ope1)
         def dos(tipo1): #case 2:
-            ope1 = memtemp.getValD(cuad[cont1][2], tipo1)
+            ope1 = memtemp.getValD(cuad[cont1][2], tipo3)
             print(ope1)
         def cuatro(tipo1):
-            ope1 = memtemp.getMemString(cuad[cont1][2], tipo1)
+            ope1 = memtemp.getMemString(cuad[cont1][2], tipo3)
             print(ope1)
         operaciones = { 1: uno, 2: dos, 4: cuatro} 
         operaciones[tipo1](tipo1)
