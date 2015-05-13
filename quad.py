@@ -231,6 +231,11 @@ def do2():
   oper2 = -1
   escribe_cuad(cont, op, oper1, -1, contemp)
 
+
+def gosub(quadInicio):
+  escribe_cuad(cont, 32, quadInicio, -1, -1)
+  
+
 def print1():
   op=33
   POper.append(op)
