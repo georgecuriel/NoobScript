@@ -51,6 +51,12 @@ llamadim2 = None
 #1 entero, 2 decimal, 3 esverdad, 4 frase
 #tipo para definicion actual de variable
 tipoactual = 0
+#contador del parametro actual
+paramactual = 0
+#nombre de la funcion si no es variable/constante/param
+nombrefunc = ''
+#direccion resultado de exp
+dirvalor
 
 reserved = {
     'entero'  : 'ENTERO',
@@ -304,78 +310,78 @@ def p_vars_push_id(t):
             elif dim == 1:
                 for x in range(dim1+1):
                     GLOBFRASE += 1
-                    funvars.append((t[-2], 0, GLOBFRASE, dim))
+                    funvars.append((t[-2], 0, GLOBFRASE, dim, dim1, dim2))
                 dim1 = None
             elif dim == 2:
                 for x in range(dim1+1):
                     for y in range(dim2+1):
                         GLOBFRASE += 1
-                        funvars.append((t[-2], 0, GLOBFRASE, dim))
+                        funvars.append((t[-2], 0, GLOBFRASE, dim, dim1, dim2))
                 dim1 = None
                 dim2 = None
     else:
         if tipoactual == 1:
             if dim == 0:
                 LOCALENTERO += 1
-                funvars.append((t[-2], 0, LOCALENTERO, dim))
+                funvars.append((t[-2], 0, LOCALENTERO, dim, dim1, dim2))
             elif dim == 1:
                 for x in range(dim1+1):
                     LOCALENTERO += 1
-                    funvars.append((t[-2], 0, LOCALENTERO, dim))
+                    funvars.append((t[-2], 0, LOCALENTERO, dim, dim1, dim2))
                 dim1 = None
             elif dim == 2:
                 for x in range(dim1+1):
                     for y in range(dim2+1):
                         LOCALENTERO += 1
-                        funvars.append((t[-2], 0, LOCALENTERO, dim))
+                        funvars.append((t[-2], 0, LOCALENTERO, dim, dim1, dim2))
                 dim1 = None
                 dim2 = None
         elif tipoactual == 2:
             if dim == 0:
                 LOCALDECIMAL += 1
-                funvars.append((t[-2], 0, LOCALDECIMAL, dim))
+                funvars.append((t[-2], 0, LOCALDECIMAL, dim, dim1, dim2))
             elif dim == 1:
                 for x in range(dim1+1):
                     LOCALDECIMAL += 1
-                    funvars.append((t[-2], 0, LOCALDECIMAL, dim))
+                    funvars.append((t[-2], 0, LOCALDECIMAL, dim, dim1, dim2))
                 dim1 = None
             elif dim == 2:
                 for x in range(dim1+1):
                     for y in range(dim2+1):
                         LOCALDECIMAL += 1
-                        funvars.append((t[-2], 0, LOCALDECIMAL, dim))
+                        funvars.append((t[-2], 0, LOCALDECIMAL, dim, dim1, dim2))
                 dim1 = None
                 dim2 = None
         elif tipoactual == 3:
             if dim == 0:
                 LOCALESVERDAD += 1
-                funvars.append((t[-2], 0, LOCALESVERDAD, dim))
+                funvars.append((t[-2], 0, LOCALESVERDAD, dim, dim1, dim2))
             elif dim == 1:
                 for x in range(dim1+1):
                     LOCALESVERDAD += 1
-                    funvars.append((t[-2], 0, LOCALESVERDAD, dim))
+                    funvars.append((t[-2], 0, LOCALESVERDAD, dim, dim1, dim2))
                 dim1 = None
             elif dim == 2:
                 for x in range(dim1+1):
                     for y in range(dim2+1):
                         LOCALESVERDAD += 1
-                        funvars.append((t[-2], 0, LOCALESVERDAD, dim))
+                        funvars.append((t[-2], 0, LOCALESVERDAD, dim, dim1, dim2))
                 dim1 = None
                 dim2 = None
         elif tipoactual == 4:
             if dim == 0:
                 LOCALFRASE += 1
-                funvars.append((t[-2], 0, LOCALFRASE, dim))
+                funvars.append((t[-2], 0, LOCALFRASE, dim, dim1, dim2))
             elif dim == 1:
                 for x in range(dim1+1):
                     LOCALFRASE += 1
-                    funvars.append((t[-2], 0, LOCALFRASE, dim))
+                    funvars.append((t[-2], 0, LOCALFRASE, dim, dim1, dim2))
                 dim1 = None
             elif dim == 2:
                 for x in range(dim1+1):
                     for y in range(dim2+1):
                         LOCALFRASE += 1
-                        funvars.append((t[-2], 0, LOCALFRASE, dim))
+                        funvars.append((t[-2], 0, LOCALFRASE, dim, dim1, dim2))
                 dim1 = None
                 dim2 = None
     dim = 0
@@ -398,32 +404,140 @@ def p_vars3_push_id(t):
     global LOCALDECIMAL
     global LOCALESVERDAD
     global LOCALFRASE
+    global dim
+    global dim1
+    global dim2
     if func == 0:
         if tipoactual == 1:
-            GLOBENTERO += 1
-            funvars.append((t[-1], 0, GLOBENTERO))
+            if dim == 0:
+                GLOBENTERO += 1
+                funvars.append((t[-2], 0, GLOBENTERO, dim, dim1, dim2))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    GLOBENTERO += 1
+                    funvars.append((t[-2], 0, GLOBENTERO, dim, dim1, dim2))
+                dim1 = None
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        GLOBENTERO += 1
+                        funvars.append((t[-2], 0, GLOBENTERO, dim,dim1, dim2))
+                dim1 = None
+                dim2 = None
         elif tipoactual == 2:
-            GLOBDECIMAL += 1
-            funvars.append((t[-1], 0, GLOBDECIMAL))
+            if dim == 0:
+                GLOBDECIMAL += 1
+                funvars.append((t[-2], 0, GLOBDECIMAL, dim, dim1, dim2))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    GLOBDECIMAL += 1
+                    funvars.append((t[-2], 0, GLOBDECIMAL, dim, dim1, dim2))
+                dim1 = None
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        GLOBDECIMAL += 1
+                        funvars.append((t[-2], 0, GLOBDECIMAL, dim, dim1, dim2))
+                dim1 = None
+                dim2 = None
         elif tipoactual == 3:
-            GLOBESVERDAD += 1
-            funvars.append((t[-1], 0, GLOBESVERDAD))
+            if dim == 0:
+                GLOBESVERDAD += 1
+                funvars.append((t[-2], 0, GLOBESVERDAD, dim, dim1, dim2))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    GLOBDECIMAL += 1
+                    funvars.append((t[-2], 0, GLOBESVERDAD, dim, dim1, dim2))
+                dim1 = None
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        GLOBDECIMAL += 1
+                        funvars.append((t[-2], 0, GLOBESVERDAD, dim, dim1, dim2))
+                dim1 = None
+                dim2 = None
         elif tipoactual == 4:
-            GLOBFRASE += 1
-            funvars.append((t[-1], 0, GLOBFRASE))
+            if dim == 0:
+                GLOBFRASE += 1
+                funvars.append((t[-2], 0, GLOBFRASE, dim, dim1, dim2))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    GLOBFRASE += 1
+                    funvars.append((t[-2], 0, GLOBFRASE, dim, dim1, dim2))
+                dim1 = None
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        GLOBFRASE += 1
+                        funvars.append((t[-2], 0, GLOBFRASE, dim, dim1, dim2))
+                dim1 = None
+                dim2 = None
     else:
         if tipoactual == 1:
-            LOCALENTERO += 1
-            funvars.append((t[-1], 0, LOCALENTERO))
+            if dim == 0:
+                LOCALENTERO += 1
+                funvars.append((t[-2], 0, LOCALENTERO, dim, dim1, dim2))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    LOCALENTERO += 1
+                    funvars.append((t[-2], 0, LOCALENTERO, dim, dim1, dim2))
+                dim1 = None
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        LOCALENTERO += 1
+                        funvars.append((t[-2], 0, LOCALENTERO, dim, dim1, dim2))
+                dim1 = None
+                dim2 = None
         elif tipoactual == 2:
-            LOCALDECIMAL += 1
-            funvars.append((t[-1], 0, LOCALDECIMAL))
+            if dim == 0:
+                LOCALDECIMAL += 1
+                funvars.append((t[-2], 0, LOCALDECIMAL, dim, dim1, dim2))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    LOCALDECIMAL += 1
+                    funvars.append((t[-2], 0, LOCALDECIMAL, dim, dim1, dim2))
+                dim1 = None
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        LOCALDECIMAL += 1
+                        funvars.append((t[-2], 0, LOCALDECIMAL, dim, dim1, dim2))
+                dim1 = None
+                dim2 = None
         elif tipoactual == 3:
-            LOCALESVERDAD += 1	
-            funvars.append((t[-1], 0, LOCALESVERDAD))
+            if dim == 0:
+                LOCALESVERDAD += 1
+                funvars.append((t[-2], 0, LOCALESVERDAD, dim, dim1, dim2))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    LOCALESVERDAD += 1
+                    funvars.append((t[-2], 0, LOCALESVERDAD, dim, dim1, dim2))
+                dim1 = None
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        LOCALESVERDAD += 1
+                        funvars.append((t[-2], 0, LOCALESVERDAD, dim, dim1, dim2))
+                dim1 = None
+                dim2 = None
         elif tipoactual == 4:
-            LOCALFRASE += 1
-            funvars.append((t[-1], 0, LOCALFRASE))
+            if dim == 0:
+                LOCALFRASE += 1
+                funvars.append((t[-2], 0, LOCALFRASE, dim, dim1, dim2))
+            elif dim == 1:
+                for x in range(dim1+1):
+                    LOCALFRASE += 1
+                    funvars.append((t[-2], 0, LOCALFRASE, dim, dim1, dim2))
+                dim1 = None
+            elif dim == 2:
+                for x in range(dim1+1):
+                    for y in range(dim2+1):
+                        LOCALFRASE += 1
+                        funvars.append((t[-2], 0, LOCALFRASE, dim, dim1, dim2))
+                dim1 = None
+                dim2 = None
+    dim = 0
 
 
 def p_vars4(t):
@@ -583,6 +697,10 @@ def p_asignacion_push_id(t):
                     elif x[3] == 2:
                         pila_id(list(x)[2]+llamadim1*(list(x)[5]+1)+llamadim2)
                         break
+                else:
+                	for x in directorio[func][3]:
+                		if x[0] == t[-2]:
+                			pila_id(list(x)[2])
                 
             
 def p_asignacion_push_igual(t):
@@ -678,7 +796,7 @@ def p_factor_rparent(t):
     parentesisPop()
 
 def p_valor(t):
-    '''valor : ID call_or_array
+    '''valor : ID nombre_func call_or_array
              | CTEINT
              | CTEDEC'''
     global CONSTENTERO
@@ -686,7 +804,6 @@ def p_valor(t):
     global CONSTDECIMAL
     global CONSTESVERDAD
     global CONSTFRASE
-    global direccion
     global GLOBENTERO
     global LOCALENTERO
     global GLOBDECIMAL
@@ -695,50 +812,92 @@ def p_valor(t):
     global LOCALESVERDAD
     global GLOBFRASE
     global LOCALFRASE
+    global directorio
+    global directorioconst
+    global llamadim1
+    global llamadim2
+    global dirvalor
     if isinstance(t[1], int):
         if t[1] in directorioconst[t[1]]:
             pila_id(directorioconst[t[1]])
+            dirvalor = directorioconst[t[1]]
+            
         
         else:
             directorioconst[t[1]] = CONSTENTERO
+            dirvalor = CONSTENTERO
             CONSTENTERO +=1
             
     elif isinstance(t[1], float):
         if t[1] in directorioconst[t[1]]:
             pila_id(directorioconst[t[1]])
+            dirvalor = directorioconst[t[1]]
         else:
             directorioconst[t[1]] = CONSTDECIMAL
+            dirvalor = CONSTDECIMAL
             CONSTDECIMAL +=1
     elif isinstance(t[1], str):
         for x in directorio[0][4]:
             if x[0] == t[1]:
             	if x[3] == 0:
                     pila_id(list(x)[2])
+                    dirvalor = list(x)[2]
                     break
                 elif x[3] == 1:
                     pila_id(list(x)[2]+llamadim1+1)
+                    dirvalor = list(x)[2]+llamadim1+1
                     break
                 elif x[3] == 2:
                     print (llamadim1,(list(x)[5]+1), llamadim2  )
                     pila_id(list(x)[2]+llamadim1*(list(x)[5]+1)+(llamadim2))
+                    dirvalor = list(x)[2]+llamadim1*(list(x)[5]+1)+(llamadim2)
                     break
             else:
                 for x in directorio[func][4]:
-                     if x[0] == t[1]:
-                        if x[3] == 0:
-                            pila_id(list(x)[2])
-                            break
-                        elif x[3] == 1:
-                            pila_id(list(x)[2]+llamadim1+1)
-                            break
+					if x[0] == t[1]:
+						if x[3] == 0:
+							pila_id(list(x)[2])
+							dirvalor = list(x)[2]
+							break
+						elif x[3] == 1:
+							pila_id(list(x)[2]+llamadim1+1)
+							dirvalor = list(x)[2]+llamadim1+1
+							break
                         elif x[3] == 2:
-                            break
+                        	pila_id(list(x)[2]+llamadim1*(list(x)[5]+1)+llamadim2)
+                        	dirvalor = list(x)[2]+llamadim1*(list(x)[5]+1)+llamadim2
+                        	break
+                    else:
+                    	for x in directorio[func][3]:
+                    		if x[0] == t[1]:
+                    			pila_id(list(x)[2])
+                    			dirvalor = list(x)[2]
+                    			break
+                    		else:
+                    			for x in directorio:
+                    				if x[0] == t[1]:
+                    					pila_id(directorio[list(x)][5])
+                    					dirvalor = directorio[list(x)[5]]
+            
+def p_nombre_func(t):
+	'nombre_func : '
+	global nombrefunc
+	nombrefunc = t[-1]
                 
                 
 def p_call_or_array(t):
 	'''call_or_array : LBRAK CTEINT push_array_dim1 RBRAK id_array
-					 | LPAREN expresion id_call RPAREN
+					 | LPAREN expresion set_value_param id_call RPAREN
 					 | empty'''
+					
+def p_set_value_param(t):
+	'set_value_param : '
+	global directorio
+	global paramactual
+	for x in directorio:
+		if x[0] == nombrefunc:
+			param(dirvalor, directorio[x][3][paramactual][2])
+			paramactual += 1
 
 def p_id_array(t):
 	'''id_array : LBRAK CTEINT push_array_dim2 RBRAK
@@ -755,7 +914,7 @@ def p_push_array_dim2(t):
 	llamadim2 = t[-1]
 
 def p_id_call(t):
-	'''id_call : COMMA expresion id_call
+	'''id_call : COMMA expresion set_value_param id_call
 			   | empty'''
 	
 
