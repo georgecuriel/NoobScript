@@ -188,8 +188,13 @@ def else1():
   PSaltos.append(cont-1)
 
 def ret():
-  escribe_cuad(cont, 34, PilaO.pop(),-1,-1 )
-#12
+  valor = PilaO.pop()
+  direccion =  PilaO.pop()
+  escribe_cuad(cont, 34, valor,-1, direccion)
+
+  
+  
+
 def if2():
   fin = PSaltos[-1]
   PSaltos.pop()

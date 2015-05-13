@@ -5,9 +5,6 @@ from globales import *
 
 auxCont = 0
 
-
-
-
 def checaScope(dire):
     if dire >= 1000 and dire < 2500:    #Direcciones de variables globales
         return 1
@@ -109,6 +106,16 @@ x_table = []
 cuad = [[]]
 cont1 = 0
 cont2 = 0
+
+for x in memconstant.constantes:
+    opcion = checaTipo(memconstant.constantes[memconstant.constantes.index(x)][1])
+    print memconstant.constantes[memconstant.constantes.index(x)]
+
+    if opcion == 1 or opcion == 2:
+        memconstant.setValD(memconstant.constantes[memconstant.constantes.index(x)][1], memconstant.constantes[memconstant.constantes.index(x)][0], opcion)
+        print (memconstant.constantes[memconstant.constantes.index(x)][1], memconstant.constantes[memconstant.constantes.index(x)][0], opcion)
+    else:
+        memconstant.setMemString(memconstant.constantes[memconstant.constantes.index(x)][1], memconstant.constantes[memconstant.constantes.index(x)][0], opcion)
 
 for eachLine in open('cuadruplos.txt', "r"):
     cuad.append([int(k) for k in eachLine.split()])
@@ -249,6 +256,31 @@ for e in range(len(cuad)-1):
         
     def PARAM(op): #case 31: //PARAM
         if tipo1 == 1 or tipo1 == 2:
+            val = obtenValorD(scope, cuad[cont1][2], tipo1)
+            meteValorD(scope, cuad[cont1][4], val , tipo3)
+        elif tipo1== 3:
+            val = obtenValorB(scope, cuad[cont1][2], tipo1)
+            meteValorB(scope, cuad[cont1][4], val , tipo3)
+        else:
+            val = obtenValorS(scope, cuad[cont1][2], tipo1)
+            meteValorS(scope, cuad[cont1][4], val , tipo3)
+    
+    def GOsub(op): #case 32: //Gosub
+        global auxCont
+        global cont1
+        auxCont = cont1
+        cont1 = cuad[cont1][2]
+    
+    def ret(op): #Case 34 return
+        global auxCont
+        global scope
+        global scope2
+        global scope3
+        global tipo1
+        global tipo2
+        global tipo3
+        global cuad
+        if tipo1 == 1 or tipo1 == 2:
             val = obtenValorD(score, cuad[cont1][2], tipo1)
             meteValorD(scope, cuad[cont1][4], val , tipo3)
         elif tipo1== 3:
@@ -256,26 +288,10 @@ for e in range(len(cuad)-1):
             meteValorB(scope, cuad[cont1][4], val , tipo3)
         else:
             val = obtenValorS(score, cuad[cont1][2], tipo1)
-            meteValorS(scope, cuad[cont1][4], val , tipo3)
-    
-    def GOsub(op): #case 32: //Gosub
-        global auxCont
-        auxCont = cont1
-        cont1 = cuad[cont1][2]
-    
-    def ret(op): #Case 34 return
-        global auxCont
-        if tipo1 == 1 or tipo1 == 2:
-            val = obtenValorD(score, cuad[cont1][2], tipo1)
-            meteValorD(scope, direccion, val , tipo3)
-        elif tipo1== 3:
-            val = obtenValorB(score, cuad[cont1][2], tipo1)
-            meteValorB(scope, direccion, val , tipo3)
-        else:
-            val = obtenValorS(score, cuad[cont1][2], tipo1)
-            meteValorS(scope, direccion, val , tipo3)     
+            meteValorS(scope, cuad[cont1][4], val , tipo3)     
         cont1 = auxCont
         
+
     def write(op): #case 33: //Write
         global scope
         global scope2
@@ -284,17 +300,37 @@ for e in range(len(cuad)-1):
         global tipo2
         global tipo3
         global cuad
-        def uno(tipo1): #case 1:
-            ope1 = memtemp.getValD(cuad[cont1][2], tipo3)
+        global ope1
+        if tipo1 == 1: #case 1:
+            if scope == 1:
+                ope1 = memglobal.getValD(cuad[cont1][2], tipo1)
+            elif scope == 2:
+                ope1 = memlocal.getValD(cuad[cont1][2], tipo1)
+            elif scope ==3:
+                ope1 = memtemp.getValD(cuad[cont1][2], tipo1)
+            else:
+                ope1 = memconstant.getValD(cuad[cont1][2], tipo1)
             print(ope1)
-        def dos(tipo1): #case 2:
-            ope1 = memtemp.getValD(cuad[cont1][2], tipo3)
+        elif tipo1 == 2: #case 2:
+            if scope == 1:
+                ope1 = memglobal.getValD(cuad[cont1][2], tipo1)
+            elif scope == 2:
+                ope1 = memlocal.getValD(cuad[cont1][2], tipo1)
+            elif scope ==3:
+                ope1 = memtemp.getValD(cuad[cont1][2], tipo1)
+            else:
+                ope1 = memconstant.getValD(cuad[cont1][2], tipo1)
             print(ope1)
-        def cuatro(tipo1):
-            ope1 = memtemp.getMemString(cuad[cont1][2], tipo3)
+        elif tipo1 == 4:
+            if scope == 1:
+                ope1 = memglobal.getValString(cuad[cont1][2], tipo1)
+            elif scope == 2:
+                ope1 = memlocal.getValDString(cuad[cont1][2], tipo1)
+            elif scope ==3:
+                ope1 = memtemp.getValDString(cuad[cont1][2], tipo1)
+            else:
+                ope1 = memconstant.getValDString(cuad[cont1][2], tipo1)
             print(ope1)
-        operaciones = { 1: uno, 2: dos, 4: cuatro} 
-        operaciones[tipo1](tipo1)
     operaciones = { 1: suma, 2: resta, 3: multiplicacion, 4: division, 5: menor, 6:mayor, 7:comparacion, 8:igualacion, 20:GOTOF, 21:GOTOV, 22:GOTO, 31:PARAM, 32: GOsub, 33:write, 34:ret} 
     operaciones[op](op) 
     print("\n")

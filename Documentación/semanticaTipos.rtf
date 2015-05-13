@@ -182,7 +182,18 @@ frase		<	entero		E\
 		==	esVerdad	E\
 			frase		E\
 \
-programa patito \{var entero a; a= 1; funcion entero b(entero z, entero b)\{ imprime (a)\} a= b(a,a); \}		1\
+programa patito \{var entero a; a= 1; funcion entero b(entero z, entero b)\{ imprime (a) regresa a\} a= b(a,a); \}\
+\
+programa patito \{ var entero a[5]; a[0] = 3; a
+\fs26 [3]
+\fs24  = 2; a[2] = a[0]; imprime(a[0]) imprime(a[2])\} \
+\
+\
+\
+\
+\}\
+\
+		1\
 -		2	 \
 *		3\
 /		4\

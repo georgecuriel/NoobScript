@@ -57,6 +57,8 @@ paramactual = 0
 nombrefunc = ''
 #direccion resultado de exp
 dirvalor = None
+#direccion de la funcion
+dirfuncion = None
 init()
 
 reserved = {
@@ -76,7 +78,8 @@ reserved = {
     'si'      : 'SI',
     'sino'    : 'SINO',
     'haz'     : 'HAZ',
-    'var'	  : 'VAR'
+    'var'	  : 'VAR',
+    'regresa' : 'REGRESA'
 }
 
     # List of token names.   This is always required
@@ -188,8 +191,15 @@ precedence = (
 def p_programa(t):
     'programa : PROGRAMA ID LLLAVE programa_push_id vars programa_push_dict body RLLAVE'
     global directorio
+    global directorioconst
     print(t[1])
     print directorio
+    with open('constantes.txt', 'w') as f:
+        for valor, direccion in directorioconst.items():
+            f.write(repr(valor))
+            f.write(' ')
+            f.write(repr(direccion))
+            f.write('\n')
     printcuadruplos()
 
 
@@ -607,16 +617,21 @@ def p_bloque(t):
 			  | empty'''
 			  
 def p_funcion(t):
-    'funcion : FUNCION funcion_increase_func tipo ID funcion_push_id LPAREN funparam RPAREN LLLAVE vars bloque RLLAVE'
+    'funcion : FUNCION funcion_increase_func tipo ID funcion_push_id LPAREN funparam RPAREN LLLAVE vars bloque return RLLAVE'
     global funnombre
     global funtipo
     global funcuad
     global funparam
     global funvars
-    directorio.append(list((funnombre, funtipo, cuadproc() - 1, funparam, funvars)))
+    directorio.append(list((funnombre, funtipo, cuadproc() - 1, funparam, funvars, dirfuncion)))
 
-	
-	
+def p_return(t):
+    'return : REGRESA expresion'
+    global dirfuncion
+    pila_id(dirfuncion)
+    ret()
+    
+    
 def p_funcion_increase_func(t):
     'funcion_increase_func : '
     global func
@@ -625,11 +640,31 @@ def p_funcion_increase_func(t):
 
 def p_funcion_push_id(t):
     'funcion_push_id : '
+    global GLOBENTERO, GLOBDECIMAL, GLOBESVERDAD, GLOBFRASE
     global funnombre
     global funtipo
     global tipoactual
+    global dirfuncion
     funtipo = tipoactual
     funnombre = t[-1]
+    if tipoactual == 1:
+        GLOBENTERO += 1
+        dirfuncion = GLOBENTERO
+        
+    elif tipoactual == 2:
+        GLOBDECIMAL += 1
+        dirfuncion = GLOBDECIMAL
+        
+    elif tipoactual == 3:
+        GLOBESVERDAD += 1
+        dirfuncion = GLOBESVERDAD
+        
+    elif tipoactual == 4:
+        GLOBFRASE += 1
+        dirfuncion = GLOBFRASE
+       
+        
+    
     #creamos espacio en memoria para la funcion
     
 
@@ -877,13 +912,7 @@ def p_call_or_array(t):
     '''call_or_array : LBRAK CTEINT push_array_dim1 RBRAK id_array
                      | LPAREN nombre_func expresion set_value_param id_call RPAREN push_gosub
                      | empty'''
-    global nombrefunc
-    global directorio
-    if t[-2] == '(':
-        for x in directorio:
-            if x[0] == nombrefunc:
-                gosub(directorio[x][2])
-            break
+
         
 def p_nombre_func(t):
     'nombre_func : '
@@ -901,6 +930,7 @@ def p_push_gosub(t):
         print (nombrefunc)
         if x[0] == nombrefunc:
             gosub(directorio[directorio.index(x)][2])
+            pila_id(directorio[directorio.index(x)][5])
     
 def p_set_value_param(t):
     'set_value_param : '
