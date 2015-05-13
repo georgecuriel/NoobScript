@@ -252,55 +252,55 @@ def p_vars_push_id(t):
         if tipoactual == 1:
             if dim == 0:
                 GLOBENTERO += 1
-                funvars.append((t[-2], 0, GLOBENTERO, dim))
+                funvars.append((t[-2], 0, GLOBENTERO, dim, dim1, dim2))
             elif dim == 1:
                 for x in range(dim1+1):
                     GLOBENTERO += 1
-                    funvars.append((t[-2], 0, GLOBENTERO, dim))
+                    funvars.append((t[-2], 0, GLOBENTERO, dim, dim1, dim2))
                 dim1 = None
             elif dim == 2:
                 for x in range(dim1+1):
                     for y in range(dim2+1):
                         GLOBENTERO += 1
-                        funvars.append((t[-2], 0, GLOBENTERO, dim))
+                        funvars.append((t[-2], 0, GLOBENTERO, dim,dim1, dim2))
                 dim1 = None
                 dim2 = None
         elif tipoactual == 2:
             if dim == 0:
                 GLOBDECIMAL += 1
-                funvars.append((t[-2], 0, GLOBDECIMAL, dim))
+                funvars.append((t[-2], 0, GLOBDECIMAL, dim, dim1, dim2))
             elif dim == 1:
                 for x in range(dim1+1):
                     GLOBDECIMAL += 1
-                    funvars.append((t[-2], 0, GLOBDECIMAL, dim))
+                    funvars.append((t[-2], 0, GLOBDECIMAL, dim, dim1, dim2))
                 dim1 = None
             elif dim == 2:
                 for x in range(dim1+1):
                     for y in range(dim2+1):
                         GLOBDECIMAL += 1
-                        funvars.append((t[-2], 0, GLOBDECIMAL, dim))
+                        funvars.append((t[-2], 0, GLOBDECIMAL, dim, dim1, dim2))
                 dim1 = None
                 dim2 = None
         elif tipoactual == 3:
             if dim == 0:
                 GLOBESVERDAD += 1
-                funvars.append((t[-2], 0, GLOBESVERDAD, dim))
+                funvars.append((t[-2], 0, GLOBESVERDAD, dim, dim1, dim2))
             elif dim == 1:
                 for x in range(dim1+1):
                     GLOBDECIMAL += 1
-                    funvars.append((t[-2], 0, GLOBESVERDAD, dim))
+                    funvars.append((t[-2], 0, GLOBESVERDAD, dim, dim1, dim2))
                 dim1 = None
             elif dim == 2:
                 for x in range(dim1+1):
                     for y in range(dim2+1):
                         GLOBDECIMAL += 1
-                        funvars.append((t[-2], 0, GLOBESVERDAD, dim))
+                        funvars.append((t[-2], 0, GLOBESVERDAD, dim, dim1, dim2))
                 dim1 = None
                 dim2 = None
         elif tipoactual == 4:
             if dim == 0:
                 GLOBFRASE += 1
-                funvars.append((t[-2], 0, GLOBFRASE, dim))
+                funvars.append((t[-2], 0, GLOBFRASE, dim, dim1, dim2))
             elif dim == 1:
                 for x in range(dim1+1):
                     GLOBFRASE += 1
@@ -312,7 +312,7 @@ def p_vars_push_id(t):
                         GLOBFRASE += 1
                         funvars.append((t[-2], 0, GLOBFRASE, dim))
                 dim1 = None
-                dim2 = None 
+                dim2 = None
     else:
         if tipoactual == 1:
             if dim == 0:
@@ -554,15 +554,36 @@ def p_estatuto(t):
 	print("estatuto")
 
 def p_asignacion(t):
-    'asignacion : ID asignacion_push_id IGUAL asignacion_push_igual expresion'
+    'asignacion : ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion'
     print("asignacion")
     assign()
     
 def p_asignacion_push_id(t):
     'asignacion_push_id :'
     for x in directorio[0][4]:
-        if x[0] == t[-1]:
-            pila_id(list(x)[2])
+        if x[0] == t[-2]:
+            if x[3] == 0:
+                pila_id(list(x)[2])
+                break
+            elif x[3] == 1:
+                pila_id(list(x)[2]+llamadim1+1)
+                break
+            elif x[3] == 2:
+                pila_id(list(x)[2]+llamadim1*(list(x)[5]+1)+llamadim2)
+                break
+        else:
+            for x in directorio[func][4]:
+                if x[0] == t[-2]:
+                    if x[3] == 0:
+                        pila_id(list(x)[2])
+                        break
+                    elif x[3] == 1:
+                        pila_id(list(x)[2]+llamadim1+1)
+                        break
+                    elif x[3] == 2:
+                        pila_id(list(x)[2]+llamadim1*(list(x)[5]+1)+llamadim2)
+                        break
+                
             
 def p_asignacion_push_igual(t):
     'asignacion_push_igual :'
@@ -692,13 +713,27 @@ def p_valor(t):
         for x in directorio[0][4]:
             if x[0] == t[1]:
             	if x[3] == 0:
-                	pila_id(list(x)[2])
+                    pila_id(list(x)[2])
+                    break
                 elif x[3] == 1:
-                	pila_id(list(x)[2]+llamadim1+1)
+                    pila_id(list(x)[2]+llamadim1+1)
+                    break
                 elif x[3] == 2:
-                	pila_id(list(x)[2]+llamadim1*x[5]+1+x[5]+1)
+                    print (llamadim1,(list(x)[5]+1), llamadim2  )
+                    pila_id(list(x)[2]+llamadim1*(list(x)[5]+1)+(llamadim2))
+                    break
             else:
-                print ("variable no declarada")
+                for x in directorio[func][4]:
+                     if x[0] == t[1]:
+                        if x[3] == 0:
+                            pila_id(list(x)[2])
+                            break
+                        elif x[3] == 1:
+                            pila_id(list(x)[2]+llamadim1+1)
+                            break
+                        elif x[3] == 2:
+                            break
+                
                 
 def p_call_or_array(t):
 	'''call_or_array : LBRAK CTEINT push_array_dim1 RBRAK id_array

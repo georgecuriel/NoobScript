@@ -51,7 +51,7 @@ Rule 39    estatuto -> mientras bloque
 Rule 40    estatuto -> para bloque
 Rule 41    estatuto -> escritura bloque
 Rule 42    estatuto -> llamada bloque
-Rule 43    asignacion -> ID asignacion_push_id IGUAL asignacion_push_igual expresion
+Rule 43    asignacion -> ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
 Rule 44    asignacion_push_id -> <empty>
 Rule 45    asignacion_push_igual -> <empty>
 Rule 46    llamada -> ID LPAREN llamadaparam RPAREN
@@ -88,66 +88,69 @@ Rule 76    factor_rparen -> <empty>
 Rule 77    valor -> ID call_or_array
 Rule 78    valor -> CTEINT
 Rule 79    valor -> CTEDEC
-Rule 80    call_or_array -> LBRAK CTEINT RBRAK id_array
+Rule 80    call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array
 Rule 81    call_or_array -> LPAREN expresion id_call RPAREN
 Rule 82    call_or_array -> empty
-Rule 83    id_array -> call_or_array
-Rule 84    id_call -> COMMA expresion id_call
-Rule 85    id_call -> empty
-Rule 86    condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
-Rule 87    condicion_if -> <empty>
-Rule 88    else -> SINO else_2 LLLAVE estatuto RLLAVE
-Rule 89    else -> empty
-Rule 90    else_2 -> <empty>
-Rule 91    para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
-Rule 92    param -> ID
-Rule 93    param -> CTEINT
-Rule 94    mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-Rule 95    mientras_haz_push -> <empty>
-Rule 96    escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN
-Rule 97    escritura_escribe -> <empty>
-Rule 98    esc -> expresion escs
-Rule 99    esc -> STRING escs
-Rule 100   escs -> COMMA esc
-Rule 101   escs -> empty
+Rule 83    id_array -> LBRAK CTEINT push_array_dim2 RBRAK
+Rule 84    id_array -> empty
+Rule 85    push_array_dim1 -> <empty>
+Rule 86    push_array_dim2 -> <empty>
+Rule 87    id_call -> COMMA expresion id_call
+Rule 88    id_call -> empty
+Rule 89    condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+Rule 90    condicion_if -> <empty>
+Rule 91    else -> SINO else_2 LLLAVE estatuto RLLAVE
+Rule 92    else -> empty
+Rule 93    else_2 -> <empty>
+Rule 94    para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+Rule 95    param -> ID
+Rule 96    param -> CTEINT
+Rule 97    mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+Rule 98    mientras_haz_push -> <empty>
+Rule 99    escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN
+Rule 100   escritura_escribe -> <empty>
+Rule 101   esc -> expresion escs
+Rule 102   esc -> STRING escs
+Rule 103   escs -> COMMA esc
+Rule 104   escs -> empty
 
 Terminals, with rules where they appear
 
 CLASE                : 
 COLON                : 
-COMMA                : 14 35 49 84 91 100
+COMMA                : 14 35 49 87 94 103
 COMPARA              : 55
 CTEDEC               : 79
-CTEINT               : 7 10 78 80 93
+CTEINT               : 7 10 78 80 83 96
 DECIMAL              : 20
 DIVIDE               : 69
-ENRANGO              : 91
+ENRANGO              : 94
 ENTERO               : 19
 ESVERDAD             : 22
 FRASE                : 21
 FUNCION              : 29
-HAZ                  : 94
-ID                   : 1 6 14 29 32 43 46 77 91 92
+HAZ                  : 97
+ID                   : 1 6 14 29 32 43 46 77 94 95
 IGUAL                : 43
-IMPRIME              : 96
-LBRAK                : 7 10 80
+IMPRIME              : 99
+LBRAK                : 7 10 80 83
 LEE                  : 52
-LLLAVE               : 1 29 86 88 91 94
-LPAREN               : 29 46 52 73 81 86 91 94 96
+LLLAVE               : 1 29 89 91 94 97
+LPAREN               : 29 46 52 73 81 89 94 97 99
 MAYOR                : 53
 MENOR                : 54
-MIENTRAS             : 94
+MIENTRAS             : 97
 MINUS                : 63
-PARA                 : 91
+PARA                 : 94
 PLUS                 : 62
 PROGRAMA             : 1
-RBRAK                : 7 10 80
-RLLAVE               : 1 29 86 88 91 94
-RPAREN               : 29 46 52 73 81 86 91 94 96
+RBRAK                : 7 10 80 83
+RLLAVE               : 1 29 89 91 94 97
+RPAREN               : 29 46 52 73 81 89 94 97 99
 SEMICOL              : 6 52
-SI                   : 86
-SINO                 : 88
-STRING               : 52 99
+SI                   : 89
+SINO                 : 91
+STRING               : 52 102
 TIMES                : 68
 VAR                  : 4
 VGLOBAL              : 
@@ -160,21 +163,21 @@ asignacion_push_id   : 43
 asignacion_push_igual : 43
 bloque               : 25 29 37 38 39 40 41 42
 body                 : 1 24 25
-call_or_array        : 77 83
+call_or_array        : 43 77
 condicion            : 38
-condicion_if         : 86
+condicion_if         : 89
 dimension            : 6 14
 dimension2           : 7
-else                 : 86
-else_2               : 88
-empty                : 5 8 11 15 18 26 28 33 36 48 50 57 64 70 82 85 89 101
-esc                  : 96 100
+else                 : 89
+else_2               : 91
+empty                : 5 8 11 15 18 26 28 33 36 48 50 57 64 70 82 84 88 92 104
+esc                  : 99 103
 escritura            : 41
-escritura_escribe    : 96
-escs                 : 98 99
-estatuto             : 27 86 88 91 94
+escritura_escribe    : 99
+escs                 : 101 102
+estatuto             : 27 89 91 94 97
 exp                  : 51 53 54 55 56
-expresion            : 43 47 73 81 84 86 94 98
+expresion            : 43 47 73 81 87 89 97 101
 expresions           : 51
 expresions_push_compara : 55
 expresions_push_mayor : 53
@@ -192,17 +195,19 @@ funparam             : 29 35
 funparam_push_id     : 32
 funparams            : 32
 id_array             : 80
-id_call              : 81 84
+id_call              : 81 87
 llamada              : 42
 llamadaparam         : 46 49
 llamadaparams        : 47
 mientras             : 39
-mientras_haz_push    : 94
+mientras_haz_push    : 97
 para                 : 40
-param                : 91 91
+param                : 94 94
 programa             : 0
 programa_push_dict   : 1
 programa_push_id     : 1
+push_array_dim1      : 80
+push_array_dim2      : 83
 push_dim1            : 7
 push_dim2            : 10
 termino              : 61 62 63
@@ -320,13 +325,13 @@ state 8
 
     (5) vars -> empty .
 
+    FUNCION         reduce using rule 5 (vars -> empty .)
     ID              reduce using rule 5 (vars -> empty .)
     SI              reduce using rule 5 (vars -> empty .)
     HAZ             reduce using rule 5 (vars -> empty .)
     PARA            reduce using rule 5 (vars -> empty .)
     IMPRIME         reduce using rule 5 (vars -> empty .)
     RLLAVE          reduce using rule 5 (vars -> empty .)
-    FUNCION         reduce using rule 5 (vars -> empty .)
 
 
 state 9
@@ -345,11 +350,11 @@ state 9
     (40) estatuto -> . para bloque
     (41) estatuto -> . escritura bloque
     (42) estatuto -> . llamada bloque
-    (43) asignacion -> . ID asignacion_push_id IGUAL asignacion_push_igual expresion
-    (86) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
-    (94) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-    (91) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
-    (96) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
+    (43) asignacion -> . ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
+    (89) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (97) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (94) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (99) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
     (46) llamada -> . ID LPAREN llamadaparam RPAREN
 
   ! shift/reduce conflict for FUNCION resolved as shift
@@ -410,13 +415,13 @@ state 13
 
     (4) vars -> VAR vars2 .
 
+    FUNCION         reduce using rule 4 (vars -> VAR vars2 .)
     ID              reduce using rule 4 (vars -> VAR vars2 .)
     SI              reduce using rule 4 (vars -> VAR vars2 .)
     HAZ             reduce using rule 4 (vars -> VAR vars2 .)
     PARA            reduce using rule 4 (vars -> VAR vars2 .)
     IMPRIME         reduce using rule 4 (vars -> VAR vars2 .)
     RLLAVE          reduce using rule 4 (vars -> VAR vars2 .)
-    FUNCION         reduce using rule 4 (vars -> VAR vars2 .)
 
 
 state 14
@@ -445,11 +450,11 @@ state 16
     (41) estatuto -> . escritura bloque
     (42) estatuto -> . llamada bloque
     (23) empty -> .
-    (43) asignacion -> . ID asignacion_push_id IGUAL asignacion_push_igual expresion
-    (86) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
-    (94) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-    (91) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
-    (96) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
+    (43) asignacion -> . ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
+    (89) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (97) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (94) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (99) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
     (46) llamada -> . ID LPAREN llamadaparam RPAREN
 
   ! shift/reduce conflict for ID resolved as shift
@@ -497,11 +502,11 @@ state 17
     (40) estatuto -> . para bloque
     (41) estatuto -> . escritura bloque
     (42) estatuto -> . llamada bloque
-    (43) asignacion -> . ID asignacion_push_id IGUAL asignacion_push_igual expresion
-    (86) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
-    (94) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-    (91) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
-    (96) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
+    (43) asignacion -> . ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
+    (89) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (97) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (94) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (99) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
     (46) llamada -> . ID LPAREN llamadaparam RPAREN
 
   ! shift/reduce conflict for FUNCION resolved as shift
@@ -539,7 +544,7 @@ state 17
 
 state 18
 
-    (91) para -> PARA . ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (94) para -> PARA . ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
 
     ID              shift and go to state 37
 
@@ -559,7 +564,7 @@ state 19
 
 state 20
 
-    (86) condicion -> SI . LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (89) condicion -> SI . LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
 
     LPAREN          shift and go to state 38
 
@@ -576,11 +581,11 @@ state 21
     (41) estatuto -> . escritura bloque
     (42) estatuto -> . llamada bloque
     (23) empty -> .
-    (43) asignacion -> . ID asignacion_push_id IGUAL asignacion_push_igual expresion
-    (86) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
-    (94) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-    (91) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
-    (96) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
+    (43) asignacion -> . ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
+    (89) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (97) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (94) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (99) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
     (46) llamada -> . ID LPAREN llamadaparam RPAREN
 
   ! shift/reduce conflict for ID resolved as shift
@@ -624,11 +629,11 @@ state 22
     (41) estatuto -> . escritura bloque
     (42) estatuto -> . llamada bloque
     (23) empty -> .
-    (43) asignacion -> . ID asignacion_push_id IGUAL asignacion_push_igual expresion
-    (86) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
-    (94) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-    (91) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
-    (96) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
+    (43) asignacion -> . ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
+    (89) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (97) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (94) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (99) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
     (46) llamada -> . ID LPAREN llamadaparam RPAREN
 
   ! shift/reduce conflict for ID resolved as shift
@@ -693,11 +698,11 @@ state 24
     (40) estatuto -> . para bloque
     (41) estatuto -> . escritura bloque
     (42) estatuto -> . llamada bloque
-    (43) asignacion -> . ID asignacion_push_id IGUAL asignacion_push_igual expresion
-    (86) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
-    (94) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-    (91) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
-    (96) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
+    (43) asignacion -> . ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
+    (89) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (97) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (94) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (99) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
     (46) llamada -> . ID LPAREN llamadaparam RPAREN
 
   ! shift/reduce conflict for FUNCION resolved as shift
@@ -752,11 +757,11 @@ state 26
     (41) estatuto -> . escritura bloque
     (42) estatuto -> . llamada bloque
     (23) empty -> .
-    (43) asignacion -> . ID asignacion_push_id IGUAL asignacion_push_igual expresion
-    (86) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
-    (94) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-    (91) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
-    (96) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
+    (43) asignacion -> . ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
+    (89) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (97) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (94) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (99) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
     (46) llamada -> . ID LPAREN llamadaparam RPAREN
 
   ! shift/reduce conflict for ID resolved as shift
@@ -790,23 +795,28 @@ state 26
 
 state 27
 
-    (94) mientras -> HAZ . mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-    (95) mientras_haz_push -> .
+    (97) mientras -> HAZ . mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (98) mientras_haz_push -> .
 
-    LLLAVE          reduce using rule 95 (mientras_haz_push -> .)
+    LLLAVE          reduce using rule 98 (mientras_haz_push -> .)
 
     mientras_haz_push              shift and go to state 44
 
 state 28
 
-    (43) asignacion -> ID . asignacion_push_id IGUAL asignacion_push_igual expresion
+    (43) asignacion -> ID . call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
     (46) llamada -> ID . LPAREN llamadaparam RPAREN
-    (44) asignacion_push_id -> .
+    (80) call_or_array -> . LBRAK CTEINT push_array_dim1 RBRAK id_array
+    (81) call_or_array -> . LPAREN expresion id_call RPAREN
+    (82) call_or_array -> . empty
+    (23) empty -> .
 
-    LPAREN          shift and go to state 45
-    IGUAL           reduce using rule 44 (asignacion_push_id -> .)
+    LPAREN          shift and go to state 46
+    LBRAK           shift and go to state 45
+    IGUAL           reduce using rule 23 (empty -> .)
 
-    asignacion_push_id             shift and go to state 46
+    call_or_array                  shift and go to state 47
+    empty                          shift and go to state 48
 
 state 29
 
@@ -818,16 +828,16 @@ state 29
     FRASE           reduce using rule 30 (funcion_increase_func -> .)
     ESVERDAD        reduce using rule 30 (funcion_increase_func -> .)
 
-    funcion_increase_func          shift and go to state 47
+    funcion_increase_func          shift and go to state 49
 
 state 30
 
-    (96) escritura -> IMPRIME . escritura_escribe LPAREN esc RPAREN
-    (97) escritura_escribe -> .
+    (99) escritura -> IMPRIME . escritura_escribe LPAREN esc RPAREN
+    (100) escritura_escribe -> .
 
-    LPAREN          reduce using rule 97 (escritura_escribe -> .)
+    LPAREN          reduce using rule 100 (escritura_escribe -> .)
 
-    escritura_escribe              shift and go to state 48
+    escritura_escribe              shift and go to state 50
 
 state 31
 
@@ -841,11 +851,11 @@ state 31
     (41) estatuto -> . escritura bloque
     (42) estatuto -> . llamada bloque
     (23) empty -> .
-    (43) asignacion -> . ID asignacion_push_id IGUAL asignacion_push_igual expresion
-    (86) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
-    (94) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-    (91) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
-    (96) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
+    (43) asignacion -> . ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
+    (89) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (97) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (94) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (99) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
     (46) llamada -> . ID LPAREN llamadaparam RPAREN
 
   ! shift/reduce conflict for ID resolved as shift
@@ -873,7 +883,7 @@ state 31
     estatuto                       shift and go to state 19
     mientras                       shift and go to state 16
     condicion                      shift and go to state 22
-    bloque                         shift and go to state 49
+    bloque                         shift and go to state 51
     empty                          shift and go to state 35
     escritura                      shift and go to state 32
 
@@ -889,11 +899,11 @@ state 32
     (41) estatuto -> . escritura bloque
     (42) estatuto -> . llamada bloque
     (23) empty -> .
-    (43) asignacion -> . ID asignacion_push_id IGUAL asignacion_push_igual expresion
-    (86) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
-    (94) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-    (91) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
-    (96) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
+    (43) asignacion -> . ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
+    (89) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (97) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (94) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (99) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
     (46) llamada -> . ID LPAREN llamadaparam RPAREN
 
   ! shift/reduce conflict for ID resolved as shift
@@ -921,7 +931,7 @@ state 32
     estatuto                       shift and go to state 19
     mientras                       shift and go to state 16
     condicion                      shift and go to state 22
-    bloque                         shift and go to state 50
+    bloque                         shift and go to state 52
     empty                          shift and go to state 35
     escritura                      shift and go to state 32
 
@@ -932,12 +942,12 @@ state 33
     (8) dimension -> . empty
     (23) empty -> .
 
-    LBRAK           shift and go to state 51
+    LBRAK           shift and go to state 53
     COMMA           reduce using rule 23 (empty -> .)
     SEMICOL         reduce using rule 23 (empty -> .)
 
-    dimension                      shift and go to state 52
-    empty                          shift and go to state 53
+    dimension                      shift and go to state 54
+    empty                          shift and go to state 55
 
 state 34
 
@@ -974,14 +984,14 @@ state 36
 
 state 37
 
-    (91) para -> PARA ID . ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (94) para -> PARA ID . ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
 
-    ENRANGO         shift and go to state 54
+    ENRANGO         shift and go to state 56
 
 
 state 38
 
-    (86) condicion -> SI LPAREN . expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (89) condicion -> SI LPAREN . expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
     (51) expresion -> . exp expresions
     (52) expresion -> . LEE LPAREN STRING RPAREN SEMICOL
     (61) exp -> . termino exps
@@ -992,17 +1002,17 @@ state 38
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    LEE             shift and go to state 63
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LEE             shift and go to state 65
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    expresion                      shift and go to state 62
-    termino                        shift and go to state 55
-    exp                            shift and go to state 64
-    factor                         shift and go to state 59
-    valor                          shift and go to state 57
+    expresion                      shift and go to state 64
+    termino                        shift and go to state 57
+    exp                            shift and go to state 66
+    factor                         shift and go to state 61
+    valor                          shift and go to state 59
 
 state 39
 
@@ -1059,14 +1069,22 @@ state 43
 
 state 44
 
-    (94) mientras -> HAZ mientras_haz_push . LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (97) mientras -> HAZ mientras_haz_push . LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
 
-    LLLAVE          shift and go to state 65
+    LLLAVE          shift and go to state 67
 
 
 state 45
 
+    (80) call_or_array -> LBRAK . CTEINT push_array_dim1 RBRAK id_array
+
+    CTEINT          shift and go to state 68
+
+
+state 46
+
     (46) llamada -> ID LPAREN . llamadaparam RPAREN
+    (81) call_or_array -> LPAREN . expresion id_call RPAREN
     (47) llamadaparam -> . expresion llamadaparams
     (48) llamadaparam -> . empty
     (51) expresion -> . exp expresions
@@ -1080,29 +1098,57 @@ state 45
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    LEE             shift and go to state 63
+    LEE             shift and go to state 65
     RPAREN          reduce using rule 23 (empty -> .)
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    expresion                      shift and go to state 68
-    valor                          shift and go to state 57
-    llamadaparam                   shift and go to state 66
-    termino                        shift and go to state 55
-    exp                            shift and go to state 64
-    factor                         shift and go to state 59
-    empty                          shift and go to state 67
-
-state 46
-
-    (43) asignacion -> ID asignacion_push_id . IGUAL asignacion_push_igual expresion
-
-    IGUAL           shift and go to state 69
-
+    expresion                      shift and go to state 71
+    valor                          shift and go to state 59
+    llamadaparam                   shift and go to state 69
+    termino                        shift and go to state 57
+    exp                            shift and go to state 66
+    factor                         shift and go to state 61
+    empty                          shift and go to state 70
 
 state 47
+
+    (43) asignacion -> ID call_or_array . asignacion_push_id IGUAL asignacion_push_igual expresion
+    (44) asignacion_push_id -> .
+
+    IGUAL           reduce using rule 44 (asignacion_push_id -> .)
+
+    asignacion_push_id             shift and go to state 72
+
+state 48
+
+    (82) call_or_array -> empty .
+
+    IGUAL           reduce using rule 82 (call_or_array -> empty .)
+    TIMES           reduce using rule 82 (call_or_array -> empty .)
+    DIVIDE          reduce using rule 82 (call_or_array -> empty .)
+    PLUS            reduce using rule 82 (call_or_array -> empty .)
+    MINUS           reduce using rule 82 (call_or_array -> empty .)
+    MAYOR           reduce using rule 82 (call_or_array -> empty .)
+    MENOR           reduce using rule 82 (call_or_array -> empty .)
+    COMPARA         reduce using rule 82 (call_or_array -> empty .)
+    LPAREN          reduce using rule 82 (call_or_array -> empty .)
+    ID              reduce using rule 82 (call_or_array -> empty .)
+    CTEINT          reduce using rule 82 (call_or_array -> empty .)
+    CTEDEC          reduce using rule 82 (call_or_array -> empty .)
+    RPAREN          reduce using rule 82 (call_or_array -> empty .)
+    COMMA           reduce using rule 82 (call_or_array -> empty .)
+    SI              reduce using rule 82 (call_or_array -> empty .)
+    HAZ             reduce using rule 82 (call_or_array -> empty .)
+    PARA            reduce using rule 82 (call_or_array -> empty .)
+    IMPRIME         reduce using rule 82 (call_or_array -> empty .)
+    FUNCION         reduce using rule 82 (call_or_array -> empty .)
+    RLLAVE          reduce using rule 82 (call_or_array -> empty .)
+
+
+state 49
 
     (29) funcion -> FUNCION funcion_increase_func . tipo ID funcion_push_id LPAREN funparam RPAREN LLLAVE vars bloque RLLAVE
     (19) tipo -> . ENTERO
@@ -1115,16 +1161,16 @@ state 47
     FRASE           shift and go to state 10
     ESVERDAD        shift and go to state 14
 
-    tipo                           shift and go to state 70
+    tipo                           shift and go to state 73
 
-state 48
+state 50
 
-    (96) escritura -> IMPRIME escritura_escribe . LPAREN esc RPAREN
+    (99) escritura -> IMPRIME escritura_escribe . LPAREN esc RPAREN
 
-    LPAREN          shift and go to state 71
+    LPAREN          shift and go to state 74
 
 
-state 49
+state 51
 
     (37) estatuto -> asignacion bloque .
 
@@ -1137,7 +1183,7 @@ state 49
     RLLAVE          reduce using rule 37 (estatuto -> asignacion bloque .)
 
 
-state 50
+state 52
 
     (41) estatuto -> escritura bloque .
 
@@ -1150,14 +1196,14 @@ state 50
     RLLAVE          reduce using rule 41 (estatuto -> escritura bloque .)
 
 
-state 51
+state 53
 
     (7) dimension -> LBRAK . CTEINT push_dim1 RBRAK dimension2
 
-    CTEINT          shift and go to state 72
+    CTEINT          shift and go to state 75
 
 
-state 52
+state 54
 
     (6) vars2 -> tipo ID dimension . vars_push_id vars3 SEMICOL vars4
     (13) vars_push_id -> .
@@ -1165,9 +1211,9 @@ state 52
     COMMA           reduce using rule 13 (vars_push_id -> .)
     SEMICOL         reduce using rule 13 (vars_push_id -> .)
 
-    vars_push_id                   shift and go to state 73
+    vars_push_id                   shift and go to state 76
 
-state 53
+state 55
 
     (8) dimension -> empty .
 
@@ -1175,14 +1221,14 @@ state 53
     SEMICOL         reduce using rule 8 (dimension -> empty .)
 
 
-state 54
+state 56
 
-    (91) para -> PARA ID ENRANGO . LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (94) para -> PARA ID ENRANGO . LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
 
-    LPAREN          shift and go to state 74
+    LPAREN          shift and go to state 77
 
 
-state 55
+state 57
 
     (61) exp -> termino . exps
     (62) exps -> . PLUS exps_push_plus termino exps
@@ -1190,8 +1236,8 @@ state 55
     (64) exps -> . empty
     (23) empty -> .
 
-    PLUS            shift and go to state 76
-    MINUS           shift and go to state 77
+    PLUS            shift and go to state 79
+    MINUS           shift and go to state 80
     MAYOR           reduce using rule 23 (empty -> .)
     MENOR           reduce using rule 23 (empty -> .)
     COMPARA         reduce using rule 23 (empty -> .)
@@ -1208,10 +1254,10 @@ state 55
     FUNCION         reduce using rule 23 (empty -> .)
     RLLAVE          reduce using rule 23 (empty -> .)
 
-    exps                           shift and go to state 75
-    empty                          shift and go to state 78
+    exps                           shift and go to state 78
+    empty                          shift and go to state 81
 
-state 56
+state 58
 
     (78) valor -> CTEINT .
 
@@ -1219,24 +1265,24 @@ state 56
     DIVIDE          reduce using rule 78 (valor -> CTEINT .)
     PLUS            reduce using rule 78 (valor -> CTEINT .)
     MINUS           reduce using rule 78 (valor -> CTEINT .)
-    RPAREN          reduce using rule 78 (valor -> CTEINT .)
-    COMMA           reduce using rule 78 (valor -> CTEINT .)
+    MAYOR           reduce using rule 78 (valor -> CTEINT .)
+    MENOR           reduce using rule 78 (valor -> CTEINT .)
+    COMPARA         reduce using rule 78 (valor -> CTEINT .)
+    LPAREN          reduce using rule 78 (valor -> CTEINT .)
     ID              reduce using rule 78 (valor -> CTEINT .)
+    CTEINT          reduce using rule 78 (valor -> CTEINT .)
+    CTEDEC          reduce using rule 78 (valor -> CTEINT .)
+    COMMA           reduce using rule 78 (valor -> CTEINT .)
+    RPAREN          reduce using rule 78 (valor -> CTEINT .)
     SI              reduce using rule 78 (valor -> CTEINT .)
     HAZ             reduce using rule 78 (valor -> CTEINT .)
     PARA            reduce using rule 78 (valor -> CTEINT .)
     IMPRIME         reduce using rule 78 (valor -> CTEINT .)
     FUNCION         reduce using rule 78 (valor -> CTEINT .)
     RLLAVE          reduce using rule 78 (valor -> CTEINT .)
-    MAYOR           reduce using rule 78 (valor -> CTEINT .)
-    MENOR           reduce using rule 78 (valor -> CTEINT .)
-    COMPARA         reduce using rule 78 (valor -> CTEINT .)
-    LPAREN          reduce using rule 78 (valor -> CTEINT .)
-    CTEINT          reduce using rule 78 (valor -> CTEINT .)
-    CTEDEC          reduce using rule 78 (valor -> CTEINT .)
 
 
-state 57
+state 59
 
     (74) factor -> valor .
 
@@ -1244,24 +1290,24 @@ state 57
     DIVIDE          reduce using rule 74 (factor -> valor .)
     PLUS            reduce using rule 74 (factor -> valor .)
     MINUS           reduce using rule 74 (factor -> valor .)
-    MAYOR           reduce using rule 74 (factor -> valor .)
-    MENOR           reduce using rule 74 (factor -> valor .)
-    COMPARA         reduce using rule 74 (factor -> valor .)
-    LPAREN          reduce using rule 74 (factor -> valor .)
-    ID              reduce using rule 74 (factor -> valor .)
-    CTEINT          reduce using rule 74 (factor -> valor .)
-    CTEDEC          reduce using rule 74 (factor -> valor .)
-    COMMA           reduce using rule 74 (factor -> valor .)
     RPAREN          reduce using rule 74 (factor -> valor .)
+    COMMA           reduce using rule 74 (factor -> valor .)
+    ID              reduce using rule 74 (factor -> valor .)
     SI              reduce using rule 74 (factor -> valor .)
     HAZ             reduce using rule 74 (factor -> valor .)
     PARA            reduce using rule 74 (factor -> valor .)
     IMPRIME         reduce using rule 74 (factor -> valor .)
     FUNCION         reduce using rule 74 (factor -> valor .)
     RLLAVE          reduce using rule 74 (factor -> valor .)
+    MAYOR           reduce using rule 74 (factor -> valor .)
+    MENOR           reduce using rule 74 (factor -> valor .)
+    COMPARA         reduce using rule 74 (factor -> valor .)
+    LPAREN          reduce using rule 74 (factor -> valor .)
+    CTEINT          reduce using rule 74 (factor -> valor .)
+    CTEDEC          reduce using rule 74 (factor -> valor .)
 
 
-state 58
+state 60
 
     (79) valor -> CTEDEC .
 
@@ -1269,24 +1315,24 @@ state 58
     DIVIDE          reduce using rule 79 (valor -> CTEDEC .)
     PLUS            reduce using rule 79 (valor -> CTEDEC .)
     MINUS           reduce using rule 79 (valor -> CTEDEC .)
-    RPAREN          reduce using rule 79 (valor -> CTEDEC .)
-    COMMA           reduce using rule 79 (valor -> CTEDEC .)
+    MAYOR           reduce using rule 79 (valor -> CTEDEC .)
+    MENOR           reduce using rule 79 (valor -> CTEDEC .)
+    COMPARA         reduce using rule 79 (valor -> CTEDEC .)
+    LPAREN          reduce using rule 79 (valor -> CTEDEC .)
     ID              reduce using rule 79 (valor -> CTEDEC .)
+    CTEINT          reduce using rule 79 (valor -> CTEDEC .)
+    CTEDEC          reduce using rule 79 (valor -> CTEDEC .)
+    COMMA           reduce using rule 79 (valor -> CTEDEC .)
+    RPAREN          reduce using rule 79 (valor -> CTEDEC .)
     SI              reduce using rule 79 (valor -> CTEDEC .)
     HAZ             reduce using rule 79 (valor -> CTEDEC .)
     PARA            reduce using rule 79 (valor -> CTEDEC .)
     IMPRIME         reduce using rule 79 (valor -> CTEDEC .)
     FUNCION         reduce using rule 79 (valor -> CTEDEC .)
     RLLAVE          reduce using rule 79 (valor -> CTEDEC .)
-    MAYOR           reduce using rule 79 (valor -> CTEDEC .)
-    MENOR           reduce using rule 79 (valor -> CTEDEC .)
-    COMPARA         reduce using rule 79 (valor -> CTEDEC .)
-    LPAREN          reduce using rule 79 (valor -> CTEDEC .)
-    CTEINT          reduce using rule 79 (valor -> CTEDEC .)
-    CTEDEC          reduce using rule 79 (valor -> CTEDEC .)
 
 
-state 59
+state 61
 
     (67) termino -> factor . terminos
     (68) terminos -> . TIMES terminos_push_times factor terminos
@@ -1294,8 +1340,8 @@ state 59
     (70) terminos -> . empty
     (23) empty -> .
 
-    TIMES           shift and go to state 81
-    DIVIDE          shift and go to state 79
+    TIMES           shift and go to state 84
+    DIVIDE          shift and go to state 82
     PLUS            reduce using rule 23 (empty -> .)
     MINUS           reduce using rule 23 (empty -> .)
     MAYOR           reduce using rule 23 (empty -> .)
@@ -1314,10 +1360,10 @@ state 59
     FUNCION         reduce using rule 23 (empty -> .)
     RLLAVE          reduce using rule 23 (empty -> .)
 
-    terminos                       shift and go to state 80
-    empty                          shift and go to state 82
+    terminos                       shift and go to state 83
+    empty                          shift and go to state 85
 
-state 60
+state 62
 
     (73) factor -> LPAREN . factor_lparen expresion RPAREN factor_rparen
     (75) factor_lparen -> .
@@ -1328,19 +1374,19 @@ state 60
     CTEINT          reduce using rule 75 (factor_lparen -> .)
     CTEDEC          reduce using rule 75 (factor_lparen -> .)
 
-    factor_lparen                  shift and go to state 83
+    factor_lparen                  shift and go to state 86
 
-state 61
+state 63
 
     (77) valor -> ID . call_or_array
-    (80) call_or_array -> . LBRAK CTEINT RBRAK id_array
+    (80) call_or_array -> . LBRAK CTEINT push_array_dim1 RBRAK id_array
     (81) call_or_array -> . LPAREN expresion id_call RPAREN
     (82) call_or_array -> . empty
     (23) empty -> .
 
   ! shift/reduce conflict for LPAREN resolved as shift
-    LBRAK           shift and go to state 84
-    LPAREN          shift and go to state 85
+    LBRAK           shift and go to state 45
+    LPAREN          shift and go to state 87
     TIMES           reduce using rule 23 (empty -> .)
     DIVIDE          reduce using rule 23 (empty -> .)
     PLUS            reduce using rule 23 (empty -> .)
@@ -1362,24 +1408,24 @@ state 61
 
   ! LPAREN          [ reduce using rule 23 (empty -> .) ]
 
-    call_or_array                  shift and go to state 86
-    empty                          shift and go to state 87
+    call_or_array                  shift and go to state 88
+    empty                          shift and go to state 48
 
-state 62
+state 64
 
-    (86) condicion -> SI LPAREN expresion . RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (89) condicion -> SI LPAREN expresion . RPAREN condicion_if LLLAVE estatuto RLLAVE else
 
-    RPAREN          shift and go to state 88
+    RPAREN          shift and go to state 89
 
 
-state 63
+state 65
 
     (52) expresion -> LEE . LPAREN STRING RPAREN SEMICOL
 
-    LPAREN          shift and go to state 89
+    LPAREN          shift and go to state 90
 
 
-state 64
+state 66
 
     (51) expresion -> exp . expresions
     (53) expresions -> . MAYOR expresions_push_mayor exp
@@ -1397,9 +1443,9 @@ state 64
     (79) valor -> . CTEDEC
 
   ! shift/reduce conflict for ID resolved as shift
-    MAYOR           shift and go to state 91
-    MENOR           shift and go to state 94
-    COMPARA         shift and go to state 93
+    MAYOR           shift and go to state 92
+    MENOR           shift and go to state 95
+    COMPARA         shift and go to state 94
     RPAREN          reduce using rule 23 (empty -> .)
     COMMA           reduce using rule 23 (empty -> .)
     SI              reduce using rule 23 (empty -> .)
@@ -1408,34 +1454,34 @@ state 64
     IMPRIME         reduce using rule 23 (empty -> .)
     FUNCION         reduce using rule 23 (empty -> .)
     RLLAVE          reduce using rule 23 (empty -> .)
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
   ! ID              [ reduce using rule 23 (empty -> .) ]
 
-    expresions                     shift and go to state 90
-    termino                        shift and go to state 55
-    exp                            shift and go to state 95
-    factor                         shift and go to state 59
-    empty                          shift and go to state 92
-    valor                          shift and go to state 57
+    expresions                     shift and go to state 91
+    termino                        shift and go to state 57
+    exp                            shift and go to state 96
+    factor                         shift and go to state 61
+    empty                          shift and go to state 93
+    valor                          shift and go to state 59
 
-state 65
+state 67
 
-    (94) mientras -> HAZ mientras_haz_push LLLAVE . estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (97) mientras -> HAZ mientras_haz_push LLLAVE . estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
     (37) estatuto -> . asignacion bloque
     (38) estatuto -> . condicion bloque
     (39) estatuto -> . mientras bloque
     (40) estatuto -> . para bloque
     (41) estatuto -> . escritura bloque
     (42) estatuto -> . llamada bloque
-    (43) asignacion -> . ID asignacion_push_id IGUAL asignacion_push_igual expresion
-    (86) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
-    (94) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-    (91) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
-    (96) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
+    (43) asignacion -> . ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
+    (89) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (97) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (94) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (99) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
     (46) llamada -> . ID LPAREN llamadaparam RPAREN
 
     ID              shift and go to state 28
@@ -1447,63 +1493,70 @@ state 65
     para                           shift and go to state 26
     asignacion                     shift and go to state 31
     llamada                        shift and go to state 21
-    estatuto                       shift and go to state 96
+    estatuto                       shift and go to state 97
     mientras                       shift and go to state 16
     condicion                      shift and go to state 22
     escritura                      shift and go to state 32
 
-state 66
+state 68
+
+    (80) call_or_array -> LBRAK CTEINT . push_array_dim1 RBRAK id_array
+    (85) push_array_dim1 -> .
+
+    RBRAK           reduce using rule 85 (push_array_dim1 -> .)
+
+    push_array_dim1                shift and go to state 98
+
+state 69
 
     (46) llamada -> ID LPAREN llamadaparam . RPAREN
 
-    RPAREN          shift and go to state 97
+    RPAREN          shift and go to state 99
 
 
-state 67
+state 70
 
     (48) llamadaparam -> empty .
 
     RPAREN          reduce using rule 48 (llamadaparam -> empty .)
 
 
-state 68
+state 71
 
+    (81) call_or_array -> LPAREN expresion . id_call RPAREN
     (47) llamadaparam -> expresion . llamadaparams
+    (87) id_call -> . COMMA expresion id_call
+    (88) id_call -> . empty
     (49) llamadaparams -> . COMMA llamadaparam
     (50) llamadaparams -> . empty
     (23) empty -> .
 
-    COMMA           shift and go to state 98
+    COMMA           shift and go to state 100
     RPAREN          reduce using rule 23 (empty -> .)
 
-    llamadaparams                  shift and go to state 99
-    empty                          shift and go to state 100
+    id_call                        shift and go to state 101
+    llamadaparams                  shift and go to state 102
+    empty                          shift and go to state 103
 
-state 69
+state 72
 
-    (43) asignacion -> ID asignacion_push_id IGUAL . asignacion_push_igual expresion
-    (45) asignacion_push_igual -> .
+    (43) asignacion -> ID call_or_array asignacion_push_id . IGUAL asignacion_push_igual expresion
 
-    LEE             reduce using rule 45 (asignacion_push_igual -> .)
-    LPAREN          reduce using rule 45 (asignacion_push_igual -> .)
-    ID              reduce using rule 45 (asignacion_push_igual -> .)
-    CTEINT          reduce using rule 45 (asignacion_push_igual -> .)
-    CTEDEC          reduce using rule 45 (asignacion_push_igual -> .)
+    IGUAL           shift and go to state 104
 
-    asignacion_push_igual          shift and go to state 101
 
-state 70
+state 73
 
     (29) funcion -> FUNCION funcion_increase_func tipo . ID funcion_push_id LPAREN funparam RPAREN LLLAVE vars bloque RLLAVE
 
-    ID              shift and go to state 102
+    ID              shift and go to state 105
 
 
-state 71
+state 74
 
-    (96) escritura -> IMPRIME escritura_escribe LPAREN . esc RPAREN
-    (98) esc -> . expresion escs
-    (99) esc -> . STRING escs
+    (99) escritura -> IMPRIME escritura_escribe LPAREN . esc RPAREN
+    (101) esc -> . expresion escs
+    (102) esc -> . STRING escs
     (51) expresion -> . exp expresions
     (52) expresion -> . LEE LPAREN STRING RPAREN SEMICOL
     (61) exp -> . termino exps
@@ -1514,54 +1567,54 @@ state 71
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    STRING          shift and go to state 104
-    LEE             shift and go to state 63
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    STRING          shift and go to state 107
+    LEE             shift and go to state 65
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    expresion                      shift and go to state 105
-    valor                          shift and go to state 57
-    esc                            shift and go to state 103
-    termino                        shift and go to state 55
-    exp                            shift and go to state 64
-    factor                         shift and go to state 59
+    expresion                      shift and go to state 108
+    valor                          shift and go to state 59
+    esc                            shift and go to state 106
+    termino                        shift and go to state 57
+    exp                            shift and go to state 66
+    factor                         shift and go to state 61
 
-state 72
+state 75
 
     (7) dimension -> LBRAK CTEINT . push_dim1 RBRAK dimension2
     (9) push_dim1 -> .
 
     RBRAK           reduce using rule 9 (push_dim1 -> .)
 
-    push_dim1                      shift and go to state 106
+    push_dim1                      shift and go to state 109
 
-state 73
+state 76
 
     (6) vars2 -> tipo ID dimension vars_push_id . vars3 SEMICOL vars4
     (14) vars3 -> . COMMA ID dimension vars3_push_id vars3
     (15) vars3 -> . empty
     (23) empty -> .
 
-    COMMA           shift and go to state 108
+    COMMA           shift and go to state 111
     SEMICOL         reduce using rule 23 (empty -> .)
 
-    vars3                          shift and go to state 107
-    empty                          shift and go to state 109
+    vars3                          shift and go to state 110
+    empty                          shift and go to state 112
 
-state 74
+state 77
 
-    (91) para -> PARA ID ENRANGO LPAREN . param COMMA param RPAREN LLLAVE estatuto RLLAVE
-    (92) param -> . ID
-    (93) param -> . CTEINT
+    (94) para -> PARA ID ENRANGO LPAREN . param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (95) param -> . ID
+    (96) param -> . CTEINT
 
-    ID              shift and go to state 112
-    CTEINT          shift and go to state 110
+    ID              shift and go to state 115
+    CTEINT          shift and go to state 113
 
-    param                          shift and go to state 111
+    param                          shift and go to state 114
 
-state 75
+state 78
 
     (61) exp -> termino exps .
 
@@ -1572,17 +1625,17 @@ state 75
     ID              reduce using rule 61 (exp -> termino exps .)
     CTEINT          reduce using rule 61 (exp -> termino exps .)
     CTEDEC          reduce using rule 61 (exp -> termino exps .)
+    COMMA           reduce using rule 61 (exp -> termino exps .)
+    RPAREN          reduce using rule 61 (exp -> termino exps .)
     SI              reduce using rule 61 (exp -> termino exps .)
     HAZ             reduce using rule 61 (exp -> termino exps .)
     PARA            reduce using rule 61 (exp -> termino exps .)
     IMPRIME         reduce using rule 61 (exp -> termino exps .)
     FUNCION         reduce using rule 61 (exp -> termino exps .)
     RLLAVE          reduce using rule 61 (exp -> termino exps .)
-    COMMA           reduce using rule 61 (exp -> termino exps .)
-    RPAREN          reduce using rule 61 (exp -> termino exps .)
 
 
-state 76
+state 79
 
     (62) exps -> PLUS . exps_push_plus termino exps
     (65) exps_push_plus -> .
@@ -1592,9 +1645,9 @@ state 76
     CTEINT          reduce using rule 65 (exps_push_plus -> .)
     CTEDEC          reduce using rule 65 (exps_push_plus -> .)
 
-    exps_push_plus                 shift and go to state 113
+    exps_push_plus                 shift and go to state 116
 
-state 77
+state 80
 
     (63) exps -> MINUS . exps_push_minus termino exps
     (66) exps_push_minus -> .
@@ -1604,9 +1657,9 @@ state 77
     CTEINT          reduce using rule 66 (exps_push_minus -> .)
     CTEDEC          reduce using rule 66 (exps_push_minus -> .)
 
-    exps_push_minus                shift and go to state 114
+    exps_push_minus                shift and go to state 117
 
-state 78
+state 81
 
     (64) exps -> empty .
 
@@ -1627,7 +1680,7 @@ state 78
     RLLAVE          reduce using rule 64 (exps -> empty .)
 
 
-state 79
+state 82
 
     (69) terminos -> DIVIDE . terminos_push_divide factor terminos
     (72) terminos_push_divide -> .
@@ -1637,32 +1690,32 @@ state 79
     CTEINT          reduce using rule 72 (terminos_push_divide -> .)
     CTEDEC          reduce using rule 72 (terminos_push_divide -> .)
 
-    terminos_push_divide           shift and go to state 115
+    terminos_push_divide           shift and go to state 118
 
-state 80
+state 83
 
     (67) termino -> factor terminos .
 
     PLUS            reduce using rule 67 (termino -> factor terminos .)
     MINUS           reduce using rule 67 (termino -> factor terminos .)
-    MAYOR           reduce using rule 67 (termino -> factor terminos .)
-    MENOR           reduce using rule 67 (termino -> factor terminos .)
-    COMPARA         reduce using rule 67 (termino -> factor terminos .)
-    LPAREN          reduce using rule 67 (termino -> factor terminos .)
-    ID              reduce using rule 67 (termino -> factor terminos .)
-    CTEINT          reduce using rule 67 (termino -> factor terminos .)
-    CTEDEC          reduce using rule 67 (termino -> factor terminos .)
-    COMMA           reduce using rule 67 (termino -> factor terminos .)
     RPAREN          reduce using rule 67 (termino -> factor terminos .)
+    COMMA           reduce using rule 67 (termino -> factor terminos .)
+    ID              reduce using rule 67 (termino -> factor terminos .)
     SI              reduce using rule 67 (termino -> factor terminos .)
     HAZ             reduce using rule 67 (termino -> factor terminos .)
     PARA            reduce using rule 67 (termino -> factor terminos .)
     IMPRIME         reduce using rule 67 (termino -> factor terminos .)
     FUNCION         reduce using rule 67 (termino -> factor terminos .)
     RLLAVE          reduce using rule 67 (termino -> factor terminos .)
+    MAYOR           reduce using rule 67 (termino -> factor terminos .)
+    MENOR           reduce using rule 67 (termino -> factor terminos .)
+    COMPARA         reduce using rule 67 (termino -> factor terminos .)
+    LPAREN          reduce using rule 67 (termino -> factor terminos .)
+    CTEINT          reduce using rule 67 (termino -> factor terminos .)
+    CTEDEC          reduce using rule 67 (termino -> factor terminos .)
 
 
-state 81
+state 84
 
     (68) terminos -> TIMES . terminos_push_times factor terminos
     (71) terminos_push_times -> .
@@ -1672,9 +1725,9 @@ state 81
     CTEINT          reduce using rule 71 (terminos_push_times -> .)
     CTEDEC          reduce using rule 71 (terminos_push_times -> .)
 
-    terminos_push_times            shift and go to state 116
+    terminos_push_times            shift and go to state 119
 
-state 82
+state 85
 
     (70) terminos -> empty .
 
@@ -1697,7 +1750,7 @@ state 82
     RLLAVE          reduce using rule 70 (terminos -> empty .)
 
 
-state 83
+state 86
 
     (73) factor -> LPAREN factor_lparen . expresion RPAREN factor_rparen
     (51) expresion -> . exp expresions
@@ -1710,26 +1763,19 @@ state 83
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    LEE             shift and go to state 63
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LEE             shift and go to state 65
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    expresion                      shift and go to state 117
-    valor                          shift and go to state 57
-    termino                        shift and go to state 55
-    exp                            shift and go to state 64
-    factor                         shift and go to state 59
+    expresion                      shift and go to state 120
+    valor                          shift and go to state 59
+    termino                        shift and go to state 57
+    exp                            shift and go to state 66
+    factor                         shift and go to state 61
 
-state 84
-
-    (80) call_or_array -> LBRAK . CTEINT RBRAK id_array
-
-    CTEINT          shift and go to state 118
-
-
-state 85
+state 87
 
     (81) call_or_array -> LPAREN . expresion id_call RPAREN
     (51) expresion -> . exp expresions
@@ -1742,19 +1788,19 @@ state 85
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    LEE             shift and go to state 63
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LEE             shift and go to state 65
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    expresion                      shift and go to state 119
-    valor                          shift and go to state 57
-    termino                        shift and go to state 55
-    exp                            shift and go to state 64
-    factor                         shift and go to state 59
+    expresion                      shift and go to state 121
+    valor                          shift and go to state 59
+    termino                        shift and go to state 57
+    exp                            shift and go to state 66
+    factor                         shift and go to state 61
 
-state 86
+state 88
 
     (77) valor -> ID call_or_array .
 
@@ -1762,65 +1808,40 @@ state 86
     DIVIDE          reduce using rule 77 (valor -> ID call_or_array .)
     PLUS            reduce using rule 77 (valor -> ID call_or_array .)
     MINUS           reduce using rule 77 (valor -> ID call_or_array .)
-    RPAREN          reduce using rule 77 (valor -> ID call_or_array .)
-    COMMA           reduce using rule 77 (valor -> ID call_or_array .)
+    MAYOR           reduce using rule 77 (valor -> ID call_or_array .)
+    MENOR           reduce using rule 77 (valor -> ID call_or_array .)
+    COMPARA         reduce using rule 77 (valor -> ID call_or_array .)
+    LPAREN          reduce using rule 77 (valor -> ID call_or_array .)
     ID              reduce using rule 77 (valor -> ID call_or_array .)
+    CTEINT          reduce using rule 77 (valor -> ID call_or_array .)
+    CTEDEC          reduce using rule 77 (valor -> ID call_or_array .)
+    COMMA           reduce using rule 77 (valor -> ID call_or_array .)
+    RPAREN          reduce using rule 77 (valor -> ID call_or_array .)
     SI              reduce using rule 77 (valor -> ID call_or_array .)
     HAZ             reduce using rule 77 (valor -> ID call_or_array .)
     PARA            reduce using rule 77 (valor -> ID call_or_array .)
     IMPRIME         reduce using rule 77 (valor -> ID call_or_array .)
     FUNCION         reduce using rule 77 (valor -> ID call_or_array .)
     RLLAVE          reduce using rule 77 (valor -> ID call_or_array .)
-    MAYOR           reduce using rule 77 (valor -> ID call_or_array .)
-    MENOR           reduce using rule 77 (valor -> ID call_or_array .)
-    COMPARA         reduce using rule 77 (valor -> ID call_or_array .)
-    LPAREN          reduce using rule 77 (valor -> ID call_or_array .)
-    CTEINT          reduce using rule 77 (valor -> ID call_or_array .)
-    CTEDEC          reduce using rule 77 (valor -> ID call_or_array .)
 
-
-state 87
-
-    (82) call_or_array -> empty .
-
-    TIMES           reduce using rule 82 (call_or_array -> empty .)
-    DIVIDE          reduce using rule 82 (call_or_array -> empty .)
-    PLUS            reduce using rule 82 (call_or_array -> empty .)
-    MINUS           reduce using rule 82 (call_or_array -> empty .)
-    MAYOR           reduce using rule 82 (call_or_array -> empty .)
-    MENOR           reduce using rule 82 (call_or_array -> empty .)
-    COMPARA         reduce using rule 82 (call_or_array -> empty .)
-    LPAREN          reduce using rule 82 (call_or_array -> empty .)
-    ID              reduce using rule 82 (call_or_array -> empty .)
-    CTEINT          reduce using rule 82 (call_or_array -> empty .)
-    CTEDEC          reduce using rule 82 (call_or_array -> empty .)
-    RPAREN          reduce using rule 82 (call_or_array -> empty .)
-    COMMA           reduce using rule 82 (call_or_array -> empty .)
-    SI              reduce using rule 82 (call_or_array -> empty .)
-    HAZ             reduce using rule 82 (call_or_array -> empty .)
-    PARA            reduce using rule 82 (call_or_array -> empty .)
-    IMPRIME         reduce using rule 82 (call_or_array -> empty .)
-    FUNCION         reduce using rule 82 (call_or_array -> empty .)
-    RLLAVE          reduce using rule 82 (call_or_array -> empty .)
-
-
-state 88
-
-    (86) condicion -> SI LPAREN expresion RPAREN . condicion_if LLLAVE estatuto RLLAVE else
-    (87) condicion_if -> .
-
-    LLLAVE          reduce using rule 87 (condicion_if -> .)
-
-    condicion_if                   shift and go to state 120
 
 state 89
 
-    (52) expresion -> LEE LPAREN . STRING RPAREN SEMICOL
+    (89) condicion -> SI LPAREN expresion RPAREN . condicion_if LLLAVE estatuto RLLAVE else
+    (90) condicion_if -> .
 
-    STRING          shift and go to state 121
+    LLLAVE          reduce using rule 90 (condicion_if -> .)
 
+    condicion_if                   shift and go to state 122
 
 state 90
+
+    (52) expresion -> LEE LPAREN . STRING RPAREN SEMICOL
+
+    STRING          shift and go to state 123
+
+
+state 91
 
     (51) expresion -> exp expresions .
 
@@ -1835,7 +1856,7 @@ state 90
     RLLAVE          reduce using rule 51 (expresion -> exp expresions .)
 
 
-state 91
+state 92
 
     (53) expresions -> MAYOR . expresions_push_mayor exp
     (58) expresions_push_mayor -> .
@@ -1845,9 +1866,9 @@ state 91
     CTEINT          reduce using rule 58 (expresions_push_mayor -> .)
     CTEDEC          reduce using rule 58 (expresions_push_mayor -> .)
 
-    expresions_push_mayor          shift and go to state 122
+    expresions_push_mayor          shift and go to state 124
 
-state 92
+state 93
 
     (57) expresions -> empty .
 
@@ -1862,7 +1883,7 @@ state 92
     RLLAVE          reduce using rule 57 (expresions -> empty .)
 
 
-state 93
+state 94
 
     (55) expresions -> COMPARA . expresions_push_compara exp
     (60) expresions_push_compara -> .
@@ -1872,9 +1893,9 @@ state 93
     CTEINT          reduce using rule 60 (expresions_push_compara -> .)
     CTEDEC          reduce using rule 60 (expresions_push_compara -> .)
 
-    expresions_push_compara        shift and go to state 123
+    expresions_push_compara        shift and go to state 125
 
-state 94
+state 95
 
     (54) expresions -> MENOR . expresions_push_menor exp
     (59) expresions_push_menor -> .
@@ -1884,9 +1905,9 @@ state 94
     CTEINT          reduce using rule 59 (expresions_push_menor -> .)
     CTEDEC          reduce using rule 59 (expresions_push_menor -> .)
 
-    expresions_push_menor          shift and go to state 124
+    expresions_push_menor          shift and go to state 126
 
-state 95
+state 96
 
     (56) expresions -> exp .
 
@@ -1901,14 +1922,21 @@ state 95
     RLLAVE          reduce using rule 56 (expresions -> exp .)
 
 
-state 96
-
-    (94) mientras -> HAZ mientras_haz_push LLLAVE estatuto . RLLAVE MIENTRAS LPAREN expresion RPAREN
-
-    RLLAVE          shift and go to state 125
-
-
 state 97
+
+    (97) mientras -> HAZ mientras_haz_push LLLAVE estatuto . RLLAVE MIENTRAS LPAREN expresion RPAREN
+
+    RLLAVE          shift and go to state 127
+
+
+state 98
+
+    (80) call_or_array -> LBRAK CTEINT push_array_dim1 . RBRAK id_array
+
+    RBRAK           shift and go to state 128
+
+
+state 99
 
     (46) llamada -> ID LPAREN llamadaparam RPAREN .
 
@@ -1921,15 +1949,16 @@ state 97
     RLLAVE          reduce using rule 46 (llamada -> ID LPAREN llamadaparam RPAREN .)
 
 
-state 98
+state 100
 
+    (87) id_call -> COMMA . expresion id_call
     (49) llamadaparams -> COMMA . llamadaparam
-    (47) llamadaparam -> . expresion llamadaparams
-    (48) llamadaparam -> . empty
     (51) expresion -> . exp expresions
     (52) expresion -> . LEE LPAREN STRING RPAREN SEMICOL
-    (23) empty -> .
+    (47) llamadaparam -> . expresion llamadaparams
+    (48) llamadaparam -> . empty
     (61) exp -> . termino exps
+    (23) empty -> .
     (67) termino -> . factor terminos
     (73) factor -> . LPAREN factor_lparen expresion RPAREN factor_rparen
     (74) factor -> . valor
@@ -1937,154 +1966,153 @@ state 98
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    LEE             shift and go to state 63
+    LEE             shift and go to state 65
     RPAREN          reduce using rule 23 (empty -> .)
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    expresion                      shift and go to state 68
-    valor                          shift and go to state 57
-    llamadaparam                   shift and go to state 126
-    termino                        shift and go to state 55
-    exp                            shift and go to state 64
-    factor                         shift and go to state 59
-    empty                          shift and go to state 67
+    expresion                      shift and go to state 130
+    valor                          shift and go to state 59
+    llamadaparam                   shift and go to state 129
+    termino                        shift and go to state 57
+    exp                            shift and go to state 66
+    factor                         shift and go to state 61
+    empty                          shift and go to state 70
 
-state 99
+state 101
+
+    (81) call_or_array -> LPAREN expresion id_call . RPAREN
+
+    RPAREN          shift and go to state 131
+
+
+state 102
 
     (47) llamadaparam -> expresion llamadaparams .
 
     RPAREN          reduce using rule 47 (llamadaparam -> expresion llamadaparams .)
 
 
-state 100
+state 103
 
+    (88) id_call -> empty .
     (50) llamadaparams -> empty .
 
+  ! reduce/reduce conflict for RPAREN resolved using rule 50 (llamadaparams -> empty .)
     RPAREN          reduce using rule 50 (llamadaparams -> empty .)
 
+  ! RPAREN          [ reduce using rule 88 (id_call -> empty .) ]
 
-state 101
 
-    (43) asignacion -> ID asignacion_push_id IGUAL asignacion_push_igual . expresion
-    (51) expresion -> . exp expresions
-    (52) expresion -> . LEE LPAREN STRING RPAREN SEMICOL
-    (61) exp -> . termino exps
-    (67) termino -> . factor terminos
-    (73) factor -> . LPAREN factor_lparen expresion RPAREN factor_rparen
-    (74) factor -> . valor
-    (77) valor -> . ID call_or_array
-    (78) valor -> . CTEINT
-    (79) valor -> . CTEDEC
+state 104
 
-    LEE             shift and go to state 63
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    (43) asignacion -> ID call_or_array asignacion_push_id IGUAL . asignacion_push_igual expresion
+    (45) asignacion_push_igual -> .
 
-    expresion                      shift and go to state 127
-    valor                          shift and go to state 57
-    termino                        shift and go to state 55
-    exp                            shift and go to state 64
-    factor                         shift and go to state 59
+    LEE             reduce using rule 45 (asignacion_push_igual -> .)
+    LPAREN          reduce using rule 45 (asignacion_push_igual -> .)
+    ID              reduce using rule 45 (asignacion_push_igual -> .)
+    CTEINT          reduce using rule 45 (asignacion_push_igual -> .)
+    CTEDEC          reduce using rule 45 (asignacion_push_igual -> .)
 
-state 102
+    asignacion_push_igual          shift and go to state 132
+
+state 105
 
     (29) funcion -> FUNCION funcion_increase_func tipo ID . funcion_push_id LPAREN funparam RPAREN LLLAVE vars bloque RLLAVE
     (31) funcion_push_id -> .
 
     LPAREN          reduce using rule 31 (funcion_push_id -> .)
 
-    funcion_push_id                shift and go to state 128
-
-state 103
-
-    (96) escritura -> IMPRIME escritura_escribe LPAREN esc . RPAREN
-
-    RPAREN          shift and go to state 129
-
-
-state 104
-
-    (99) esc -> STRING . escs
-    (100) escs -> . COMMA esc
-    (101) escs -> . empty
-    (23) empty -> .
-
-    COMMA           shift and go to state 131
-    RPAREN          reduce using rule 23 (empty -> .)
-
-    escs                           shift and go to state 130
-    empty                          shift and go to state 132
-
-state 105
-
-    (98) esc -> expresion . escs
-    (100) escs -> . COMMA esc
-    (101) escs -> . empty
-    (23) empty -> .
-
-    COMMA           shift and go to state 131
-    RPAREN          reduce using rule 23 (empty -> .)
-
-    escs                           shift and go to state 133
-    empty                          shift and go to state 132
+    funcion_push_id                shift and go to state 133
 
 state 106
 
-    (7) dimension -> LBRAK CTEINT push_dim1 . RBRAK dimension2
+    (99) escritura -> IMPRIME escritura_escribe LPAREN esc . RPAREN
 
-    RBRAK           shift and go to state 134
+    RPAREN          shift and go to state 134
 
 
 state 107
 
-    (6) vars2 -> tipo ID dimension vars_push_id vars3 . SEMICOL vars4
+    (102) esc -> STRING . escs
+    (103) escs -> . COMMA esc
+    (104) escs -> . empty
+    (23) empty -> .
 
-    SEMICOL         shift and go to state 135
+    COMMA           shift and go to state 136
+    RPAREN          reduce using rule 23 (empty -> .)
 
+    escs                           shift and go to state 135
+    empty                          shift and go to state 137
 
 state 108
 
-    (14) vars3 -> COMMA . ID dimension vars3_push_id vars3
+    (101) esc -> expresion . escs
+    (103) escs -> . COMMA esc
+    (104) escs -> . empty
+    (23) empty -> .
 
-    ID              shift and go to state 136
+    COMMA           shift and go to state 136
+    RPAREN          reduce using rule 23 (empty -> .)
 
+    escs                           shift and go to state 138
+    empty                          shift and go to state 137
 
 state 109
+
+    (7) dimension -> LBRAK CTEINT push_dim1 . RBRAK dimension2
+
+    RBRAK           shift and go to state 139
+
+
+state 110
+
+    (6) vars2 -> tipo ID dimension vars_push_id vars3 . SEMICOL vars4
+
+    SEMICOL         shift and go to state 140
+
+
+state 111
+
+    (14) vars3 -> COMMA . ID dimension vars3_push_id vars3
+
+    ID              shift and go to state 141
+
+
+state 112
 
     (15) vars3 -> empty .
 
     SEMICOL         reduce using rule 15 (vars3 -> empty .)
 
 
-state 110
-
-    (93) param -> CTEINT .
-
-    COMMA           reduce using rule 93 (param -> CTEINT .)
-    RPAREN          reduce using rule 93 (param -> CTEINT .)
-
-
-state 111
-
-    (91) para -> PARA ID ENRANGO LPAREN param . COMMA param RPAREN LLLAVE estatuto RLLAVE
-
-    COMMA           shift and go to state 137
-
-
-state 112
-
-    (92) param -> ID .
-
-    COMMA           reduce using rule 92 (param -> ID .)
-    RPAREN          reduce using rule 92 (param -> ID .)
-
-
 state 113
+
+    (96) param -> CTEINT .
+
+    RPAREN          reduce using rule 96 (param -> CTEINT .)
+    COMMA           reduce using rule 96 (param -> CTEINT .)
+
+
+state 114
+
+    (94) para -> PARA ID ENRANGO LPAREN param . COMMA param RPAREN LLLAVE estatuto RLLAVE
+
+    COMMA           shift and go to state 142
+
+
+state 115
+
+    (95) param -> ID .
+
+    RPAREN          reduce using rule 95 (param -> ID .)
+    COMMA           reduce using rule 95 (param -> ID .)
+
+
+state 116
 
     (62) exps -> PLUS exps_push_plus . termino exps
     (67) termino -> . factor terminos
@@ -2094,16 +2122,16 @@ state 113
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    valor                          shift and go to state 57
-    termino                        shift and go to state 138
-    factor                         shift and go to state 59
+    valor                          shift and go to state 59
+    termino                        shift and go to state 143
+    factor                         shift and go to state 61
 
-state 114
+state 117
 
     (63) exps -> MINUS exps_push_minus . termino exps
     (67) termino -> . factor terminos
@@ -2113,16 +2141,16 @@ state 114
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    valor                          shift and go to state 57
-    termino                        shift and go to state 139
-    factor                         shift and go to state 59
+    valor                          shift and go to state 59
+    termino                        shift and go to state 144
+    factor                         shift and go to state 61
 
-state 115
+state 118
 
     (69) terminos -> DIVIDE terminos_push_divide . factor terminos
     (73) factor -> . LPAREN factor_lparen expresion RPAREN factor_rparen
@@ -2131,15 +2159,15 @@ state 115
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    valor                          shift and go to state 57
-    factor                         shift and go to state 140
+    valor                          shift and go to state 59
+    factor                         shift and go to state 145
 
-state 116
+state 119
 
     (68) terminos -> TIMES terminos_push_times . factor terminos
     (73) factor -> . LPAREN factor_lparen expresion RPAREN factor_rparen
@@ -2148,56 +2176,49 @@ state 116
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    valor                          shift and go to state 57
-    factor                         shift and go to state 141
-
-state 117
-
-    (73) factor -> LPAREN factor_lparen expresion . RPAREN factor_rparen
-
-    RPAREN          shift and go to state 142
-
-
-state 118
-
-    (80) call_or_array -> LBRAK CTEINT . RBRAK id_array
-
-    RBRAK           shift and go to state 143
-
-
-state 119
-
-    (81) call_or_array -> LPAREN expresion . id_call RPAREN
-    (84) id_call -> . COMMA expresion id_call
-    (85) id_call -> . empty
-    (23) empty -> .
-
-    COMMA           shift and go to state 144
-    RPAREN          reduce using rule 23 (empty -> .)
-
-    id_call                        shift and go to state 145
-    empty                          shift and go to state 146
+    valor                          shift and go to state 59
+    factor                         shift and go to state 146
 
 state 120
 
-    (86) condicion -> SI LPAREN expresion RPAREN condicion_if . LLLAVE estatuto RLLAVE else
+    (73) factor -> LPAREN factor_lparen expresion . RPAREN factor_rparen
 
-    LLLAVE          shift and go to state 147
+    RPAREN          shift and go to state 147
 
 
 state 121
 
-    (52) expresion -> LEE LPAREN STRING . RPAREN SEMICOL
+    (81) call_or_array -> LPAREN expresion . id_call RPAREN
+    (87) id_call -> . COMMA expresion id_call
+    (88) id_call -> . empty
+    (23) empty -> .
 
-    RPAREN          shift and go to state 148
+    COMMA           shift and go to state 148
+    RPAREN          reduce using rule 23 (empty -> .)
 
+    id_call                        shift and go to state 101
+    empty                          shift and go to state 149
 
 state 122
+
+    (89) condicion -> SI LPAREN expresion RPAREN condicion_if . LLLAVE estatuto RLLAVE else
+
+    LLLAVE          shift and go to state 150
+
+
+state 123
+
+    (52) expresion -> LEE LPAREN STRING . RPAREN SEMICOL
+
+    RPAREN          shift and go to state 151
+
+
+state 124
 
     (53) expresions -> MAYOR expresions_push_mayor . exp
     (61) exp -> . termino exps
@@ -2208,17 +2229,17 @@ state 122
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    termino                        shift and go to state 55
-    exp                            shift and go to state 149
-    factor                         shift and go to state 59
-    valor                          shift and go to state 57
+    termino                        shift and go to state 57
+    exp                            shift and go to state 152
+    factor                         shift and go to state 61
+    valor                          shift and go to state 59
 
-state 123
+state 125
 
     (55) expresions -> COMPARA expresions_push_compara . exp
     (61) exp -> . termino exps
@@ -2229,17 +2250,17 @@ state 123
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    valor                          shift and go to state 57
-    termino                        shift and go to state 55
-    exp                            shift and go to state 150
-    factor                         shift and go to state 59
+    valor                          shift and go to state 59
+    termino                        shift and go to state 57
+    exp                            shift and go to state 153
+    factor                         shift and go to state 61
 
-state 124
+state 126
 
     (54) expresions -> MENOR expresions_push_menor . exp
     (61) exp -> . termino exps
@@ -2250,75 +2271,108 @@ state 124
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    valor                          shift and go to state 57
-    termino                        shift and go to state 55
-    exp                            shift and go to state 151
-    factor                         shift and go to state 59
+    valor                          shift and go to state 59
+    termino                        shift and go to state 57
+    exp                            shift and go to state 154
+    factor                         shift and go to state 61
 
-state 125
+state 127
 
-    (94) mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE . MIENTRAS LPAREN expresion RPAREN
+    (97) mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE . MIENTRAS LPAREN expresion RPAREN
 
-    MIENTRAS        shift and go to state 152
+    MIENTRAS        shift and go to state 155
 
 
-state 126
+state 128
+
+    (80) call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK . id_array
+    (83) id_array -> . LBRAK CTEINT push_array_dim2 RBRAK
+    (84) id_array -> . empty
+    (23) empty -> .
+
+    LBRAK           shift and go to state 157
+    IGUAL           reduce using rule 23 (empty -> .)
+    TIMES           reduce using rule 23 (empty -> .)
+    DIVIDE          reduce using rule 23 (empty -> .)
+    PLUS            reduce using rule 23 (empty -> .)
+    MINUS           reduce using rule 23 (empty -> .)
+    MAYOR           reduce using rule 23 (empty -> .)
+    MENOR           reduce using rule 23 (empty -> .)
+    COMPARA         reduce using rule 23 (empty -> .)
+    LPAREN          reduce using rule 23 (empty -> .)
+    ID              reduce using rule 23 (empty -> .)
+    CTEINT          reduce using rule 23 (empty -> .)
+    CTEDEC          reduce using rule 23 (empty -> .)
+    RPAREN          reduce using rule 23 (empty -> .)
+    COMMA           reduce using rule 23 (empty -> .)
+    SI              reduce using rule 23 (empty -> .)
+    HAZ             reduce using rule 23 (empty -> .)
+    PARA            reduce using rule 23 (empty -> .)
+    IMPRIME         reduce using rule 23 (empty -> .)
+    FUNCION         reduce using rule 23 (empty -> .)
+    RLLAVE          reduce using rule 23 (empty -> .)
+
+    id_array                       shift and go to state 156
+    empty                          shift and go to state 158
+
+state 129
 
     (49) llamadaparams -> COMMA llamadaparam .
 
     RPAREN          reduce using rule 49 (llamadaparams -> COMMA llamadaparam .)
 
 
-state 127
-
-    (43) asignacion -> ID asignacion_push_id IGUAL asignacion_push_igual expresion .
-
-    ID              reduce using rule 43 (asignacion -> ID asignacion_push_id IGUAL asignacion_push_igual expresion .)
-    SI              reduce using rule 43 (asignacion -> ID asignacion_push_id IGUAL asignacion_push_igual expresion .)
-    HAZ             reduce using rule 43 (asignacion -> ID asignacion_push_id IGUAL asignacion_push_igual expresion .)
-    PARA            reduce using rule 43 (asignacion -> ID asignacion_push_id IGUAL asignacion_push_igual expresion .)
-    IMPRIME         reduce using rule 43 (asignacion -> ID asignacion_push_id IGUAL asignacion_push_igual expresion .)
-    FUNCION         reduce using rule 43 (asignacion -> ID asignacion_push_id IGUAL asignacion_push_igual expresion .)
-    RLLAVE          reduce using rule 43 (asignacion -> ID asignacion_push_id IGUAL asignacion_push_igual expresion .)
-
-
-state 128
-
-    (29) funcion -> FUNCION funcion_increase_func tipo ID funcion_push_id . LPAREN funparam RPAREN LLLAVE vars bloque RLLAVE
-
-    LPAREN          shift and go to state 153
-
-
-state 129
-
-    (96) escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .
-
-    ID              reduce using rule 96 (escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .)
-    SI              reduce using rule 96 (escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .)
-    HAZ             reduce using rule 96 (escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .)
-    PARA            reduce using rule 96 (escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .)
-    IMPRIME         reduce using rule 96 (escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .)
-    FUNCION         reduce using rule 96 (escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .)
-    RLLAVE          reduce using rule 96 (escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .)
-
-
 state 130
 
-    (99) esc -> STRING escs .
+    (87) id_call -> COMMA expresion . id_call
+    (47) llamadaparam -> expresion . llamadaparams
+    (87) id_call -> . COMMA expresion id_call
+    (88) id_call -> . empty
+    (49) llamadaparams -> . COMMA llamadaparam
+    (50) llamadaparams -> . empty
+    (23) empty -> .
 
-    RPAREN          reduce using rule 99 (esc -> STRING escs .)
+    COMMA           shift and go to state 100
+    RPAREN          reduce using rule 23 (empty -> .)
 
+    id_call                        shift and go to state 159
+    llamadaparams                  shift and go to state 102
+    empty                          shift and go to state 103
 
 state 131
 
-    (100) escs -> COMMA . esc
-    (98) esc -> . expresion escs
-    (99) esc -> . STRING escs
+    (81) call_or_array -> LPAREN expresion id_call RPAREN .
+
+    IGUAL           reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    TIMES           reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    DIVIDE          reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    PLUS            reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    MINUS           reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    MAYOR           reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    MENOR           reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    COMPARA         reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    LPAREN          reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    ID              reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    CTEINT          reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    CTEDEC          reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    RPAREN          reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    COMMA           reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    SI              reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    HAZ             reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    PARA            reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    IMPRIME         reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    FUNCION         reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    RLLAVE          reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+
+
+state 132
+
+    (43) asignacion -> ID call_or_array asignacion_push_id IGUAL asignacion_push_igual . expresion
     (51) expresion -> . exp expresions
     (52) expresion -> . LEE LPAREN STRING RPAREN SEMICOL
     (61) exp -> . termino exps
@@ -2329,49 +2383,103 @@ state 131
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    STRING          shift and go to state 104
-    LEE             shift and go to state 63
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LEE             shift and go to state 65
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    expresion                      shift and go to state 105
-    valor                          shift and go to state 57
-    esc                            shift and go to state 154
-    termino                        shift and go to state 55
-    exp                            shift and go to state 64
-    factor                         shift and go to state 59
-
-state 132
-
-    (101) escs -> empty .
-
-    RPAREN          reduce using rule 101 (escs -> empty .)
-
+    expresion                      shift and go to state 160
+    valor                          shift and go to state 59
+    termino                        shift and go to state 57
+    exp                            shift and go to state 66
+    factor                         shift and go to state 61
 
 state 133
 
-    (98) esc -> expresion escs .
+    (29) funcion -> FUNCION funcion_increase_func tipo ID funcion_push_id . LPAREN funparam RPAREN LLLAVE vars bloque RLLAVE
 
-    RPAREN          reduce using rule 98 (esc -> expresion escs .)
+    LPAREN          shift and go to state 161
 
 
 state 134
+
+    (99) escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .
+
+    ID              reduce using rule 99 (escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .)
+    SI              reduce using rule 99 (escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .)
+    HAZ             reduce using rule 99 (escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .)
+    PARA            reduce using rule 99 (escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .)
+    IMPRIME         reduce using rule 99 (escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .)
+    FUNCION         reduce using rule 99 (escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .)
+    RLLAVE          reduce using rule 99 (escritura -> IMPRIME escritura_escribe LPAREN esc RPAREN .)
+
+
+state 135
+
+    (102) esc -> STRING escs .
+
+    RPAREN          reduce using rule 102 (esc -> STRING escs .)
+
+
+state 136
+
+    (103) escs -> COMMA . esc
+    (101) esc -> . expresion escs
+    (102) esc -> . STRING escs
+    (51) expresion -> . exp expresions
+    (52) expresion -> . LEE LPAREN STRING RPAREN SEMICOL
+    (61) exp -> . termino exps
+    (67) termino -> . factor terminos
+    (73) factor -> . LPAREN factor_lparen expresion RPAREN factor_rparen
+    (74) factor -> . valor
+    (77) valor -> . ID call_or_array
+    (78) valor -> . CTEINT
+    (79) valor -> . CTEDEC
+
+    STRING          shift and go to state 107
+    LEE             shift and go to state 65
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
+
+    expresion                      shift and go to state 108
+    valor                          shift and go to state 59
+    esc                            shift and go to state 162
+    termino                        shift and go to state 57
+    exp                            shift and go to state 66
+    factor                         shift and go to state 61
+
+state 137
+
+    (104) escs -> empty .
+
+    RPAREN          reduce using rule 104 (escs -> empty .)
+
+
+state 138
+
+    (101) esc -> expresion escs .
+
+    RPAREN          reduce using rule 101 (esc -> expresion escs .)
+
+
+state 139
 
     (7) dimension -> LBRAK CTEINT push_dim1 RBRAK . dimension2
     (10) dimension2 -> . LBRAK CTEINT push_dim2 RBRAK
     (11) dimension2 -> . empty
     (23) empty -> .
 
-    LBRAK           shift and go to state 156
+    LBRAK           shift and go to state 164
     COMMA           reduce using rule 23 (empty -> .)
     SEMICOL         reduce using rule 23 (empty -> .)
 
-    empty                          shift and go to state 157
-    dimension2                     shift and go to state 155
+    empty                          shift and go to state 165
+    dimension2                     shift and go to state 163
 
-state 135
+state 140
 
     (6) vars2 -> tipo ID dimension vars_push_id vars3 SEMICOL . vars4
     (17) vars4 -> . vars2
@@ -2396,36 +2504,36 @@ state 135
     ESVERDAD        shift and go to state 14
 
     tipo                           shift and go to state 11
-    vars2                          shift and go to state 158
-    vars4                          shift and go to state 159
-    empty                          shift and go to state 160
+    vars2                          shift and go to state 166
+    vars4                          shift and go to state 167
+    empty                          shift and go to state 168
 
-state 136
+state 141
 
     (14) vars3 -> COMMA ID . dimension vars3_push_id vars3
     (7) dimension -> . LBRAK CTEINT push_dim1 RBRAK dimension2
     (8) dimension -> . empty
     (23) empty -> .
 
-    LBRAK           shift and go to state 51
+    LBRAK           shift and go to state 53
     COMMA           reduce using rule 23 (empty -> .)
     SEMICOL         reduce using rule 23 (empty -> .)
 
-    dimension                      shift and go to state 161
-    empty                          shift and go to state 53
+    dimension                      shift and go to state 169
+    empty                          shift and go to state 55
 
-state 137
+state 142
 
-    (91) para -> PARA ID ENRANGO LPAREN param COMMA . param RPAREN LLLAVE estatuto RLLAVE
-    (92) param -> . ID
-    (93) param -> . CTEINT
+    (94) para -> PARA ID ENRANGO LPAREN param COMMA . param RPAREN LLLAVE estatuto RLLAVE
+    (95) param -> . ID
+    (96) param -> . CTEINT
 
-    ID              shift and go to state 112
-    CTEINT          shift and go to state 110
+    ID              shift and go to state 115
+    CTEINT          shift and go to state 113
 
-    param                          shift and go to state 162
+    param                          shift and go to state 170
 
-state 138
+state 143
 
     (62) exps -> PLUS exps_push_plus termino . exps
     (62) exps -> . PLUS exps_push_plus termino exps
@@ -2433,8 +2541,8 @@ state 138
     (64) exps -> . empty
     (23) empty -> .
 
-    PLUS            shift and go to state 76
-    MINUS           shift and go to state 77
+    PLUS            shift and go to state 79
+    MINUS           shift and go to state 80
     MAYOR           reduce using rule 23 (empty -> .)
     MENOR           reduce using rule 23 (empty -> .)
     COMPARA         reduce using rule 23 (empty -> .)
@@ -2451,10 +2559,10 @@ state 138
     FUNCION         reduce using rule 23 (empty -> .)
     RLLAVE          reduce using rule 23 (empty -> .)
 
-    exps                           shift and go to state 163
-    empty                          shift and go to state 78
+    exps                           shift and go to state 171
+    empty                          shift and go to state 81
 
-state 139
+state 144
 
     (63) exps -> MINUS exps_push_minus termino . exps
     (62) exps -> . PLUS exps_push_plus termino exps
@@ -2462,8 +2570,8 @@ state 139
     (64) exps -> . empty
     (23) empty -> .
 
-    PLUS            shift and go to state 76
-    MINUS           shift and go to state 77
+    PLUS            shift and go to state 79
+    MINUS           shift and go to state 80
     MAYOR           reduce using rule 23 (empty -> .)
     MENOR           reduce using rule 23 (empty -> .)
     COMPARA         reduce using rule 23 (empty -> .)
@@ -2480,10 +2588,10 @@ state 139
     FUNCION         reduce using rule 23 (empty -> .)
     RLLAVE          reduce using rule 23 (empty -> .)
 
-    exps                           shift and go to state 164
-    empty                          shift and go to state 78
+    exps                           shift and go to state 172
+    empty                          shift and go to state 81
 
-state 140
+state 145
 
     (69) terminos -> DIVIDE terminos_push_divide factor . terminos
     (68) terminos -> . TIMES terminos_push_times factor terminos
@@ -2491,8 +2599,8 @@ state 140
     (70) terminos -> . empty
     (23) empty -> .
 
-    TIMES           shift and go to state 81
-    DIVIDE          shift and go to state 79
+    TIMES           shift and go to state 84
+    DIVIDE          shift and go to state 82
     PLUS            reduce using rule 23 (empty -> .)
     MINUS           reduce using rule 23 (empty -> .)
     MAYOR           reduce using rule 23 (empty -> .)
@@ -2511,10 +2619,10 @@ state 140
     FUNCION         reduce using rule 23 (empty -> .)
     RLLAVE          reduce using rule 23 (empty -> .)
 
-    terminos                       shift and go to state 165
-    empty                          shift and go to state 82
+    terminos                       shift and go to state 173
+    empty                          shift and go to state 85
 
-state 141
+state 146
 
     (68) terminos -> TIMES terminos_push_times factor . terminos
     (68) terminos -> . TIMES terminos_push_times factor terminos
@@ -2522,8 +2630,8 @@ state 141
     (70) terminos -> . empty
     (23) empty -> .
 
-    TIMES           shift and go to state 81
-    DIVIDE          shift and go to state 79
+    TIMES           shift and go to state 84
+    DIVIDE          shift and go to state 82
     PLUS            reduce using rule 23 (empty -> .)
     MINUS           reduce using rule 23 (empty -> .)
     MAYOR           reduce using rule 23 (empty -> .)
@@ -2542,10 +2650,10 @@ state 141
     FUNCION         reduce using rule 23 (empty -> .)
     RLLAVE          reduce using rule 23 (empty -> .)
 
-    terminos                       shift and go to state 166
-    empty                          shift and go to state 82
+    terminos                       shift and go to state 174
+    empty                          shift and go to state 85
 
-state 142
+state 147
 
     (73) factor -> LPAREN factor_lparen expresion RPAREN . factor_rparen
     (76) factor_rparen -> .
@@ -2570,48 +2678,11 @@ state 142
     FUNCION         reduce using rule 76 (factor_rparen -> .)
     RLLAVE          reduce using rule 76 (factor_rparen -> .)
 
-    factor_rparen                  shift and go to state 167
+    factor_rparen                  shift and go to state 175
 
-state 143
+state 148
 
-    (80) call_or_array -> LBRAK CTEINT RBRAK . id_array
-    (83) id_array -> . call_or_array
-    (80) call_or_array -> . LBRAK CTEINT RBRAK id_array
-    (81) call_or_array -> . LPAREN expresion id_call RPAREN
-    (82) call_or_array -> . empty
-    (23) empty -> .
-
-  ! shift/reduce conflict for LPAREN resolved as shift
-    LBRAK           shift and go to state 84
-    LPAREN          shift and go to state 85
-    TIMES           reduce using rule 23 (empty -> .)
-    DIVIDE          reduce using rule 23 (empty -> .)
-    PLUS            reduce using rule 23 (empty -> .)
-    MINUS           reduce using rule 23 (empty -> .)
-    MAYOR           reduce using rule 23 (empty -> .)
-    MENOR           reduce using rule 23 (empty -> .)
-    COMPARA         reduce using rule 23 (empty -> .)
-    ID              reduce using rule 23 (empty -> .)
-    CTEINT          reduce using rule 23 (empty -> .)
-    CTEDEC          reduce using rule 23 (empty -> .)
-    RPAREN          reduce using rule 23 (empty -> .)
-    COMMA           reduce using rule 23 (empty -> .)
-    SI              reduce using rule 23 (empty -> .)
-    HAZ             reduce using rule 23 (empty -> .)
-    PARA            reduce using rule 23 (empty -> .)
-    IMPRIME         reduce using rule 23 (empty -> .)
-    FUNCION         reduce using rule 23 (empty -> .)
-    RLLAVE          reduce using rule 23 (empty -> .)
-
-  ! LPAREN          [ reduce using rule 23 (empty -> .) ]
-
-    call_or_array                  shift and go to state 169
-    id_array                       shift and go to state 168
-    empty                          shift and go to state 87
-
-state 144
-
-    (84) id_call -> COMMA . expresion id_call
+    (87) id_call -> COMMA . expresion id_call
     (51) expresion -> . exp expresions
     (52) expresion -> . LEE LPAREN STRING RPAREN SEMICOL
     (61) exp -> . termino exps
@@ -2622,46 +2693,39 @@ state 144
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    LEE             shift and go to state 63
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LEE             shift and go to state 65
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    expresion                      shift and go to state 170
-    valor                          shift and go to state 57
-    termino                        shift and go to state 55
-    exp                            shift and go to state 64
-    factor                         shift and go to state 59
+    expresion                      shift and go to state 176
+    valor                          shift and go to state 59
+    termino                        shift and go to state 57
+    exp                            shift and go to state 66
+    factor                         shift and go to state 61
 
-state 145
+state 149
 
-    (81) call_or_array -> LPAREN expresion id_call . RPAREN
+    (88) id_call -> empty .
 
-    RPAREN          shift and go to state 171
-
-
-state 146
-
-    (85) id_call -> empty .
-
-    RPAREN          reduce using rule 85 (id_call -> empty .)
+    RPAREN          reduce using rule 88 (id_call -> empty .)
 
 
-state 147
+state 150
 
-    (86) condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE . estatuto RLLAVE else
+    (89) condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE . estatuto RLLAVE else
     (37) estatuto -> . asignacion bloque
     (38) estatuto -> . condicion bloque
     (39) estatuto -> . mientras bloque
     (40) estatuto -> . para bloque
     (41) estatuto -> . escritura bloque
     (42) estatuto -> . llamada bloque
-    (43) asignacion -> . ID asignacion_push_id IGUAL asignacion_push_igual expresion
-    (86) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
-    (94) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-    (91) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
-    (96) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
+    (43) asignacion -> . ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
+    (89) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (97) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (94) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (99) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
     (46) llamada -> . ID LPAREN llamadaparam RPAREN
 
     ID              shift and go to state 28
@@ -2673,19 +2737,19 @@ state 147
     para                           shift and go to state 26
     asignacion                     shift and go to state 31
     llamada                        shift and go to state 21
-    estatuto                       shift and go to state 172
+    estatuto                       shift and go to state 177
     mientras                       shift and go to state 16
     condicion                      shift and go to state 22
     escritura                      shift and go to state 32
 
-state 148
+state 151
 
     (52) expresion -> LEE LPAREN STRING RPAREN . SEMICOL
 
-    SEMICOL         shift and go to state 173
+    SEMICOL         shift and go to state 178
 
 
-state 149
+state 152
 
     (53) expresions -> MAYOR expresions_push_mayor exp .
 
@@ -2700,7 +2764,7 @@ state 149
     RLLAVE          reduce using rule 53 (expresions -> MAYOR expresions_push_mayor exp .)
 
 
-state 150
+state 153
 
     (55) expresions -> COMPARA expresions_push_compara exp .
 
@@ -2715,7 +2779,7 @@ state 150
     RLLAVE          reduce using rule 55 (expresions -> COMPARA expresions_push_compara exp .)
 
 
-state 151
+state 154
 
     (54) expresions -> MENOR expresions_push_menor exp .
 
@@ -2730,14 +2794,93 @@ state 151
     RLLAVE          reduce using rule 54 (expresions -> MENOR expresions_push_menor exp .)
 
 
-state 152
+state 155
 
-    (94) mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS . LPAREN expresion RPAREN
+    (97) mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS . LPAREN expresion RPAREN
 
-    LPAREN          shift and go to state 174
+    LPAREN          shift and go to state 179
 
 
-state 153
+state 156
+
+    (80) call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .
+
+    IGUAL           reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    TIMES           reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    DIVIDE          reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    PLUS            reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    MINUS           reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    MAYOR           reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    MENOR           reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    COMPARA         reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    LPAREN          reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    ID              reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    CTEINT          reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    CTEDEC          reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    RPAREN          reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    COMMA           reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    SI              reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    HAZ             reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    PARA            reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    IMPRIME         reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    FUNCION         reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+    RLLAVE          reduce using rule 80 (call_or_array -> LBRAK CTEINT push_array_dim1 RBRAK id_array .)
+
+
+state 157
+
+    (83) id_array -> LBRAK . CTEINT push_array_dim2 RBRAK
+
+    CTEINT          shift and go to state 180
+
+
+state 158
+
+    (84) id_array -> empty .
+
+    IGUAL           reduce using rule 84 (id_array -> empty .)
+    TIMES           reduce using rule 84 (id_array -> empty .)
+    DIVIDE          reduce using rule 84 (id_array -> empty .)
+    PLUS            reduce using rule 84 (id_array -> empty .)
+    MINUS           reduce using rule 84 (id_array -> empty .)
+    MAYOR           reduce using rule 84 (id_array -> empty .)
+    MENOR           reduce using rule 84 (id_array -> empty .)
+    COMPARA         reduce using rule 84 (id_array -> empty .)
+    LPAREN          reduce using rule 84 (id_array -> empty .)
+    ID              reduce using rule 84 (id_array -> empty .)
+    CTEINT          reduce using rule 84 (id_array -> empty .)
+    CTEDEC          reduce using rule 84 (id_array -> empty .)
+    RPAREN          reduce using rule 84 (id_array -> empty .)
+    COMMA           reduce using rule 84 (id_array -> empty .)
+    SI              reduce using rule 84 (id_array -> empty .)
+    HAZ             reduce using rule 84 (id_array -> empty .)
+    PARA            reduce using rule 84 (id_array -> empty .)
+    IMPRIME         reduce using rule 84 (id_array -> empty .)
+    FUNCION         reduce using rule 84 (id_array -> empty .)
+    RLLAVE          reduce using rule 84 (id_array -> empty .)
+
+
+state 159
+
+    (87) id_call -> COMMA expresion id_call .
+
+    RPAREN          reduce using rule 87 (id_call -> COMMA expresion id_call .)
+
+
+state 160
+
+    (43) asignacion -> ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion .
+
+    ID              reduce using rule 43 (asignacion -> ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion .)
+    SI              reduce using rule 43 (asignacion -> ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion .)
+    HAZ             reduce using rule 43 (asignacion -> ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion .)
+    PARA            reduce using rule 43 (asignacion -> ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion .)
+    IMPRIME         reduce using rule 43 (asignacion -> ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion .)
+    FUNCION         reduce using rule 43 (asignacion -> ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion .)
+    RLLAVE          reduce using rule 43 (asignacion -> ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion .)
+
+
+state 161
 
     (29) funcion -> FUNCION funcion_increase_func tipo ID funcion_push_id LPAREN . funparam RPAREN LLLAVE vars bloque RLLAVE
     (32) funparam -> . tipo ID funparam_push_id funparams
@@ -2754,18 +2897,18 @@ state 153
     ESVERDAD        shift and go to state 14
     RPAREN          reduce using rule 23 (empty -> .)
 
-    tipo                           shift and go to state 175
-    funparam                       shift and go to state 176
-    empty                          shift and go to state 177
+    tipo                           shift and go to state 181
+    funparam                       shift and go to state 182
+    empty                          shift and go to state 183
 
-state 154
+state 162
 
-    (100) escs -> COMMA esc .
+    (103) escs -> COMMA esc .
 
-    RPAREN          reduce using rule 100 (escs -> COMMA esc .)
+    RPAREN          reduce using rule 103 (escs -> COMMA esc .)
 
 
-state 155
+state 163
 
     (7) dimension -> LBRAK CTEINT push_dim1 RBRAK dimension2 .
 
@@ -2773,14 +2916,14 @@ state 155
     SEMICOL         reduce using rule 7 (dimension -> LBRAK CTEINT push_dim1 RBRAK dimension2 .)
 
 
-state 156
+state 164
 
     (10) dimension2 -> LBRAK . CTEINT push_dim2 RBRAK
 
-    CTEINT          shift and go to state 178
+    CTEINT          shift and go to state 184
 
 
-state 157
+state 165
 
     (11) dimension2 -> empty .
 
@@ -2788,7 +2931,7 @@ state 157
     SEMICOL         reduce using rule 11 (dimension2 -> empty .)
 
 
-state 158
+state 166
 
     (17) vars4 -> vars2 .
 
@@ -2801,7 +2944,7 @@ state 158
     RLLAVE          reduce using rule 17 (vars4 -> vars2 .)
 
 
-state 159
+state 167
 
     (6) vars2 -> tipo ID dimension vars_push_id vars3 SEMICOL vars4 .
 
@@ -2814,7 +2957,7 @@ state 159
     RLLAVE          reduce using rule 6 (vars2 -> tipo ID dimension vars_push_id vars3 SEMICOL vars4 .)
 
 
-state 160
+state 168
 
     (18) vars4 -> empty .
 
@@ -2827,7 +2970,7 @@ state 160
     RLLAVE          reduce using rule 18 (vars4 -> empty .)
 
 
-state 161
+state 169
 
     (14) vars3 -> COMMA ID dimension . vars3_push_id vars3
     (16) vars3_push_id -> .
@@ -2835,16 +2978,16 @@ state 161
     COMMA           reduce using rule 16 (vars3_push_id -> .)
     SEMICOL         reduce using rule 16 (vars3_push_id -> .)
 
-    vars3_push_id                  shift and go to state 179
+    vars3_push_id                  shift and go to state 185
 
-state 162
+state 170
 
-    (91) para -> PARA ID ENRANGO LPAREN param COMMA param . RPAREN LLLAVE estatuto RLLAVE
+    (94) para -> PARA ID ENRANGO LPAREN param COMMA param . RPAREN LLLAVE estatuto RLLAVE
 
-    RPAREN          shift and go to state 180
+    RPAREN          shift and go to state 186
 
 
-state 163
+state 171
 
     (62) exps -> PLUS exps_push_plus termino exps .
 
@@ -2865,7 +3008,7 @@ state 163
     RLLAVE          reduce using rule 62 (exps -> PLUS exps_push_plus termino exps .)
 
 
-state 164
+state 172
 
     (63) exps -> MINUS exps_push_minus termino exps .
 
@@ -2886,7 +3029,7 @@ state 164
     RLLAVE          reduce using rule 63 (exps -> MINUS exps_push_minus termino exps .)
 
 
-state 165
+state 173
 
     (69) terminos -> DIVIDE terminos_push_divide factor terminos .
 
@@ -2909,7 +3052,7 @@ state 165
     RLLAVE          reduce using rule 69 (terminos -> DIVIDE terminos_push_divide factor terminos .)
 
 
-state 166
+state 174
 
     (68) terminos -> TIMES terminos_push_times factor terminos .
 
@@ -2932,7 +3075,7 @@ state 166
     RLLAVE          reduce using rule 68 (terminos -> TIMES terminos_push_times factor terminos .)
 
 
-state 167
+state 175
 
     (73) factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .
 
@@ -2940,119 +3083,44 @@ state 167
     DIVIDE          reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
     PLUS            reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
     MINUS           reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
-    MAYOR           reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
-    MENOR           reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
-    COMPARA         reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
-    LPAREN          reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
-    ID              reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
-    CTEINT          reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
-    CTEDEC          reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
-    COMMA           reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
     RPAREN          reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
+    COMMA           reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
+    ID              reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
     SI              reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
     HAZ             reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
     PARA            reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
     IMPRIME         reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
     FUNCION         reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
     RLLAVE          reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
+    MAYOR           reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
+    MENOR           reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
+    COMPARA         reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
+    LPAREN          reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
+    CTEINT          reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
+    CTEDEC          reduce using rule 73 (factor -> LPAREN factor_lparen expresion RPAREN factor_rparen .)
 
 
-state 168
+state 176
 
-    (80) call_or_array -> LBRAK CTEINT RBRAK id_array .
-
-    TIMES           reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    DIVIDE          reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    PLUS            reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    MINUS           reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    MAYOR           reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    MENOR           reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    COMPARA         reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    LPAREN          reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    ID              reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    CTEINT          reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    CTEDEC          reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    RPAREN          reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    COMMA           reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    SI              reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    HAZ             reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    PARA            reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    IMPRIME         reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    FUNCION         reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-    RLLAVE          reduce using rule 80 (call_or_array -> LBRAK CTEINT RBRAK id_array .)
-
-
-state 169
-
-    (83) id_array -> call_or_array .
-
-    TIMES           reduce using rule 83 (id_array -> call_or_array .)
-    DIVIDE          reduce using rule 83 (id_array -> call_or_array .)
-    PLUS            reduce using rule 83 (id_array -> call_or_array .)
-    MINUS           reduce using rule 83 (id_array -> call_or_array .)
-    MAYOR           reduce using rule 83 (id_array -> call_or_array .)
-    MENOR           reduce using rule 83 (id_array -> call_or_array .)
-    COMPARA         reduce using rule 83 (id_array -> call_or_array .)
-    LPAREN          reduce using rule 83 (id_array -> call_or_array .)
-    ID              reduce using rule 83 (id_array -> call_or_array .)
-    CTEINT          reduce using rule 83 (id_array -> call_or_array .)
-    CTEDEC          reduce using rule 83 (id_array -> call_or_array .)
-    RPAREN          reduce using rule 83 (id_array -> call_or_array .)
-    COMMA           reduce using rule 83 (id_array -> call_or_array .)
-    SI              reduce using rule 83 (id_array -> call_or_array .)
-    HAZ             reduce using rule 83 (id_array -> call_or_array .)
-    PARA            reduce using rule 83 (id_array -> call_or_array .)
-    IMPRIME         reduce using rule 83 (id_array -> call_or_array .)
-    FUNCION         reduce using rule 83 (id_array -> call_or_array .)
-    RLLAVE          reduce using rule 83 (id_array -> call_or_array .)
-
-
-state 170
-
-    (84) id_call -> COMMA expresion . id_call
-    (84) id_call -> . COMMA expresion id_call
-    (85) id_call -> . empty
+    (87) id_call -> COMMA expresion . id_call
+    (87) id_call -> . COMMA expresion id_call
+    (88) id_call -> . empty
     (23) empty -> .
 
-    COMMA           shift and go to state 144
+    COMMA           shift and go to state 148
     RPAREN          reduce using rule 23 (empty -> .)
 
-    id_call                        shift and go to state 181
-    empty                          shift and go to state 146
+    id_call                        shift and go to state 159
+    empty                          shift and go to state 149
 
-state 171
+state 177
 
-    (81) call_or_array -> LPAREN expresion id_call RPAREN .
+    (89) condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto . RLLAVE else
 
-    TIMES           reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    DIVIDE          reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    PLUS            reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    MINUS           reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    MAYOR           reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    MENOR           reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    COMPARA         reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    LPAREN          reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    ID              reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    CTEINT          reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    CTEDEC          reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    RPAREN          reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    COMMA           reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    SI              reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    HAZ             reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    PARA            reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    IMPRIME         reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    FUNCION         reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
-    RLLAVE          reduce using rule 81 (call_or_array -> LPAREN expresion id_call RPAREN .)
+    RLLAVE          shift and go to state 187
 
 
-state 172
-
-    (86) condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto . RLLAVE else
-
-    RLLAVE          shift and go to state 182
-
-
-state 173
+state 178
 
     (52) expresion -> LEE LPAREN STRING RPAREN SEMICOL .
 
@@ -3067,9 +3135,9 @@ state 173
     RLLAVE          reduce using rule 52 (expresion -> LEE LPAREN STRING RPAREN SEMICOL .)
 
 
-state 174
+state 179
 
-    (94) mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN . expresion RPAREN
+    (97) mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN . expresion RPAREN
     (51) expresion -> . exp expresions
     (52) expresion -> . LEE LPAREN STRING RPAREN SEMICOL
     (61) exp -> . termino exps
@@ -3080,83 +3148,85 @@ state 174
     (78) valor -> . CTEINT
     (79) valor -> . CTEDEC
 
-    LEE             shift and go to state 63
-    LPAREN          shift and go to state 60
-    ID              shift and go to state 61
-    CTEINT          shift and go to state 56
-    CTEDEC          shift and go to state 58
+    LEE             shift and go to state 65
+    LPAREN          shift and go to state 62
+    ID              shift and go to state 63
+    CTEINT          shift and go to state 58
+    CTEDEC          shift and go to state 60
 
-    expresion                      shift and go to state 183
-    valor                          shift and go to state 57
-    exp                            shift and go to state 64
-    factor                         shift and go to state 59
-    termino                        shift and go to state 55
+    expresion                      shift and go to state 188
+    valor                          shift and go to state 59
+    exp                            shift and go to state 66
+    factor                         shift and go to state 61
+    termino                        shift and go to state 57
 
-state 175
+state 180
+
+    (83) id_array -> LBRAK CTEINT . push_array_dim2 RBRAK
+    (86) push_array_dim2 -> .
+
+    RBRAK           reduce using rule 86 (push_array_dim2 -> .)
+
+    push_array_dim2                shift and go to state 189
+
+state 181
 
     (32) funparam -> tipo . ID funparam_push_id funparams
 
-    ID              shift and go to state 184
+    ID              shift and go to state 190
 
 
-state 176
+state 182
 
     (29) funcion -> FUNCION funcion_increase_func tipo ID funcion_push_id LPAREN funparam . RPAREN LLLAVE vars bloque RLLAVE
 
-    RPAREN          shift and go to state 185
+    RPAREN          shift and go to state 191
 
 
-state 177
+state 183
 
     (33) funparam -> empty .
 
     RPAREN          reduce using rule 33 (funparam -> empty .)
 
 
-state 178
+state 184
 
     (10) dimension2 -> LBRAK CTEINT . push_dim2 RBRAK
     (12) push_dim2 -> .
 
     RBRAK           reduce using rule 12 (push_dim2 -> .)
 
-    push_dim2                      shift and go to state 186
+    push_dim2                      shift and go to state 192
 
-state 179
+state 185
 
     (14) vars3 -> COMMA ID dimension vars3_push_id . vars3
     (14) vars3 -> . COMMA ID dimension vars3_push_id vars3
     (15) vars3 -> . empty
     (23) empty -> .
 
-    COMMA           shift and go to state 108
+    COMMA           shift and go to state 111
     SEMICOL         reduce using rule 23 (empty -> .)
 
-    vars3                          shift and go to state 187
-    empty                          shift and go to state 109
+    vars3                          shift and go to state 193
+    empty                          shift and go to state 112
 
-state 180
+state 186
 
-    (91) para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN . LLLAVE estatuto RLLAVE
+    (94) para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN . LLLAVE estatuto RLLAVE
 
-    LLLAVE          shift and go to state 188
-
-
-state 181
-
-    (84) id_call -> COMMA expresion id_call .
-
-    RPAREN          reduce using rule 84 (id_call -> COMMA expresion id_call .)
+    LLLAVE          shift and go to state 194
 
 
-state 182
+state 187
 
-    (86) condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE . else
-    (88) else -> . SINO else_2 LLLAVE estatuto RLLAVE
-    (89) else -> . empty
+    (89) condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE . else
+    (91) else -> . SINO else_2 LLLAVE estatuto RLLAVE
+    (92) else -> . empty
     (23) empty -> .
 
-    SINO            shift and go to state 190
+    SINO            shift and go to state 196
     ID              reduce using rule 23 (empty -> .)
     SI              reduce using rule 23 (empty -> .)
     HAZ             reduce using rule 23 (empty -> .)
@@ -3165,17 +3235,24 @@ state 182
     FUNCION         reduce using rule 23 (empty -> .)
     RLLAVE          reduce using rule 23 (empty -> .)
 
-    else                           shift and go to state 189
-    empty                          shift and go to state 191
+    else                           shift and go to state 195
+    empty                          shift and go to state 197
 
-state 183
+state 188
 
-    (94) mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion . RPAREN
+    (97) mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion . RPAREN
 
-    RPAREN          shift and go to state 192
+    RPAREN          shift and go to state 198
 
 
-state 184
+state 189
+
+    (83) id_array -> LBRAK CTEINT push_array_dim2 . RBRAK
+
+    RBRAK           shift and go to state 199
+
+
+state 190
 
     (32) funparam -> tipo ID . funparam_push_id funparams
     (34) funparam_push_id -> .
@@ -3183,43 +3260,43 @@ state 184
     COMMA           reduce using rule 34 (funparam_push_id -> .)
     RPAREN          reduce using rule 34 (funparam_push_id -> .)
 
-    funparam_push_id               shift and go to state 193
+    funparam_push_id               shift and go to state 200
 
-state 185
+state 191
 
     (29) funcion -> FUNCION funcion_increase_func tipo ID funcion_push_id LPAREN funparam RPAREN . LLLAVE vars bloque RLLAVE
 
-    LLLAVE          shift and go to state 194
+    LLLAVE          shift and go to state 201
 
 
-state 186
+state 192
 
     (10) dimension2 -> LBRAK CTEINT push_dim2 . RBRAK
 
-    RBRAK           shift and go to state 195
+    RBRAK           shift and go to state 202
 
 
-state 187
+state 193
 
     (14) vars3 -> COMMA ID dimension vars3_push_id vars3 .
 
     SEMICOL         reduce using rule 14 (vars3 -> COMMA ID dimension vars3_push_id vars3 .)
 
 
-state 188
+state 194
 
-    (91) para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE . estatuto RLLAVE
+    (94) para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE . estatuto RLLAVE
     (37) estatuto -> . asignacion bloque
     (38) estatuto -> . condicion bloque
     (39) estatuto -> . mientras bloque
     (40) estatuto -> . para bloque
     (41) estatuto -> . escritura bloque
     (42) estatuto -> . llamada bloque
-    (43) asignacion -> . ID asignacion_push_id IGUAL asignacion_push_igual expresion
-    (86) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
-    (94) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-    (91) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
-    (96) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
+    (43) asignacion -> . ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
+    (89) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (97) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (94) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (99) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
     (46) llamada -> . ID LPAREN llamadaparam RPAREN
 
     ID              shift and go to state 28
@@ -3231,73 +3308,99 @@ state 188
     para                           shift and go to state 26
     asignacion                     shift and go to state 31
     llamada                        shift and go to state 21
-    estatuto                       shift and go to state 196
+    estatuto                       shift and go to state 203
     mientras                       shift and go to state 16
     condicion                      shift and go to state 22
     escritura                      shift and go to state 32
 
-state 189
+state 195
 
-    (86) condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .
+    (89) condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .
 
-    ID              reduce using rule 86 (condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .)
-    SI              reduce using rule 86 (condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .)
-    HAZ             reduce using rule 86 (condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .)
-    PARA            reduce using rule 86 (condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .)
-    IMPRIME         reduce using rule 86 (condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .)
-    FUNCION         reduce using rule 86 (condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .)
-    RLLAVE          reduce using rule 86 (condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .)
-
-
-state 190
-
-    (88) else -> SINO . else_2 LLLAVE estatuto RLLAVE
-    (90) else_2 -> .
-
-    LLLAVE          reduce using rule 90 (else_2 -> .)
-
-    else_2                         shift and go to state 197
-
-state 191
-
-    (89) else -> empty .
-
-    ID              reduce using rule 89 (else -> empty .)
-    SI              reduce using rule 89 (else -> empty .)
-    HAZ             reduce using rule 89 (else -> empty .)
-    PARA            reduce using rule 89 (else -> empty .)
-    IMPRIME         reduce using rule 89 (else -> empty .)
-    FUNCION         reduce using rule 89 (else -> empty .)
-    RLLAVE          reduce using rule 89 (else -> empty .)
+    ID              reduce using rule 89 (condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .)
+    SI              reduce using rule 89 (condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .)
+    HAZ             reduce using rule 89 (condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .)
+    PARA            reduce using rule 89 (condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .)
+    IMPRIME         reduce using rule 89 (condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .)
+    FUNCION         reduce using rule 89 (condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .)
+    RLLAVE          reduce using rule 89 (condicion -> SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else .)
 
 
-state 192
+state 196
 
-    (94) mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .
+    (91) else -> SINO . else_2 LLLAVE estatuto RLLAVE
+    (93) else_2 -> .
 
-    ID              reduce using rule 94 (mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .)
-    SI              reduce using rule 94 (mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .)
-    HAZ             reduce using rule 94 (mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .)
-    PARA            reduce using rule 94 (mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .)
-    IMPRIME         reduce using rule 94 (mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .)
-    FUNCION         reduce using rule 94 (mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .)
-    RLLAVE          reduce using rule 94 (mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .)
+    LLLAVE          reduce using rule 93 (else_2 -> .)
+
+    else_2                         shift and go to state 204
+
+state 197
+
+    (92) else -> empty .
+
+    ID              reduce using rule 92 (else -> empty .)
+    SI              reduce using rule 92 (else -> empty .)
+    HAZ             reduce using rule 92 (else -> empty .)
+    PARA            reduce using rule 92 (else -> empty .)
+    IMPRIME         reduce using rule 92 (else -> empty .)
+    FUNCION         reduce using rule 92 (else -> empty .)
+    RLLAVE          reduce using rule 92 (else -> empty .)
 
 
-state 193
+state 198
+
+    (97) mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .
+
+    ID              reduce using rule 97 (mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .)
+    SI              reduce using rule 97 (mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .)
+    HAZ             reduce using rule 97 (mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .)
+    PARA            reduce using rule 97 (mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .)
+    IMPRIME         reduce using rule 97 (mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .)
+    FUNCION         reduce using rule 97 (mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .)
+    RLLAVE          reduce using rule 97 (mientras -> HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN .)
+
+
+state 199
+
+    (83) id_array -> LBRAK CTEINT push_array_dim2 RBRAK .
+
+    IGUAL           reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    TIMES           reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    DIVIDE          reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    PLUS            reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    MINUS           reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    MAYOR           reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    MENOR           reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    COMPARA         reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    LPAREN          reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    ID              reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    CTEINT          reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    CTEDEC          reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    RPAREN          reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    COMMA           reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    SI              reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    HAZ             reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    PARA            reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    IMPRIME         reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    FUNCION         reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+    RLLAVE          reduce using rule 83 (id_array -> LBRAK CTEINT push_array_dim2 RBRAK .)
+
+
+state 200
 
     (32) funparam -> tipo ID funparam_push_id . funparams
     (35) funparams -> . COMMA funparam
     (36) funparams -> . empty
     (23) empty -> .
 
-    COMMA           shift and go to state 198
+    COMMA           shift and go to state 205
     RPAREN          reduce using rule 23 (empty -> .)
 
-    funparams                      shift and go to state 199
-    empty                          shift and go to state 200
+    funparams                      shift and go to state 206
+    empty                          shift and go to state 207
 
-state 194
+state 201
 
     (29) funcion -> FUNCION funcion_increase_func tipo ID funcion_push_id LPAREN funparam RPAREN LLLAVE . vars bloque RLLAVE
     (4) vars -> . VAR vars2
@@ -3312,10 +3415,10 @@ state 194
     IMPRIME         reduce using rule 23 (empty -> .)
     RLLAVE          reduce using rule 23 (empty -> .)
 
-    vars                           shift and go to state 201
+    vars                           shift and go to state 208
     empty                          shift and go to state 8
 
-state 195
+state 202
 
     (10) dimension2 -> LBRAK CTEINT push_dim2 RBRAK .
 
@@ -3323,21 +3426,21 @@ state 195
     SEMICOL         reduce using rule 10 (dimension2 -> LBRAK CTEINT push_dim2 RBRAK .)
 
 
-state 196
+state 203
 
-    (91) para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto . RLLAVE
+    (94) para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto . RLLAVE
 
-    RLLAVE          shift and go to state 202
-
-
-state 197
-
-    (88) else -> SINO else_2 . LLLAVE estatuto RLLAVE
-
-    LLLAVE          shift and go to state 203
+    RLLAVE          shift and go to state 209
 
 
-state 198
+state 204
+
+    (91) else -> SINO else_2 . LLLAVE estatuto RLLAVE
+
+    LLLAVE          shift and go to state 210
+
+
+state 205
 
     (35) funparams -> COMMA . funparam
     (32) funparam -> . tipo ID funparam_push_id funparams
@@ -3354,25 +3457,25 @@ state 198
     ESVERDAD        shift and go to state 14
     RPAREN          reduce using rule 23 (empty -> .)
 
-    funparam                       shift and go to state 204
-    empty                          shift and go to state 177
-    tipo                           shift and go to state 175
+    funparam                       shift and go to state 211
+    empty                          shift and go to state 183
+    tipo                           shift and go to state 181
 
-state 199
+state 206
 
     (32) funparam -> tipo ID funparam_push_id funparams .
 
     RPAREN          reduce using rule 32 (funparam -> tipo ID funparam_push_id funparams .)
 
 
-state 200
+state 207
 
     (36) funparams -> empty .
 
     RPAREN          reduce using rule 36 (funparams -> empty .)
 
 
-state 201
+state 208
 
     (29) funcion -> FUNCION funcion_increase_func tipo ID funcion_push_id LPAREN funparam RPAREN LLLAVE vars . bloque RLLAVE
     (27) bloque -> . estatuto
@@ -3384,11 +3487,11 @@ state 201
     (41) estatuto -> . escritura bloque
     (42) estatuto -> . llamada bloque
     (23) empty -> .
-    (43) asignacion -> . ID asignacion_push_id IGUAL asignacion_push_igual expresion
-    (86) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
-    (94) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-    (91) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
-    (96) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
+    (43) asignacion -> . ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
+    (89) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (97) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (94) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (99) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
     (46) llamada -> . ID LPAREN llamadaparam RPAREN
 
     RLLAVE          reduce using rule 23 (empty -> .)
@@ -3399,7 +3502,7 @@ state 201
     IMPRIME         shift and go to state 30
 
     mientras                       shift and go to state 16
-    bloque                         shift and go to state 205
+    bloque                         shift and go to state 212
     estatuto                       shift and go to state 19
     llamada                        shift and go to state 21
     condicion                      shift and go to state 22
@@ -3408,33 +3511,33 @@ state 201
     asignacion                     shift and go to state 31
     escritura                      shift and go to state 32
 
-state 202
+state 209
 
-    (91) para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .
+    (94) para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .
 
-    ID              reduce using rule 91 (para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .)
-    SI              reduce using rule 91 (para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .)
-    HAZ             reduce using rule 91 (para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .)
-    PARA            reduce using rule 91 (para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .)
-    IMPRIME         reduce using rule 91 (para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .)
-    RLLAVE          reduce using rule 91 (para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .)
-    FUNCION         reduce using rule 91 (para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .)
+    ID              reduce using rule 94 (para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .)
+    SI              reduce using rule 94 (para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .)
+    HAZ             reduce using rule 94 (para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .)
+    PARA            reduce using rule 94 (para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .)
+    IMPRIME         reduce using rule 94 (para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .)
+    FUNCION         reduce using rule 94 (para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .)
+    RLLAVE          reduce using rule 94 (para -> PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE .)
 
 
-state 203
+state 210
 
-    (88) else -> SINO else_2 LLLAVE . estatuto RLLAVE
+    (91) else -> SINO else_2 LLLAVE . estatuto RLLAVE
     (37) estatuto -> . asignacion bloque
     (38) estatuto -> . condicion bloque
     (39) estatuto -> . mientras bloque
     (40) estatuto -> . para bloque
     (41) estatuto -> . escritura bloque
     (42) estatuto -> . llamada bloque
-    (43) asignacion -> . ID asignacion_push_id IGUAL asignacion_push_igual expresion
-    (86) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
-    (94) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
-    (91) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
-    (96) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
+    (43) asignacion -> . ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion
+    (89) condicion -> . SI LPAREN expresion RPAREN condicion_if LLLAVE estatuto RLLAVE else
+    (97) mientras -> . HAZ mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN
+    (94) para -> . PARA ID ENRANGO LPAREN param COMMA param RPAREN LLLAVE estatuto RLLAVE
+    (99) escritura -> . IMPRIME escritura_escribe LPAREN esc RPAREN
     (46) llamada -> . ID LPAREN llamadaparam RPAREN
 
     ID              shift and go to state 28
@@ -3446,33 +3549,33 @@ state 203
     para                           shift and go to state 26
     asignacion                     shift and go to state 31
     llamada                        shift and go to state 21
-    estatuto                       shift and go to state 206
+    estatuto                       shift and go to state 213
     mientras                       shift and go to state 16
     condicion                      shift and go to state 22
     escritura                      shift and go to state 32
 
-state 204
+state 211
 
     (35) funparams -> COMMA funparam .
 
     RPAREN          reduce using rule 35 (funparams -> COMMA funparam .)
 
 
-state 205
+state 212
 
     (29) funcion -> FUNCION funcion_increase_func tipo ID funcion_push_id LPAREN funparam RPAREN LLLAVE vars bloque . RLLAVE
 
-    RLLAVE          shift and go to state 207
+    RLLAVE          shift and go to state 214
 
 
-state 206
+state 213
 
-    (88) else -> SINO else_2 LLLAVE estatuto . RLLAVE
+    (91) else -> SINO else_2 LLLAVE estatuto . RLLAVE
 
-    RLLAVE          shift and go to state 208
+    RLLAVE          shift and go to state 215
 
 
-state 207
+state 214
 
     (29) funcion -> FUNCION funcion_increase_func tipo ID funcion_push_id LPAREN funparam RPAREN LLLAVE vars bloque RLLAVE .
 
@@ -3485,17 +3588,17 @@ state 207
     RLLAVE          reduce using rule 29 (funcion -> FUNCION funcion_increase_func tipo ID funcion_push_id LPAREN funparam RPAREN LLLAVE vars bloque RLLAVE .)
 
 
-state 208
+state 215
 
-    (88) else -> SINO else_2 LLLAVE estatuto RLLAVE .
+    (91) else -> SINO else_2 LLLAVE estatuto RLLAVE .
 
-    ID              reduce using rule 88 (else -> SINO else_2 LLLAVE estatuto RLLAVE .)
-    SI              reduce using rule 88 (else -> SINO else_2 LLLAVE estatuto RLLAVE .)
-    HAZ             reduce using rule 88 (else -> SINO else_2 LLLAVE estatuto RLLAVE .)
-    PARA            reduce using rule 88 (else -> SINO else_2 LLLAVE estatuto RLLAVE .)
-    IMPRIME         reduce using rule 88 (else -> SINO else_2 LLLAVE estatuto RLLAVE .)
-    FUNCION         reduce using rule 88 (else -> SINO else_2 LLLAVE estatuto RLLAVE .)
-    RLLAVE          reduce using rule 88 (else -> SINO else_2 LLLAVE estatuto RLLAVE .)
+    ID              reduce using rule 91 (else -> SINO else_2 LLLAVE estatuto RLLAVE .)
+    SI              reduce using rule 91 (else -> SINO else_2 LLLAVE estatuto RLLAVE .)
+    HAZ             reduce using rule 91 (else -> SINO else_2 LLLAVE estatuto RLLAVE .)
+    PARA            reduce using rule 91 (else -> SINO else_2 LLLAVE estatuto RLLAVE .)
+    IMPRIME         reduce using rule 91 (else -> SINO else_2 LLLAVE estatuto RLLAVE .)
+    FUNCION         reduce using rule 91 (else -> SINO else_2 LLLAVE estatuto RLLAVE .)
+    RLLAVE          reduce using rule 91 (else -> SINO else_2 LLLAVE estatuto RLLAVE .)
 
 WARNING: 
 WARNING: Conflicts:
@@ -3548,8 +3651,9 @@ WARNING: shift/reduce conflict for SI in state 32 resolved as shift
 WARNING: shift/reduce conflict for HAZ in state 32 resolved as shift
 WARNING: shift/reduce conflict for PARA in state 32 resolved as shift
 WARNING: shift/reduce conflict for IMPRIME in state 32 resolved as shift
-WARNING: shift/reduce conflict for LPAREN in state 61 resolved as shift
-WARNING: shift/reduce conflict for ID in state 64 resolved as shift
-WARNING: shift/reduce conflict for LPAREN in state 143 resolved as shift
+WARNING: shift/reduce conflict for LPAREN in state 63 resolved as shift
+WARNING: shift/reduce conflict for ID in state 66 resolved as shift
 WARNING: reduce/reduce conflict in state 23 resolved using rule (body -> empty)
 WARNING: rejected rule (bloque -> empty) in state 23
+WARNING: reduce/reduce conflict in state 103 resolved using rule (llamadaparams -> empty)
+WARNING: rejected rule (id_call -> empty) in state 103
