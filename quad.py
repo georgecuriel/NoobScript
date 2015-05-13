@@ -73,7 +73,7 @@ def parentesisPop():
 #5 ARREGLAR
 def termino():
   global contemp
-  print( "Estoy en cuadruplo termino\n")
+  print( "Estoy en cuadruplo termino (el de multiplicaciones)\n")
   op = POper[-1]
   POper.pop()
   if op == 3 or op == 4:      #operadores * o /
@@ -96,7 +96,7 @@ def termino():
 #6
 def expresion():
   global contemp
-  print( "Estoy en cuadruplo expresion osea suma y resta")
+  print( "Estoy en cuadruplo expresion (suma y resta)")
   op = POper[-1]
   POper.pop()
   if op == 1 or op == 2:        #operadores + o -
@@ -162,30 +162,6 @@ def assign():
   else:
     print( "No es asignacion pasar al siguiente \n")
     pila_op(op)
-    
-  #15
-def logico():
-  global contemp
-  print( "Estoy en cuad logico\n");
-  op = POper[-1]
-  POper.pop()
-  if op == 8 or op == 9: # op == & || op == |
-    oper2 = PilaO[-1]
-    PilaO.pop()
-    oper1 = PilaO[-1]
-    PilaO.pop()
-    if check(op, oper1, oper2):   #checa el tipo
-      escribe_cuad(cont, op, oper1, oper2,  (contemp+tipotemp()))
-      pila_id(contemp+tipotemp())   # mete el resultado a la pila de operadores
-      contemp = contemp + 1
-    
-    else:   #marca error si no es compatible
-        print( "***ERROR DE TIPOS**** logico\n")
-        exit(1)
-         
-  else:
-    print( "No es logico, pasar al siguiente \n")
-    pila_op(op)
       
 #10
 def if1():
@@ -195,7 +171,7 @@ def if1():
   #1.- genera gotoF y mete cont-1 a la pila de saltos
   op = 20
   oper1 = PilaO[-1]
-  if per1 < 10000 or oper1 >= 11000:
+  if oper1 <= 2000 and oper1 > 2500 or oper1 <= 4000 and oper1 > 4500 or oper1 <= 6000 and oper1 > 6500 or oper1 <= 8000 and oper1 > 8500:
     print ("***ERROR DE TIPOS**** IF\n") #STANDAR ERROR DE PYTHON CHECAR
   else:
     POper.pop()
@@ -236,13 +212,16 @@ def gosub(quadInicio):
   escribe_cuad(cont, 32, quadInicio, -1, -1)
   
 
+def param(valor, param):
+  escribe_cuad(cont, 31,valor ,-1,param)
+
 def print1():
   op=33
   POper.append(op)
 
 def print2():
   oper1=PilaO[-1]
-  escribe_cuad(cont,top(POper),oper1,-1,-1)
+  escribe_cuad(cont,POper[-1],oper1,-1,-1)
   
 def cuadproc():
   return cont

@@ -3,6 +3,8 @@ from temporal import *
 from constant import *
 from globales import *
 
+auxCont = 0
+
 def checaScope(dire):
     if dire >= 1000 and dire < 2500:    #Direcciones de variables globales
         return 1
@@ -239,8 +241,9 @@ for e in range(len(cuad)-1):
             cont1 = cuad[cont1][4]
     def GOTO(op): #case 22: //GOTO
         cont1 = cuad[cont1][4]
-    def ERA(op): #case 30: //ERA
-        print ("era")
+        
+        
+        
     def PARAM(op): #case 31: //PARAM
         if tipo1 == 1 or tipo1 == 2:
             val = obtenValorD(score, cuad[cont1][2], tipo1)
@@ -251,8 +254,25 @@ for e in range(len(cuad)-1):
         else:
             val = obtenValorS(score, cuad[cont1][2], tipo1)
             meteValorS(scope, cuad[cont1][4], val , tipo3)
+    
     def GOsub(op): #case 32: //Gosub
-        print("")
+        global auxCont
+        auxCont = cont1
+        cont1 = cuad[cont1][2]
+    
+    def ret(op): #Case 34 return
+        global auxCont
+        if tipo1 == 1 or tipo1 == 2:
+            val = obtenValorD(score, cuad[cont1][2], tipo1)
+            meteValorD(scope, direccion, val , tipo3)
+        elif tipo1== 3:
+            val = obtenValorB(score, cuad[cont1][2], tipo1)
+            meteValorB(scope, direccion, val , tipo3)
+        else:
+            val = obtenValorS(score, cuad[cont1][2], tipo1)
+            meteValorS(scope, direccion, val , tipo3)     
+        cont1 = auxCont
+        
     def write(op): #case 33: //Write
         global scope
         global scope2
@@ -262,17 +282,17 @@ for e in range(len(cuad)-1):
         global tipo3
         global cuad
         def uno(tipo1): #case 1:
-            ope1 = memtemp.getValD(cuad[cont1][2])
-            print(ope1)
+            ope1 = memtemp.getValD(cuad[cont1][2], tipo1)
+            print("lool bro!", ope1)
         def dos(tipo1): #case 2:
-            ope1 = memtemp.getValD(cuad[cont1][2])
+            ope1 = memtemp.getValD(cuad[cont1][2], tipo1)
             print(ope1)
         def cuatro(tipo1):
-            ope1 = memtemp.getMemString(cuad[cont1][2])
+            ope1 = memtemp.getMemString(cuad[cont1][2], tipo1)
             print(ope1)
         operaciones = { 1: uno, 2: dos, 4: cuatro} 
         operaciones[tipo1](tipo1)
-    operaciones = { 1: suma, 2: resta, 3: multiplicacion, 4: division, 5: menor, 6:mayor, 7:comparacion, 8:igualacion, 20:GOTOF, 21:GOTOV, 22:GOTO, 30:ERA, 31:PARAM, 32: GOsub, 33:write} 
+    operaciones = { 1: suma, 2: resta, 3: multiplicacion, 4: division, 5: menor, 6:mayor, 7:comparacion, 8:igualacion, 20:GOTOF, 21:GOTOV, 22:GOTO, 31:PARAM, 32: GOsub, 33:write, 34:ret} 
     operaciones[op](op) 
     print("\n")
     

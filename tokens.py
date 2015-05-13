@@ -51,12 +51,16 @@ llamadim2 = None
 #1 entero, 2 decimal, 3 esverdad, 4 frase
 #tipo para definicion actual de variable
 tipoactual = 0
+<<<<<<< Updated upstream
 #contador del parametro actual
 paramactual = 0
 #nombre de la funcion si no es variable/constante/param
 nombrefunc = ''
 #direccion resultado de exp
 dirvalor
+=======
+paramactual = 0
+>>>>>>> Stashed changes
 
 reserved = {
     'entero'  : 'ENTERO',
@@ -837,7 +841,7 @@ def p_valor(t):
             dirvalor = CONSTDECIMAL
             CONSTDECIMAL +=1
     elif isinstance(t[1], str):
-        for x in directorio[0][4]:
+        for x in directorio[0][4]:   
             if x[0] == t[1]:
             	if x[3] == 0:
                     pila_id(list(x)[2])
@@ -854,6 +858,7 @@ def p_valor(t):
                     break
             else:
                 for x in directorio[func][4]:
+<<<<<<< Updated upstream
 					if x[0] == t[1]:
 						if x[3] == 0:
 							pila_id(list(x)[2])
@@ -898,6 +903,35 @@ def p_set_value_param(t):
 		if x[0] == nombrefunc:
 			param(dirvalor, directorio[x][3][paramactual][2])
 			paramactual += 1
+=======
+                    if x[0] == t[1]:
+                        if x[3] == 0:
+                            pila_id(list(x)[2])
+                            break
+                        elif x[3] == 1:
+                            pila_id(list(x)[2]+llamadim1+1)
+                            break
+                        elif x[3] == 2:
+                            break
+                    else:
+                        for x in directorio[func][3]:
+                            if x[0] == t[1]:
+                                pila_id(list(x)[2])
+                                break
+                            else:
+                                for x in directorio:
+                                    if x[0] == t[1]:
+                                        directorio[x]
+                
+def p_call_or_array(t):
+    '''call_or_array : LBRAK CTEINT push_array_dim1 RBRAK id_array
+                     | LPAREN expresion push_valor_array id_call RPAREN
+                     | empty'''
+
+def p_push_valor_array(t):
+    'push_valor_array : '
+    t[-1]
+>>>>>>> Stashed changes
 
 def p_id_array(t):
 	'''id_array : LBRAK CTEINT push_array_dim2 RBRAK
