@@ -78,14 +78,13 @@ def meteValorS(scope, val, dire):
     operaciones[scope]()
 
 def obtenValorB(scope, dire):
-    def uno():
+    if scope == 1:
         return memglobal.getMemBool(dire)
-    def dos():
+    if scope == 2:
         return memlocal.getMemBool(dire)
-    def tres():
+    if scope == 3:
         return memtemp.getMemBool(dire)
-    operaciones = { 1: uno, 2: dos, 3: tres} 
-    operaciones[scope]()
+
     
 def meteValorB(scope, dire, val):
     def uno() : #case 1:
@@ -121,14 +120,14 @@ for eachLine in open('cuadruplos.txt', "r"):
     cuad.append([int(k) for k in eachLine.split()])
     cont2 = cont2 + 1
     #El operador es el segundo elemento del arreglo obtenido
-    
+cuad.append([cont2+1, 666,-1,-1,-1])
+op=0
 
 
-
-for e in range(len(cuad)-1):
-    
+while op is not 666:
     
     cont1 = cont1 + 1
+    print ("estoy en la linea", cont1) 
     op =  cuad[cont1][1]
     scope = checaScope(cuad[cont1][2])
     scope2 = checaScope(cuad[cont1][3])
@@ -148,7 +147,9 @@ for e in range(len(cuad)-1):
         global tipo3
         global cuad
         ope1 = obtenValorD(scope, cuad[cont1][2], tipo1)
+        print ope1
         ope2 = obtenValorD(scope2, cuad[cont1][3], tipo2)
+        print ope2
         meteValorD(scope3, cuad[cont1][4], (ope1 + ope2), tipo3)
     def resta(op): # case 2: -
         global scope
@@ -170,7 +171,9 @@ for e in range(len(cuad)-1):
         global tipo3
         global cuad
         ope1 = obtenValorD(scope, cuad[cont1][2], tipo1)
+        print ope1
         ope2 = obtenValorD(scope2, cuad[cont1][3], tipo2)
+        print ope2
         meteValorD(scope3, cuad[cont1][4], (ope1 * ope2), tipo3)
     def division(op): #case 4: /
         global scope
@@ -240,17 +243,33 @@ for e in range(len(cuad)-1):
         operaciones[tipo3](tipo3)   
     
     def GOTOF(op):  #case 20: //GOTOF
-        if obtenValorB(scope,cuad[cont1][2]) == True:
+        global cont1
+        global scope
+        global scope2
+        global scope3
+        global tipo1
+        global tipo2
+        global tipo3
+        global cuad
+        if obtenValorB(scope,cuad[cont1][2]) == 1:
             print ("siguele ")
         else:
-            cont1 = cuad[cont1][3]
+            cont1 = cuad[cont1][4]
     def GOTOV(op): #case 21: //GOTOV
-        if obtenValorB(scope,cuad[cont1][2]) == False:
+        if obtenValorB(scope,cuad[cont1][2]) == 0:
             print ("siguele ")
         else:
             cont1 = cuad[cont1][4]
     def GOTO(op): #case 22: //GOTO
-        cont1 = cuad[cont1][4]
+        global cont1
+        global scope
+        global scope2
+        global scope3
+        global tipo1
+        global tipo2
+        global tipo3
+        global cuad
+        cont1 = cuad[cont1][4] -1
         
         
         
@@ -269,8 +288,10 @@ for e in range(len(cuad)-1):
         global auxCont
         global cont1
         auxCont = cont1
-        cont1 = cuad[cont1][2]
-    
+        print auxCont
+        cont1 = cuad[cont1][2] - 1
+        print cont1
+        
     def ret(op): #Case 34 return
         global auxCont
         global scope
@@ -280,17 +301,22 @@ for e in range(len(cuad)-1):
         global tipo2
         global tipo3
         global cuad
+        global cont1
         if tipo1 == 1 or tipo1 == 2:
-            val = obtenValorD(score, cuad[cont1][2], tipo1)
-            meteValorD(scope, cuad[cont1][4], val , tipo3)
+            val = obtenValorD(scope, cuad[cont1][2], tipo1)
+            meteValorD(scope3, cuad[cont1][4], val , tipo3)
         elif tipo1== 3:
-            val = obtenValorB(score, cuad[cont1][2], tipo1)
-            meteValorB(scope, cuad[cont1][4], val , tipo3)
+            val = obtenValorB(scope, cuad[cont1][2], tipo1)
+            meteValorB(scope3, cuad[cont1][4], val , tipo3)
         else:
-            val = obtenValorS(score, cuad[cont1][2], tipo1)
-            meteValorS(scope, cuad[cont1][4], val , tipo3)     
-        cont1 = auxCont
-        
+            val = obtenValorS(scope, cuad[cont1][2], tipo1)
+            meteValorS(scope3, cuad[cont1][4], val , tipo3)     
+        if auxCont == 0:
+            print("No ha sido llamada la funcion")
+        else:
+            cont1 = auxCont
+            print cont1
+    
 
     def write(op): #case 33: //Write
         global scope
@@ -331,7 +357,10 @@ for e in range(len(cuad)-1):
             else:
                 ope1 = memconstant.getValDString(cuad[cont1][2], tipo1)
             print(ope1)
-    operaciones = { 1: suma, 2: resta, 3: multiplicacion, 4: division, 5: menor, 6:mayor, 7:comparacion, 8:igualacion, 20:GOTOF, 21:GOTOV, 22:GOTO, 31:PARAM, 32: GOsub, 33:write, 34:ret} 
+    def salir(op):
+        print "ya acabe"
+        exit(1)
+    operaciones = { 1: suma, 2: resta, 3: multiplicacion, 4: division, 5: menor, 6:mayor, 7:comparacion, 8:igualacion, 20:GOTOF, 21:GOTOV, 22:GOTO, 31:PARAM, 32: GOsub, 33:write, 34:ret, 666: salir} 
     operaciones[op](op) 
     print("\n")
     

@@ -34,19 +34,22 @@ class Temporal:
 	def setMemBool(self, dire, val):
 		dirReal = dire - 6000
 		if dirReal < 500:
-			memBool[dirReal] = self.val
+			self.memBool[dirReal] = val
 		
 	def getMemBool(self, dire):
 		global esVerdad
 		dirReal = dire - 6000
 		if dirReal < 500:
-			return self.memBool[dirReal]
+			if self.memBool[dirReal] == False:
+				return 0
+			else:
+				return 1
 		
 	def setMemString(self, dire, val):
 		global frases
 		dirReal = dire - 6500
 		if dirReal < 500:
-			memString[dirReal] = self.val
+			self.memString[dirReal] = val
 		
 	def getMemString(self ,dire):
 		global frases

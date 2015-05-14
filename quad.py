@@ -29,7 +29,6 @@ def printcuadruplos():
       global cuadf
       cuadf.write(repr(cuadruplos[i][j]) + " ")
     cuadf.write("\n") ;
-  
 
 #impresion de de direccion en memoria y de valor asignado de la variable dependiendo de su tipo  
 def escribe_ctei(dire, val):
@@ -62,6 +61,9 @@ def pila_op(op):
     POper.append(op)
     print( "ya meti op \n", repr(op))
    
+def pila_saltos(op):
+    PSaltos.append(op)
+    print("ya meti salto a \n", repr(op))
 #3
 def parentesisPush():
     POper.append(9)  #genera pared falsa en pila
@@ -73,70 +75,80 @@ def parentesisPop():
 def termino():
   global contemp
   print( "Estoy en cuadruplo termino (el de multiplicaciones)\n")
-  op = POper[-1]
-  POper.pop()
-  if op == 3 or op == 4:      #operadores * o /
-    oper2 = PilaO[-1]
-    PilaO.pop()
-    oper1 = PilaO[-1]
-    PilaO.pop()
-    if (check(op, oper1, oper2)):   #checa si es valido
-      escribe_cuad(cont, op, oper1, oper2, contemp+tipotemp())  #genera el cuadruplo
-      pila_id(contemp+tipotemp())     #mete el resultado a la pila de operadores
-      contemp = contemp+1
-    
-    else: #marca error si no es compatible
-      print( "***ERROR DE TIPOS**** termino\n")
-      exit(1)
+  if not POper:
+    print ("lol bro")
   else:
-      print( "No es termino pasar al siguiente \n")
-      pila_op(op)
+    op = POper[-1]
+    POper.pop()
+    if op == 3 or op == 4:      #operadores * o /
+      oper2 = PilaO[-1]
+      PilaO.pop()
+      oper1 = PilaO[-1]
+      PilaO.pop()
+      if (check(op, oper1, oper2)):   #checa si es valido
+        escribe_cuad(cont, op, oper1, oper2, contemp+tipotemp())  #genera el cuadruplo
+        pila_id(contemp+tipotemp())     #mete el resultado a la pila de operadores
+        contemp = contemp+1
+      
+      else: #marca error si no es compatible
+        print( "***ERROR DE TIPOS**** termino\n")
+        exit(1)
+    else:
+        print( "No es termino pasar al siguiente \n")
+        pila_op(op)
    
 #6
 def expresion():
   global contemp
   print( "Estoy en cuadruplo expresion (suma y resta)")
-  op = POper[-1]
-  POper.pop()
-  if op == 1 or op == 2:        #operadores + o -
-    oper2 = PilaO[-1]
-    PilaO.pop()
-    oper1 = PilaO[-1]
-    PilaO.pop()
-    if check(op, oper1, oper2):   #checa el tipo    
-      escribe_cuad(cont, op, oper1, oper2,  contemp+tipotemp()) #genera el cuadruplo
-      pila_id(contemp+tipotemp())     #mete el resultado a la pila de operadores
-      contemp = contemp+1
-    else:   #marca error si no es compatible
-      print( "***ERROR DE TIPOS**** expresion\n")
-      exit(1)
+  if not POper:
+    print("lol bro")
   else:
-    print( "No es expresion pasar al siguiente \n")
-    pila_op(op)
+    op = POper[-1]
+    POper.pop()
+    if op == 1 or op == 2:        #operadores + o -
+      oper2 = PilaO[-1]
+      PilaO.pop()
+      oper1 = PilaO[-1]
+      PilaO.pop()
+      if check(op, oper1, oper2):   #checa el tipo    
+        escribe_cuad(cont, op, oper1, oper2,  contemp+tipotemp()) #genera el cuadruplo
+        pila_id(contemp+tipotemp())     #mete el resultado a la pila de operadores
+        contemp = contemp+1
+      else:   #marca error si no es compatible
+        print( "***ERROR DE TIPOS**** expresion\n")
+        exit(1)
+    else:
+      print( "No es expresion pasar al siguiente \n")
+      pila_op(op)
      
 #7
 def relacional():
     print( "Estoy en cuadruplo relacional\n ");
     global contemp
-    op = POper[-1]
-    POper.pop()
-    if op == 5 or op == 6 or op == 7 :  # op == < || op == > || op = ==
-        oper2 = PilaO[-1] 
-        PilaO.pop()
-        oper1 = PilaO[-1]
-        PilaO.pop()
-        if check(op, oper1, oper2):   #checa el tipo
-          escribe_cuad(cont, op, oper1, oper2, contemp+tipotemp())
-          pila_id(contemp+tipotemp());     #mete el resultado a la pila de operadores
-          contemp = contemp + 1 
-         
-        else:   #marca error si no es compatible
-          print( "***ERROR DE TIPOS**** relacional\n");
-          exit(1)
-
+    if not POper:
+      print ("La pila esta vacia")
     else:
-        print( "No es relacional pasar al siguiente \n");
-        pila_op(op)
+      print POper
+      op = POper[-1]
+      POper.pop()
+      if op == 5 or op == 6 or op == 7 :  # op == < || op == > || op = ==
+          oper2 = PilaO[-1] 
+          PilaO.pop()
+          oper1 = PilaO[-1]
+          PilaO.pop()
+          if check(op, oper1, oper2):   #checa el tipo
+            escribe_cuad(cont, op, oper1, oper2, contemp+tipotemp())
+            pila_id(contemp+tipotemp());     #mete el resultado a la pila de operadores
+            contemp = contemp + 1 
+           
+          else:   #marca error si no es compatible
+            print( "***ERROR DE TIPOS**** relacional\n");
+            exit(1)
+  
+      else:
+          print( "No es relacional pasar al siguiente \n");
+          pila_op(op)
 
 #8
 
@@ -146,9 +158,11 @@ def assign():
   op = POper[-1] 
   POper.pop()
   if op == 8:  #si el operador es =
+    print PilaO
     oper2 = PilaO[-1]
     PilaO.pop() 
     oper1 = PilaO[-1]
+    print PilaO
     PilaO.pop()
     if check(op, oper1, oper2): #checa el tipo
       escribe_cuad(cont, op,  oper2, -1, oper1)   #genera el cuadruplo
@@ -171,11 +185,11 @@ def if1():
   op = 20
   oper1 = PilaO[-1]
   if oper1 <= 2000 and oper1 > 2500 or oper1 <= 4000 and oper1 > 4500 or oper1 <= 6000 and oper1 > 6500 or oper1 <= 8000 and oper1 > 8500:
-    print ("***ERROR DE TIPOS**** IF\n") #STANDAR ERROR DE PYTHON CHECAR
+    print ("***ERROR DE TIPOS**** IF\n") 
   else:
-    POper.pop()
     escribe_cuad(cont, op, oper1, -1, -1)
     PSaltos.append(cont-1)
+    print PSaltos
     
 #11
 def else1():
@@ -183,9 +197,21 @@ def else1():
 #2genera goto (else), y saca falso de la pila y rellena el primer salto
   op = 22 #goto
   escribe_cuad(cont, op, -1, -1, -1)
+  print PSaltos
+  print cont
   falso = PSaltos[-1]
-  cuadruplos[falso-1][4]=cont
-  PSaltos.append(cont-1)
+  cuadruplos[falso-1][4]= cont
+  PSaltos.append(cont)
+
+
+
+def if2():
+  fin = PSaltos.pop()
+  print PSaltos
+  print fin
+  aux = PSaltos.pop()
+  cuadruplos[fin-2][4]= aux-1
+  #13
 
 def ret():
   valor = PilaO.pop()
@@ -193,25 +219,33 @@ def ret():
   escribe_cuad(cont, 34, valor,-1, direccion)
 
   
-  
-
-def if2():
-  fin = PSaltos[-1]
-  PSaltos.pop()
-  cuadruplos[fin-1][4]=cont
-  #13
-  
 def do1():
   #do-while
   #1.- mete cont a pila de saltos
-  PSaltos.append(cont)
+  PSaltos.append(cont-1)
   #14
 def do2(): 
-  #2.- genra gotoV e incrementa el cont
-  op = 21 #gotov
-  oper1 = Pila0[-1]
-  oper2 = -1
-  escribe_cuad(cont, op, oper1, -1, contemp)
+  global cont
+  print( "Estoy en cuadruplo while\n")
+  #if
+  #1.- genera gotoF y mete cont-1 a la pila de saltos
+  op = 20
+  oper1 = PilaO[-1]
+  if oper1 <= 2000 and oper1 > 2500 or oper1 <= 4000 and oper1 > 4500 or oper1 <= 6000 and oper1 > 6500 or oper1 <= 8000 and oper1 > 8500:
+    print ("***ERROR DE TIPOS**** IF\n") 
+  else:
+    escribe_cuad(cont, op, oper1, -1, -1)
+    PSaltos.append(cont-1)
+    print PSaltos 
+
+def do3():
+  falso = PSaltos.pop()
+  retorno = PSaltos.pop()
+  print PSaltos
+  print falso
+  print retorno
+  escribe_cuad(cont, 22, -1, -1, retorno+1)
+  cuadruplos[falso-1][4] = cont-1
 
 
 def gosub(quadInicio):

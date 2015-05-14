@@ -158,6 +158,7 @@ def division(op, operando1 , operando2):
         return False
 
 def menorQue(op, operando1 , operando2):
+    global tipo
     print  ("Estoy en el case en menorque <")
     
     if operando1 =='es' or operando1 =='f':
@@ -194,6 +195,7 @@ def menorQue(op, operando1 , operando2):
         return False
 
 def mayorQue(op, operando1 , operando2):
+    global tipo
     print ("Estoy en mayor que")
     
     if operando1 =='es' or operando1 =='f':

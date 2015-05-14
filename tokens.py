@@ -114,8 +114,8 @@ t_TIMES    = r'\*'
 t_DIVIDE   = r'/'
 t_LPAREN   = r'\('
 t_RPAREN   = r'\)'
-t_MAYOR    = r'<'
-t_MENOR    = r'>'
+t_MAYOR    = r'>'
+t_MENOR    = r'<'
 t_IGUAL    = r'='
 t_COMPARA  = r'=='
 t_LBRAK    = r'\['
@@ -617,18 +617,18 @@ def p_bloque(t):
 			  | empty'''
 			  
 def p_funcion(t):
-    'funcion : FUNCION funcion_increase_func tipo ID funcion_push_id LPAREN funparam RPAREN LLLAVE vars bloque return RLLAVE'
+    'funcion : FUNCION funcion_increase_func tipo ID funcion_push_id LPAREN funparam RPAREN LLLAVE vars bloque RLLAVE'
     global funnombre
     global funtipo
     global funcuad
     global funparam
     global funvars
-    directorio.append(list((funnombre, funtipo, cuadproc() - 1, funparam, funvars, dirfuncion)))
+    directorio.append([funnombre, funtipo, cuadproc() - 1, funparam, funvars, dirfuncion])
 
 def p_return(t):
     'return : REGRESA expresion'
     global dirfuncion
-    pila_id(dirfuncion)
+    print dirfuncion
     ret()
     
     
@@ -650,19 +650,24 @@ def p_funcion_push_id(t):
     if tipoactual == 1:
         GLOBENTERO += 1
         dirfuncion = GLOBENTERO
+        pila_id(dirfuncion)
+        directorio[0][4].append([t[-1], -1, dirfuncion, 0, -1, -1  ])
         
     elif tipoactual == 2:
         GLOBDECIMAL += 1
         dirfuncion = GLOBDECIMAL
-        
+        pila_id(dirfuncion)
+        directorio[0][4].append([t[-1], -1, dirfuncion, 0, -1, -1  ])
     elif tipoactual == 3:
         GLOBESVERDAD += 1
         dirfuncion = GLOBESVERDAD
-        
+        pila_id(dirfuncion)
+        directorio[0][4].append([t[-1], -1, dirfuncion, 0, -1, -1  ])
     elif tipoactual == 4:
         GLOBFRASE += 1
         dirfuncion = GLOBFRASE
-       
+        pila_id(dirfuncion)
+        directorio[0][4].append([t[-1], -1, dirfuncion, 0, -1, -1  ])
         
     
     #creamos espacio en memoria para la funcion
@@ -697,13 +702,14 @@ def p_funparams(t):
 				 | empty'''
 
 def p_estatuto(t):
-	'''estatuto : asignacion bloque
-				| condicion bloque
-				| mientras bloque 
-				| para bloque
-				| escritura bloque
-				| llamada bloque'''
-	print("estatuto")
+    '''estatuto : asignacion bloque
+                | condicion bloque
+                | mientras bloque
+                | para bloque
+                | escritura bloque
+                | llamada bloque
+                | return bloque'''
+    print("estatuto")
 
 def p_asignacion(t):
     'asignacion : ID call_or_array asignacion_push_id IGUAL asignacion_push_igual expresion SEMICOL'
@@ -711,45 +717,59 @@ def p_asignacion(t):
     assign()
     
 def p_asignacion_push_id(t):
-    'asignacion_push_id :'
+    'asignacion_push_id : '
+    global directorio
+    global llamadim1
+    global llamadim2
     for x in directorio[0][4]:
+        print x[0]
+        print directorio[0][4]
+        print t[-2]
+        print x[3]
         if x[0] == t[-2]:
             if x[3] == 0:
                 pila_id(list(x)[2])
                 break
             elif x[3] == 1:
-                pila_id(list(x)[2]+llamadim1+1)
+                pila_id(list(x)[2]+llamadim1)
                 break
             elif x[3] == 2:
                 pila_id(list(x)[2]+llamadim1*(list(x)[5]+1)+llamadim2)
                 break
+    else:
+        for x in directorio[func][4]:
+            if x[0] == t[-2]:
+                if x[3] == 0:
+                    pila_id(list(x)[2])
+                    break
+                elif x[3] == 1:
+                    pila_id(list(x)[2]+llamadim1)
+                    break
+                elif x[3] == 2:
+                    pila_id(list(x)[2]+llamadim1*(list(x)[5]+1)+llamadim2)
+                    break
         else:
-            for x in directorio[func][4]:
+            for x in directorio[func][3]:
                 if x[0] == t[-2]:
-                    if x[3] == 0:
-                        pila_id(list(x)[2])
-                        break
-                    elif x[3] == 1:
-                        pila_id(list(x)[2]+llamadim1+1)
-                        break
-                    elif x[3] == 2:
-                        pila_id(list(x)[2]+llamadim1*(list(x)[5]+1)+llamadim2)
-                        break
-                else:
-                	for x in directorio[func][3]:
-                		if x[0] == t[-2]:
-                			pila_id(list(x)[2])
-                
+                    pila_id(list(x)[2])
+                    break
             
 def p_asignacion_push_igual(t):
     'asignacion_push_igual :'
     pila_op(8)
 
 def p_llamada(t):
-	'llamada : ID LPAREN llamadaparam RPAREN'
+    'llamada : ID LPAREN nombre_func llamadaparam RPAREN'
+    global nombrefunc
+    global directorio
+    for x in directorio:
+        print (x[0])
+        print (nombrefunc)
+        if x[0] == nombrefunc:
+            gosub(directorio[directorio.index(x)][2])
 
 def p_llamadaparam(t):
-	'''llamadaparam : expresion llamadaparams
+	'''llamadaparam : expresion set_value_param llamadaparams
 					| empty'''
 
 def p_llamadaparams(t):
@@ -855,6 +875,7 @@ def p_valor(t):
     global llamadim1
     global llamadim2
     global dirvalor
+    
     if isinstance(t[1], int):
             directorioconst[t[1]] = CONSTENTERO
             dirvalor = CONSTENTERO
@@ -867,51 +888,62 @@ def p_valor(t):
             CONSTDECIMAL +=1
     elif isinstance(t[1], str):
         for x in directorio[0][4]:
+            print directorio[0][4]
+            print x[0]
+            print x[3]
+            print t[1]
             if x[0] == t[1]:
-            	if x[3] == 0:
+                if x[3] == 0:
                     pila_id(list(x)[2])
                     dirvalor = list(x)[2]
                     break
                 elif x[3] == 1:
-                    pila_id(list(x)[2]+llamadim1+1)
-                    dirvalor = list(x)[2]+llamadim1+1
+                    print (list(x)[2]+llamadim1)
+                    pila_id(list(x)[2]+llamadim1)
+                    dirvalor = list(x)[2]+llamadim1
                     break
                 elif x[3] == 2:
                     print (llamadim1,(list(x)[5]+1), llamadim2  )
                     pila_id(list(x)[2]+llamadim1*(list(x)[5]+1)+(llamadim2))
                     dirvalor = list(x)[2]+llamadim1*(list(x)[5]+1)+(llamadim2)
                     break
-            else:
-                for x in directorio[func][4]:
-                    if x[0] == t[1]:
-                        if x[3] == 0:
+        else:
+            print directorio
+            print func
+            for x in directorio[func][4]:
+                if x[0] == t[1]:
+                    if x[3] == 0:
+                        pila_id(list(x)[2])
+                        dirvalor = list(x)[2]
+                        break
+                    elif x[3] == 1:
+                        pila_id(list(x)[2]+llamadim1)
+                        dirvalor = list(x)[2]+llamadim1
+                        break
+                    elif x[3] == 2:
+                        pila_id(list(x)[2]+llamadim1*(list(x)[5]+1)+llamadim2)
+                        dirvalor = list(x)[2]+llamadim1*(list(x)[5]+1)+llamadim2
+                        break
+                else:
+                    for x in directorio[func][3]:
+                        if x[0] == t[1]:
                             pila_id(list(x)[2])
                             dirvalor = list(x)[2]
                             break
-                        elif x[3] == 1:
-                            pila_id(list(x)[2]+llamadim1+1)
-                            dirvalor = list(x)[2]+llamadim1+1
-                            break
-                        elif x[3] == 2:
-                        	pila_id(list(x)[2]+llamadim1*(list(x)[5]+1)+llamadim2)
-                        	dirvalor = list(x)[2]+llamadim1*(list(x)[5]+1)+llamadim2
-                        	break
-                    else:
-                    	for x in directorio[func][3]:
-                    		if x[0] == t[1]:
-                    			pila_id(list(x)[2])
-                    			dirvalor = list(x)[2]
-                    			break
-                    		else:
-                    			for x in directorio:
-                    				if x[0] == t[1]:
-                    					pila_id(directorio[list(x)][5])
-                    					dirvalor = directorio[list(x)[5]]
+                        else:
+                            for x in directorio:
+                                if x[0] == t[1]:
+                                    pila_id(directorio[list(x)][5])
+                                    dirvalor = directorio[list(x)[5]]
         
 def p_call_or_array(t):
     '''call_or_array : LBRAK CTEINT push_array_dim1 RBRAK id_array
-                     | LPAREN nombre_func expresion set_value_param id_call RPAREN push_gosub
+                     | LPAREN nombre_func param_array id_call RPAREN push_gosub
                      | empty'''
+                     
+def p_param_array(t):
+    '''param_array : expresion set_value_param
+                   | empty'''
 
         
 def p_nombre_func(t):
@@ -930,7 +962,7 @@ def p_push_gosub(t):
         print (nombrefunc)
         if x[0] == nombrefunc:
             gosub(directorio[directorio.index(x)][2])
-            pila_id(directorio[directorio.index(x)][5])
+            
     
 def p_set_value_param(t):
     'set_value_param : '
@@ -989,13 +1021,18 @@ def p_param(t):
 	print("param")
 
 def p_mientras(t):
-    'mientras : HAZ  mientras_haz_push LLLAVE estatuto RLLAVE MIENTRAS LPAREN expresion RPAREN'
+    'mientras : MIENTRAS mientras_haz_push LPAREN expresion RPAREN mientras_haz_push2 LLLAVE estatuto RLLAVE '
     print("mientras")
-    do2()
+    do3()
 
 def p_mientras_haz_push(t):
     'mientras_haz_push : '
     do1()
+    
+def p_mientras_haz_push2(t):
+    'mientras_haz_push2 : '
+    do2()
+    
     
 def p_escritura(t):
     'escritura : IMPRIME escritura_escribe LPAREN esc RPAREN'
